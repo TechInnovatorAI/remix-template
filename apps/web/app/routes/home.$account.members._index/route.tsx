@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
@@ -40,7 +42,6 @@ import { TeamAccountLayoutPageHeader } from '~/routes/home.$account/_components/
 import { loader as accountWorkspaceLoader } from '~/routes/home.$account/route';
 
 import { loadMembersPageData } from './_lib/members-page-loader.server';
-import {useMemo} from "react";
 
 const MembersActionsSchema = z.union([
   InviteMembersSchema,
@@ -102,7 +103,7 @@ export default function TeamAccountMembersPage() {
       canUpdateInvitation: canManageRoles,
       canRemoveInvitation: canManageRoles,
       currentUserRoleHierarchy,
-    }
+    };
   }, [canManageRoles, currentUserRoleHierarchy]);
 
   return (
