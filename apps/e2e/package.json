@@ -1,0 +1,19 @@
+{
+  "name": "web-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "report": "playwright show-report",
+    "test": "playwright test --max-failures=1",
+    "test:ui": "playwright test --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.43.1",
+    "@types/node": "^20.12.7",
+    "node-html-parser": "^6.1.13"
+  }
+}

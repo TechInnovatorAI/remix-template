@@ -1,0 +1,53 @@
+{
+  "name": "remix-supabase-saas-kit-turbo",
+  "private": true,
+  "sideEffects": false,
+  "engines": {
+    "node": ">=v18.17.1"
+  },
+  "author": {
+    "url": "https://makerkit.dev",
+    "name": "MakerKit"
+  },
+  "scripts": {
+    "build": "turbo build --cache-dir=.turbo",
+    "clean": "git clean -xdf node_modules dist",
+    "clean:workspaces": "turbo clean",
+    "dev": "cross-env FORCE_COLOR=1 turbo dev --parallel",
+    "dev:web": "turbo dev --parallel",
+    "format": "turbo format --cache-dir=.turbo --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "format:fix": "turbo format --cache-dir=.turbo --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "lint": "turbo lint --cache-dir=.turbo --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
+    "lint:fix": "turbo lint --cache-dir=.turbo --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
+    "typecheck": "turbo typecheck --cache-dir=.turbo",
+    "test": "turbo test --cache-dir=.turbo",
+    "update": "pnpm update -r",
+    "supabase:web:start": "pnpm --filter web supabase:start",
+    "supabase:web:stop": "pnpm --filter web supabase:stop",
+    "supabase:web:typegen": "pnpm --filter web supabase:typegen",
+    "supabase:web:reset": "pnpm --filter web supabase:reset",
+    "stripe:listen": "pnpm --filter '@kit/stripe' start"
+  },
+  "prettier": "@kit/prettier-config",
+  "workspaces": [
+    "apps/*",
+    "packages/**",
+    "tooling/*"
+  ],
+  "dependencies": {
+    "@manypkg/cli": "^0.21.4",
+    "@turbo/gen": "^1.13.3",
+    "cross-env": "^7.0.3",
+    "pnpm": "^9.0.6",
+    "prettier": "^3.2.5",
+    "turbo": "^1.13.3",
+    "typescript": "^5.4.5",
+    "yarn": "^1.22.22"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "18.3.1",
+      "react-dom": "18.3.1"
+    }
+  }
+}

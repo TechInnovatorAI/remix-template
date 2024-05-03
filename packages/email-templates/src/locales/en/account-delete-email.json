@@ -1,0 +1,9 @@
+{
+  "subject": "We have deleted your {{productName}} account",
+  "previewText": "We have deleted your {{productName}} account",
+  "hello": "Hello {{displayName}},",
+  "paragraph1": "This is to confirm that we have processed your request to delete your account with {{productName}}.",
+  "paragraph2": "We're sorry to see you go. Please note that this action is irreversible, and we'll make sure to delete all of your data from our systems.",
+  "paragraph3": "We thank you again for using {{productName}}.",
+  "paragraph4": "The {{productName}} Team"
+}

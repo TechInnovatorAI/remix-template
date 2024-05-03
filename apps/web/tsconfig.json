@@ -1,0 +1,26 @@
+{
+  "extends": "@kit/tsconfig/base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "moduleResolution": "bundler",
+    "paths": {
+      "~/*": ["./app/*"],
+      "~/config/*": ["./config/*"],
+      "~/components/*": ["./components/*"],
+      "~/lib/*": ["./lib/*"]
+    },
+    "noEmit": true,
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  },
+  "include": [
+    "*.ts",
+    "*.tsx",
+    "*.mjs",
+    "config/**/*.{ts|tsx}",
+    "components/**/*",
+    "lib/**/*.ts",
+    "app"
+  ],
+  "exclude": ["node_modules"]
+}

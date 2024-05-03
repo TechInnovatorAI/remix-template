@@ -1,0 +1,97 @@
+.HTML h1 {
+  @apply mt-14 text-4xl font-bold font-heading;
+}
+
+.HTML h2 {
+  @apply mb-4 mt-12 text-2xl font-semibold lg:text-3xl font-heading;
+}
+
+.HTML h3 {
+  @apply mt-10 text-2xl font-bold font-heading;
+}
+
+.HTML h4 {
+  @apply mt-8 text-xl font-bold;
+}
+
+.HTML h5 {
+  @apply mt-6 text-lg font-semibold;
+}
+
+.HTML h6 {
+  @apply mt-2 text-base font-medium;
+}
+
+/**
+Tailwind "dark" variants do not work with CSS Modules
+We work it around using :global(.dark)
+For more info: https://github.com/tailwindlabs/tailwindcss/issues/3258#issuecomment-770215347
+*/
+:global(.dark) .HTML h1,
+:global(.dark) .HTML h2,
+:global(.dark) .HTML h3,
+:global(.dark) .HTML h4,
+:global(.dark) .HTML h5,
+:global(.dark) .HTML h6 {
+  @apply text-white;
+}
+
+.HTML p {
+  @apply mb-4 mt-2 text-base leading-7;
+}
+
+.HTML li {
+  @apply relative my-1.5 text-base leading-7;
+}
+
+.HTML ul > li:before {
+  content: '-';
+
+  @apply mr-2;
+}
+
+.HTML ol > li:before {
+  @apply inline-flex font-medium;
+
+  content: counters(counts, '.') '. ';
+  font-feature-settings: 'tnum';
+}
+
+.HTML b,
+.HTML strong {
+  @apply font-bold;
+}
+
+:global(.dark) .HTML b,
+:global(.dark) .HTML strong {
+  @apply text-white;
+}
+
+.HTML img,
+.HTML video {
+  @apply rounded-md;
+}
+
+.HTML ul,
+.HTML ol {
+  @apply pl-1;
+}
+
+.HTML ol > li {
+  counter-increment: counts;
+}
+
+.HTML ol > li:before {
+  @apply mr-2 inline-flex font-semibold;
+
+  content: counters(counts, '.') '. ';
+  font-feature-settings: 'tnum';
+}
+
+.HTML blockquote {
+  @apply my-4 border-l-8 border border-primary px-6 py-4 text-lg font-medium text-muted-foreground;
+}
+
+.HTML pre {
+  @apply my-6 text-sm text-current border p-6 rounded-lg;
+}

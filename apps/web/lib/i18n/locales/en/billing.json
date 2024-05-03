@@ -1,0 +1,114 @@
+{
+  "subscriptionTabSubheading": "Manage your Subscription and Billing",
+  "planCardTitle": "Your Plan",
+  "planCardDescription": "Below are the details of your current plan. You can change your plan or cancel your subscription at any time.",
+  "planRenewal": "Renews every {{interval}} at {{price}}",
+  "planDetails": "Plan Details",
+  "checkout": "Proceed to Checkout",
+  "trialEndsOn": "Your trial ends on",
+  "billingPortalCardButton": "Visit Billing Portal",
+  "billingPortalCardTitle": "Manage your Billing Details",
+  "billingPortalCardDescription": "Visit your Billing Portal to manage your subscription and billing. You can update or cancel your plan, or download your invoices.",
+  "cancelAtPeriodEndDescription": "Your subscription is scheduled to be canceled on {{- endDate }}.",
+  "renewAtPeriodEndDescription": "Your subscription is scheduled to be renewed on {{- endDate }}",
+  "noPermissionsAlertHeading": "You don't have permissions to change the billing settings",
+  "noPermissionsAlertBody": "Please contact your account owner to change the billing settings for your account.",
+  "checkoutSuccessTitle": "Done! You're all set.",
+  "checkoutSuccessDescription": "Thank you for subscribing, we have successfully processed your subscription! A confirmation email will be sent to {{ customerEmail }}.",
+  "checkoutSuccessBackButton": "Proceed to App",
+  "cannotManageBillingAlertTitle": "You cannot manage billing",
+  "cannotManageBillingAlertDescription": "You do not have permissions to manage billing. Please contact your account owner.",
+  "manageTeamPlan": "Manage your Team Plan",
+  "manageTeamPlanDescription": "Choose a plan that fits your team's needs. You can upgrade or downgrade your plan at any time.",
+  "basePlan": "Base Plan",
+  "billingInterval": {
+    "label": "Choose your billing interval",
+    "month": "Billed monthly",
+    "year": "Billed yearly"
+  },
+  "custom": "Custom Plan",
+  "lifetime": "Lifetime",
+  "trialPeriod": "{{period}} day trial",
+  "perPeriod": "per {{period}}",
+  "redirectingToPayment": "Redirecting to checkout. Please wait...",
+  "proceedToPayment": "Proceed to Payment",
+  "startTrial": "Start Trial",
+  "perTeamMember": "Per team member",
+  "perUnit": "Per {{unit}} usage",
+  "teamMembers": "Team Members",
+  "includedUpTo": "Up to {{upTo}} {{unit}} included in the plan",
+  "fromPreviousTierUpTo": "for each {{unit}} for the next {{ upTo }} {{ unit }}",
+  "andAbove": "above {{ previousTier }} {{ unit }}",
+  "setupFee": "plus a {{ setupFee }} setup fee",
+  "perUnitIncluded": "({{included}} included)",
+  "featuresLabel": "Features",
+  "detailsLabel": "Details",
+  "planPickerLabel": "Pick your preferred plan",
+  "planCardLabel": "Manage your Plan",
+  "planPickerAlertErrorTitle": "Error requesting checkout",
+  "planPickerAlertErrorDescription": "There was an error requesting checkout. Please try again later.",
+  "subscriptionCancelled": "Subscription Cancelled",
+  "cancelSubscriptionDate": "Your subscription will be cancelled at the end of the period",
+  "status": {
+    "free": {
+      "badge": "Free Plan",
+      "heading": "You are currently on the Free Plan",
+      "description": "You're on a free plan. You can upgrade to a paid plan at any time."
+    },
+    "active": {
+      "badge": "Active",
+      "heading": "Your subscription is active",
+      "description": "Your subscription is active. You can manage your subscription and billing in the Customer Portal."
+    },
+    "trialing": {
+      "badge": "Trial",
+      "heading": "You're on a trial",
+      "description": "Your trial will end on {{- trialEndDate }}."
+    },
+    "past_due": {
+      "badge": "Past Due",
+      "heading": "Your invoice is past due",
+      "description": "Your invoice is past due. Please update your payment method."
+    },
+    "canceled": {
+      "badge": "Canceled",
+      "heading": "Your subscription is canceled",
+      "description": "Your subscription is canceled. It is scheduled to end at end of the billing period."
+    },
+    "unpaid": {
+      "badge": "Unpaid",
+      "heading": "Your invoice is unpaid",
+      "description": "Your invoice is unpaid. Please update your payment method."
+    },
+    "incomplete": {
+      "badge": "Incomplete",
+      "heading": "We're waiting for your payment",
+      "description": "We're waiting for your payment to go through. Please bear with us."
+    },
+    "incomplete_expired": {
+      "badge": "Expired",
+      "heading": "Your payment has expired",
+      "description": "Your payment has expired. Please update your payment method."
+    },
+    "paused": {
+      "badge": "Paused",
+      "heading": "Your subscription is paused",
+      "description": "Your subscription is paused. You can resume it at any time."
+    },
+    "succeeded": {
+      "badge": "Succeeded",
+      "heading": "Your payment was successful",
+      "description": "Your payment was successful. Thank you for subscribing!"
+    },
+    "pending": {
+      "badge": "Pending",
+      "heading": "Your payment is pending",
+      "description": "Your payment is pending. Please bear with us."
+    },
+    "failed": {
+      "badge": "Failed",
+      "heading": "Your payment failed",
+      "description": "Your payment failed. Please update your payment method."
+    }
+  }
+}

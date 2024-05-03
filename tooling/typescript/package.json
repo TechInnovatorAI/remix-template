@@ -1,0 +1,14 @@
+{
+  "name": "@kit/tsconfig",
+  "private": true,
+  "version": "0.1.0",
+  "files": [
+    "base.json"
+  ],
+  "dependencies": {
+    "@tanstack/react-table": "^8.16.0",
+    "next": "14.2.3",
+    "tailwind-merge": "^2.3.0",
+    "zod": "^3.23.5"
+  }
+}
