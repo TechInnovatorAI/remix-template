@@ -1,4 +1,4 @@
-'use client';
+import { useMemo } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useSearchParams } from '@remix-run/react';
@@ -35,7 +35,6 @@ import {
 import { AdminDeleteAccountDialog } from './admin-delete-account-dialog';
 import { AdminDeleteUserDialog } from './admin-delete-user-dialog';
 import { AdminImpersonateUserDialog } from './admin-impersonate-user-dialog';
-import {useMemo} from "react";
 
 type Account = Database['public']['Tables']['accounts']['Row'];
 

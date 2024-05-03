@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFetcher } from '@remix-run/react';
 import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import {
@@ -34,8 +37,20 @@ export function AdminImpersonateUserDialog(
     userId: string;
   }>,
 ) {
+  const [tokens, setTokens] = useState<{
+    accessToken: string;
+    refreshToken: string;
+  }>();
+
   const form = useForm({
-    resolver: zodResolver(ImpersonateUserSchema),
+    resolver: zodResolver(
+      z.object({
+        userId: z.string(),
+        confirmation: z.string().refine((data) => data === 'CONFIRM', {
+          message: 'You must type CONFIRM to confirm',
+        }),
+      }),
+    ),
     defaultValues: {
       userId: props.userId,
       confirmation: '',
@@ -43,13 +58,15 @@ export function AdminImpersonateUserDialog(
   });
 
   const fetcher = useFetcher<{
-    tokens: {
-      accessToken: string;
-      refreshToken: string;
-    };
+    accessToken: string;
+    refreshToken: string;
   }>();
 
-  const tokens = fetcher.data?.tokens;
+  useEffect(() => {
+    if (fetcher.data) {
+      setTokens(fetcher.data);
+    }
+  }, [fetcher.data]);
 
   if (tokens) {
     return (
@@ -79,10 +96,16 @@ export function AdminImpersonateUserDialog(
           <form
             className={'flex flex-col space-y-8'}
             onSubmit={form.handleSubmit((data) => {
-              fetcher.submit({
-                intent: 'impersonate-user',
-                payload: data,
-              });
+              fetcher.submit(
+                {
+                  intent: 'impersonate-user',
+                  payload: data,
+                } satisfies z.infer<typeof ImpersonateUserSchema>,
+                {
+                  method: 'POST',
+                  encType: 'application/json',
+                },
+              );
             })}
           >
             <FormField

@@ -1,7 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import {
   AlertDialog,
@@ -25,7 +27,6 @@ import {
 } from '@kit/ui/form';
 import { Input } from '@kit/ui/input';
 
-import { banUserAction } from '../lib/server/admin-actions.server';
 import { BanUserSchema } from '../lib/server/schema/admin-actions.schema';
 
 export function AdminBanUserDialog(
@@ -33,8 +34,19 @@ export function AdminBanUserDialog(
     userId: string;
   }>,
 ) {
+  const fetcher = useFetcher<{
+    success: boolean;
+  }>();
+
   const form = useForm({
-    resolver: zodResolver(BanUserSchema),
+    resolver: zodResolver(
+      z.object({
+        userId: z.string(),
+        confirmation: z.string().refine((data) => data === 'CONFIRM', {
+          message: 'You must type CONFIRM to confirm',
+        }),
+      }),
+    ),
     defaultValues: {
       userId: props.userId,
       confirmation: '',
@@ -58,7 +70,16 @@ export function AdminBanUserDialog(
           <form
             className={'flex flex-col space-y-8'}
             onSubmit={form.handleSubmit((data) => {
-              return banUserAction(data);
+              fetcher.submit(
+                {
+                  intent: 'ban-user',
+                  payload: data,
+                } satisfies z.infer<typeof BanUserSchema>,
+                {
+                  method: 'POST',
+                  encType: 'application/json',
+                },
+              );
             })}
           >
             <FormField

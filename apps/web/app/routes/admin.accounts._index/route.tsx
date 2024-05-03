@@ -15,6 +15,12 @@ import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client'
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PageBody, PageHeader } from '@kit/ui/page';
 
+export const meta = [
+  {
+    title: 'Admin | Accounts',
+  },
+];
+
 export const loader = async function (args: LoaderFunctionArgs) {
   const client = getSupabaseServerClient(args.request);
   await getSuperAdminUser(client);

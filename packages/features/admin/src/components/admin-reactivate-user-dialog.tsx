@@ -1,7 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import {
   AlertDialog,
@@ -25,7 +27,6 @@ import {
 } from '@kit/ui/form';
 import { Input } from '@kit/ui/input';
 
-import { reactivateUserAction } from '../lib/server/admin-actions.server';
 import { ReactivateUserSchema } from '../lib/server/schema/admin-actions.schema';
 
 export function AdminReactivateUserDialog(
@@ -33,8 +34,17 @@ export function AdminReactivateUserDialog(
     userId: string;
   }>,
 ) {
+  const fetcher = useFetcher();
+
   const form = useForm({
-    resolver: zodResolver(ReactivateUserSchema),
+    resolver: zodResolver(
+      z.object({
+        userId: z.string(),
+        confirmation: z.string().refine((data) => data === 'CONFIRM', {
+          message: 'You must type CONFIRM to confirm',
+        }),
+      }),
+    ),
     defaultValues: {
       userId: props.userId,
       confirmation: '',
@@ -58,7 +68,16 @@ export function AdminReactivateUserDialog(
           <form
             className={'flex flex-col space-y-8'}
             onSubmit={form.handleSubmit((data) => {
-              return reactivateUserAction(data);
+              fetcher.submit(
+                {
+                  intent: 'reactivate-user',
+                  payload: data,
+                } satisfies z.infer<typeof ReactivateUserSchema>,
+                {
+                  method: 'POST',
+                  encType: 'application/json',
+                },
+              );
             })}
           >
             <FormField
