@@ -9,27 +9,15 @@ import { Database } from '@kit/supabase/database';
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
-import { DeletePersonalAccountSchema } from '../schema/delete-personal-account.schema';
 import { createDeletePersonalAccountService } from './services/delete-personal-account.service';
 
 const emailSettings = getEmailSettingsFromEnvironment();
 
 export const deletePersonalAccountAction = async ({
-  formData,
   client,
 }: {
-  formData: FormData;
   client: SupabaseClient<Database>;
 }) => {
-  // validate the form data
-  const { success } = DeletePersonalAccountSchema.safeParse(
-    Object.fromEntries(formData.entries()),
-  );
-
-  if (!success) {
-    throw new Error('Invalid form data');
-  }
-
   const auth = await requireUser(client);
 
   if (!auth.data) {

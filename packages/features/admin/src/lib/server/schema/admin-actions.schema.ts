@@ -13,11 +13,11 @@ export const ReactivateUserSchema = UserIdSchema;
 export const ImpersonateUserSchema = UserIdSchema;
 export const DeleteUserSchema = UserIdSchema;
 
-const Payload = ConfirmationSchema.extend({
+export const DeleteAccountForm = ConfirmationSchema.extend({
   accountId: z.string().uuid(),
 });
 
 export const DeleteAccountSchema = z.object({
   intent: z.literal('delete-team-account'),
-  payload: Payload,
+  payload: DeleteAccountForm,
 });

@@ -1,6 +1,13 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from '@remix-run/node';
 
+import { deletePersonalAccountAction } from '@kit/accounts/actions';
 import { PersonalAccountSettingsContainer } from '@kit/accounts/personal-account-settings';
+import { DeletePersonalAccountSchema } from '@kit/accounts/schema';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
@@ -16,6 +23,8 @@ const features = {
 const paths = {
   callback: pathsConfig.auth.callback + `?next=${pathsConfig.app.accountHome}`,
 };
+
+const ActionsSchema = DeletePersonalAccountSchema;
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
@@ -50,3 +59,15 @@ export default function PersonalAccountSettingsPage() {
     </>
   );
 }
+
+export const action = async (args: ActionFunctionArgs) => {
+  const json = ActionsSchema.parse(await args.request.json());
+  const client = getSupabaseServerClient(args.request);
+
+  switch (json.intent) {
+    case 'delete-account':
+      return deletePersonalAccountAction({ client });
+  }
+
+  return new Response('Invalid action', { status: 400 });
+};

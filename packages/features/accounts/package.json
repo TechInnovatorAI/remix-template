@@ -14,6 +14,7 @@
     "./personal-account-settings": "./src/components/personal-account-settings/index.ts",
     "./hooks/*": "./src/hooks/*.ts",
     "./api": "./src/server/api.ts",
+    "./schema": "./src/schema/index.ts",
     "./actions": "./src/server/personal-account-actions.server.ts"
   },
   "dependencies": {

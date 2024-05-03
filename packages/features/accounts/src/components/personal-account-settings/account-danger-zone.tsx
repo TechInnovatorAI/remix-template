@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
 
 import { ErrorBoundary } from '@kit/monitoring/components';
@@ -16,13 +17,17 @@ import {
   AlertDialogTrigger,
 } from '@kit/ui/alert-dialog';
 import { Button } from '@kit/ui/button';
-import { Form, FormControl, FormItem, FormLabel } from '@kit/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@kit/ui/form';
 import { Input } from '@kit/ui/input';
 import { Trans } from '@kit/ui/trans';
 
-import { DeletePersonalAccountSchema } from '../../schema/delete-personal-account.schema';
-import { deletePersonalAccountAction } from '../../server/personal-accounts-actions.server';
-import {useFetcher} from "@remix-run/react";
+import { DeleteAccountFormSchema } from '../../schema/delete-personal-account.schema';
 
 export function AccountDangerZone() {
   return (
@@ -70,14 +75,14 @@ function DeleteAccountModal() {
 
 function DeleteAccountForm() {
   const form = useForm({
-    resolver: zodResolver(DeletePersonalAccountSchema),
+    resolver: zodResolver(DeleteAccountFormSchema),
     defaultValues: {
       confirmation: '',
-      intent: 'delete-account'
     },
   });
 
   const fetcher = useFetcher();
+  const pending = fetcher.state === 'submitting';
 
   return (
     <Form {...form}>
@@ -85,10 +90,16 @@ function DeleteAccountForm() {
         data-test={'delete-account-form'}
         className={'flex flex-col space-y-4'}
         onSubmit={form.handleSubmit((data) => {
-          fetcher.submit(data, {
-            encType: 'application/json',
-            method: 'POST',
-          });
+          fetcher.submit(
+            {
+              intent: 'delete-account',
+              payload: data,
+            },
+            {
+              encType: 'application/json',
+              method: 'POST',
+            },
+          );
         })}
       >
         <div className={'flex flex-col space-y-6'}>
@@ -106,24 +117,31 @@ function DeleteAccountForm() {
             </div>
           </div>
 
-          <FormItem>
-            <FormLabel>
-              <Trans i18nKey={'account:deleteProfileConfirmationInputLabel'} />
-            </FormLabel>
+          <FormField
+            name={'confirmation'}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <Trans
+                    i18nKey={'account:deleteProfileConfirmationInputLabel'}
+                  />
+                </FormLabel>
 
-            <FormControl>
-              <Input
-                autoComplete={'off'}
-                data-test={'delete-account-input-field'}
-                required
-                name={'confirmation'}
-                type={'text'}
-                className={'w-full'}
-                placeholder={''}
-                pattern={`DELETE`}
-              />
-            </FormControl>
-          </FormItem>
+                <FormControl>
+                  <Input
+                    autoComplete={'off'}
+                    data-test={'delete-account-input-field'}
+                    required
+                    type={'text'}
+                    className={'w-full'}
+                    placeholder={''}
+                    pattern={`DELETE`}
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
         </div>
 
         <AlertDialogFooter>
@@ -131,28 +149,22 @@ function DeleteAccountForm() {
             <Trans i18nKey={'common:cancel'} />
           </AlertDialogCancel>
 
-          <DeleteAccountSubmitButton />
+          <Button
+            data-test={'confirm-delete-account-button'}
+            type={'submit'}
+            disabled={pending}
+            name={'action'}
+            variant={'destructive'}
+          >
+            {pending ? (
+              <Trans i18nKey={'account:deletingAccount'} />
+            ) : (
+              <Trans i18nKey={'account:deleteAccount'} />
+            )}
+          </Button>
         </AlertDialogFooter>
       </form>
     </Form>
-  );
-}
-
-function DeleteAccountSubmitButton({ pending }: { pending: boolean }) {
-  return (
-    <Button
-      data-test={'confirm-delete-account-button'}
-      type={'submit'}
-      disabled={pending}
-      name={'action'}
-      variant={'destructive'}
-    >
-      {pending ? (
-        <Trans i18nKey={'account:deletingAccount'} />
-      ) : (
-        <Trans i18nKey={'account:deleteAccount'} />
-      )}
-    </Button>
   );
 }
 

@@ -25,7 +25,7 @@ import {
 import { Input } from '@kit/ui/input';
 
 import { deleteAccountAction } from '../lib/server/admin-server-actions';
-import { DeleteAccountSchema } from '../lib/server/schema/admin-actions.schema';
+import { DeleteAccountForm } from '../lib/server/schema/admin-actions.schema';
 
 export function AdminDeleteAccountDialog(
   props: React.PropsWithChildren<{
@@ -33,7 +33,7 @@ export function AdminDeleteAccountDialog(
   }>,
 ) {
   const form = useForm({
-    resolver: zodResolver(DeleteAccountSchema),
+    resolver: zodResolver(DeleteAccountForm),
     defaultValues: {
       accountId: props.accountId,
       confirmation: '',
