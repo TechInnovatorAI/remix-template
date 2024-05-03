@@ -1,8 +1,5 @@
-'use client';
-
-import { useState } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useFetcher } from '@remix-run/react';
 import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
@@ -30,7 +27,6 @@ import {
 import { Input } from '@kit/ui/input';
 import { LoadingOverlay } from '@kit/ui/loading-overlay';
 
-import { impersonateUserAction } from '../lib/server/admin-server-actions';
 import { ImpersonateUserSchema } from '../lib/server/schema/admin-actions.schema';
 
 export function AdminImpersonateUserDialog(
@@ -46,10 +42,14 @@ export function AdminImpersonateUserDialog(
     },
   });
 
-  const [tokens, setTokens] = useState<{
-    accessToken: string;
-    refreshToken: string;
+  const fetcher = useFetcher<{
+    tokens: {
+      accessToken: string;
+      refreshToken: string;
+    };
   }>();
+
+  const tokens = fetcher.data?.tokens;
 
   if (tokens) {
     return (
@@ -78,10 +78,11 @@ export function AdminImpersonateUserDialog(
         <Form {...form}>
           <form
             className={'flex flex-col space-y-8'}
-            onSubmit={form.handleSubmit(async (data) => {
-              const tokens = await impersonateUserAction(data);
-
-              setTokens(tokens);
+            onSubmit={form.handleSubmit((data) => {
+              fetcher.submit({
+                intent: 'impersonate-user',
+                payload: data,
+              });
             })}
           >
             <FormField

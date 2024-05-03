@@ -1,19 +1,14 @@
-
-
-import { cache } from 'react';
-
-import { getSupabaseServerComponentClient } from '@kit/supabase/server-component-client';
+import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
 import { createAdminDashboardService } from '../services/admin-dashboard.service';
 
 /**
  * @name loadAdminDashboard
  * @description Load the admin dashboard data.
- * @param params
  */
-export const loadAdminDashboard = cache(() => {
-  const client = getSupabaseServerComponentClient({ admin: true });
+export const loadAdminDashboard = () => {
+  const client = getSupabaseServerAdminClient();
   const service = createAdminDashboardService(client);
 
   return service.getDashboardData();
-});
+};

@@ -1,7 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import {
   AlertDialog,
@@ -24,14 +26,18 @@ import {
 } from '@kit/ui/form';
 import { Input } from '@kit/ui/input';
 
-import { deleteAccountAction } from '../lib/server/admin-server-actions';
-import { DeleteAccountForm } from '../lib/server/schema/admin-actions.schema';
+import {
+  DeleteAccountForm,
+  DeleteAccountSchema,
+} from '../lib/server/schema/admin-actions.schema';
 
 export function AdminDeleteAccountDialog(
   props: React.PropsWithChildren<{
     accountId: string;
   }>,
 ) {
+  const fetcher = useFetcher();
+
   const form = useForm({
     resolver: zodResolver(DeleteAccountForm),
     defaultValues: {
@@ -59,7 +65,16 @@ export function AdminDeleteAccountDialog(
           <form
             className={'flex flex-col space-y-8'}
             onSubmit={form.handleSubmit((data) => {
-              return deleteAccountAction(data);
+              return fetcher.submit(
+                {
+                  intent: 'delete-team-account',
+                  payload: data,
+                } satisfies z.infer<typeof DeleteAccountSchema>,
+                {
+                  method: 'POST',
+                  encType: 'application/json',
+                },
+              );
             })}
           >
             <FormField

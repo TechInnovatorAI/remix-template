@@ -1,16 +1,15 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@kit/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@kit/ui/card';
 
-import { loadAdminDashboard } from '../lib/server/loaders/admin-dashboard.loader';
-
-export async function AdminDashboard() {
-  const data = await loadAdminDashboard();
-
+export function AdminDashboard({
+  data,
+}: {
+  data: {
+    accounts: number;
+    teamAccounts: number;
+    subscriptions: number;
+    trials: number;
+  };
+}) {
   return (
     <div
       className={

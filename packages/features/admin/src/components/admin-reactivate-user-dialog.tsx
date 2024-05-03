@@ -25,7 +25,7 @@ import {
 } from '@kit/ui/form';
 import { Input } from '@kit/ui/input';
 
-import { reactivateUserAction } from '../lib/server/admin-server-actions';
+import { reactivateUserAction } from '../lib/server/admin-actions.server';
 import { ReactivateUserSchema } from '../lib/server/schema/admin-actions.schema';
 
 export function AdminReactivateUserDialog(

@@ -25,7 +25,7 @@ import {
 } from '@kit/ui/form';
 import { Input } from '@kit/ui/input';
 
-import { banUserAction } from '../lib/server/admin-server-actions';
+import { banUserAction } from '../lib/server/admin-actions.server';
 import { BanUserSchema } from '../lib/server/schema/admin-actions.schema';
 
 export function AdminBanUserDialog(

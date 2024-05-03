@@ -32,7 +32,7 @@ export class AdminDashboardService {
           throw new Error(response.error.message);
         }
 
-        return response.count;
+        return response.count ?? 0;
       });
 
     const trialsPromise = this.client
@@ -44,7 +44,7 @@ export class AdminDashboardService {
           throw new Error(response.error.message);
         }
 
-        return response.count;
+        return response.count ?? 0;
       });
 
     const accountsPromise = this.client
@@ -56,7 +56,7 @@ export class AdminDashboardService {
           throw new Error(response.error.message);
         }
 
-        return response.count;
+        return response.count ?? 0;
       });
 
     const teamAccountsPromise = this.client
@@ -68,7 +68,7 @@ export class AdminDashboardService {
           throw new Error(response.error.message);
         }
 
-        return response.count;
+        return response.count ?? 0;
       });
 
     const [subscriptions, trials, accounts, teamAccounts] = await Promise.all([

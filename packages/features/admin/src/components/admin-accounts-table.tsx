@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Link, useSearchParams } from '@remix-run/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { EllipsisVertical } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -34,7 +35,7 @@ import {
 import { AdminDeleteAccountDialog } from './admin-delete-account-dialog';
 import { AdminDeleteUserDialog } from './admin-delete-user-dialog';
 import { AdminImpersonateUserDialog } from './admin-impersonate-user-dialog';
-import {Link, useSearchParams} from "@remix-run/react";
+import {useMemo} from "react";
 
 type Account = Database['public']['Tables']['accounts']['Row'];
 
@@ -54,6 +55,8 @@ export function AdminAccountsTable(
     };
   }>,
 ) {
+  const columns = useMemo(() => getColumns(), []);
+
   return (
     <div className={'flex flex-col space-y-4'}>
       <AccountsTableFilters filters={props.filters} />
@@ -63,7 +66,7 @@ export function AdminAccountsTable(
         pageIndex={props.page - 1}
         pageCount={props.pageCount}
         data={props.data}
-        columns={getColumns()}
+        columns={columns}
       />
     </div>
   );

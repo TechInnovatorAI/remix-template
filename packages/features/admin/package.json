@@ -32,7 +32,10 @@
   },
   "exports": {
     ".": "./src/index.ts",
-    "./components/*": "./src/components/*.tsx"
+    "./components/*": "./src/components/*.tsx",
+    "./api": "./src/lib/server/api.server.ts",
+    "./schema": "./src/lib/server/schema/admin-actions.schema.ts",
+    "./actions": "./src/lib/server/admin-actions.server.ts"
   },
   "eslintConfig": {
     "root": true,

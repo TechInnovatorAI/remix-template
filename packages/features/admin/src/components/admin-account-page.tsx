@@ -8,7 +8,6 @@ import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
 import { If } from '@kit/ui/if';
 import { ProfileAvatar } from '@kit/ui/profile-avatar';
-import { Separator } from '@kit/ui/separator';
 import {
   Table,
   TableBody,

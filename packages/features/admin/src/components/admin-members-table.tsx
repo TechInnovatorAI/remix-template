@@ -1,11 +1,11 @@
 'use client';
 
+import { Link } from '@remix-run/react';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { Database } from '@kit/supabase/database';
 import { DataTable } from '@kit/ui/enhanced-data-table';
 import { ProfileAvatar } from '@kit/ui/profile-avatar';
-import {Link} from "@remix-run/react";
 
 type Memberships =
   Database['public']['Functions']['get_account_members']['Returns'][number];
