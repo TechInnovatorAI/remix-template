@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@remix-run/react';
 
 import { If } from '@kit/ui/if';
 import { cn } from '@kit/ui/utils';
@@ -18,19 +18,19 @@ export function DocsPageLink({
   return (
     <Link
       className={cn(
-        `flex w-full items-center space-x-8 rounded-xl p-6 font-medium text-current ring-2 ring-muted transition-all hover:ring-primary`,
+        `ring-muted hover:ring-primary flex w-full items-center space-x-8 rounded-xl p-6 font-medium text-current ring-2 transition-all`,
         {
           'justify-start': before,
           'justify-end self-end': after,
         },
       )}
-      href={page.url}
+      to={page.url}
     >
       <If condition={before}>{(node) => <>{node}</>}</If>
 
       <span className={'flex flex-col space-y-1.5'}>
         <span
-          className={'text-xs font-semibold uppercase text-muted-foreground'}
+          className={'text-muted-foreground text-xs font-semibold uppercase'}
         >
           {before ? `Previous` : ``}
           {after ? `Next` : ``}

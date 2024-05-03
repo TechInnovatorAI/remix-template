@@ -1,20 +1,22 @@
-
+import { Link } from '@remix-run/react';
 import { ChevronRight } from 'lucide-react';
 
 import { Trans } from '@kit/ui/trans';
-import {Link} from "@remix-run/react";
 
-export const DocsCard: React.FC<
-  React.PropsWithChildren<{
-    title: string;
-    subtitle?: string | null;
-    link: { url: string; label?: string };
-  }>
-> = ({ title, subtitle, children, link }) => {
+export function DocsCard({
+  title,
+  subtitle,
+  children,
+  link,
+}: React.PropsWithChildren<{
+  title: string;
+  subtitle?: string | null;
+  link: { url: string; label?: string };
+}>) {
   return (
     <div className="flex flex-col">
       <div
-        className={`flex grow flex-col space-y-2.5 border bg-background p-6
+        className={`bg-background flex grow flex-col space-y-2.5 border p-6
         ${link ? 'rounded-t-2xl border-b-0' : 'rounded-2xl'}`}
       >
         <h3 className="mt-0 text-lg font-semibold dark:text-white">
@@ -22,7 +24,7 @@ export const DocsCard: React.FC<
         </h3>
 
         {subtitle && (
-          <div className="text-sm text-muted-foreground">
+          <div className="text-muted-foreground text-sm">
             <p dangerouslySetInnerHTML={{ __html: subtitle }}></p>
           </div>
         )}
@@ -31,7 +33,7 @@ export const DocsCard: React.FC<
       </div>
 
       {link && (
-        <div className="rounded-b-2xl border bg-muted p-6 py-4 dark:bg-background">
+        <div className="bg-muted dark:bg-background rounded-b-2xl border p-6 py-4">
           <span className={'flex items-center space-x-2'}>
             <Link
               className={'text-sm font-medium hover:underline'}
@@ -46,4 +48,4 @@ export const DocsCard: React.FC<
       )}
     </div>
   );
-};
+}

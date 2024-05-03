@@ -92,7 +92,7 @@ export default function Index() {
             width={1689}
             height={1057}
             src={`/images/dashboard-demo.webp`}
-            alt={`App Image`}
+            alt={`App`}
           />
         </div>
       </div>

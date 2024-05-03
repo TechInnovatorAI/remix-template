@@ -2,10 +2,13 @@ import { Link } from '@remix-run/react';
 
 import { cn } from '@kit/ui/utils';
 
-const LogoImage: React.FC<{
+function LogoImage({
+  className,
+  width = 105,
+}: {
   className?: string;
   width?: number;
-}> = ({ className, width = 105 }) => {
+}) {
   return (
     <svg
       width={width}
@@ -21,16 +24,20 @@ const LogoImage: React.FC<{
       />
     </svg>
   );
-};
+}
 
-export const AppLogo: React.FC<{
+export function AppLogo({
+  href,
+  label,
+  className,
+}: {
   href?: string;
   className?: string;
   label?: string;
-}> = ({ href, label, className }) => {
+}) {
   return (
     <Link aria-label={label ?? 'Home Page'} to={href ?? '/'}>
       <LogoImage className={className} />
     </Link>
   );
-};
+}

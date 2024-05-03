@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { useNavigate } from '@remix-run/react';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -30,7 +31,6 @@ import {
 } from '@kit/ui/input-otp';
 import { Spinner } from '@kit/ui/spinner';
 import { Trans } from '@kit/ui/trans';
-import {useNavigate} from "@remix-run/react";
 
 export function MultiFactorChallengeContainer({
   paths,
@@ -43,8 +43,8 @@ export function MultiFactorChallengeContainer({
   const verifyMFAChallenge = useVerifyMFAChallenge();
 
   const onSuccess = useCallback(() => {
-    navigate(paths.redirectPath, {replace: true});
-  }, [router, paths.redirectPath]);
+    navigate(paths.redirectPath, { replace: true });
+  }, [navigate, paths.redirectPath]);
 
   const verificationCodeForm = useForm({
     resolver: zodResolver(

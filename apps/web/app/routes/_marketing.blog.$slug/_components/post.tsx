@@ -9,10 +9,13 @@ const ContentRenderer = lazy(() => {
   return import('@kit/cms').then((mod) => ({ default: mod.ContentRenderer }));
 });
 
-export const Post: React.FC<{
+export function Post({
+  post,
+  content,
+}: {
   post: Cms.ContentItem;
   content: unknown;
-}> = ({ post, content }) => {
+}) {
   return (
     <div>
       <PostHeader post={post} />
@@ -24,4 +27,4 @@ export const Post: React.FC<{
       </div>
     </div>
   );
-};
+}

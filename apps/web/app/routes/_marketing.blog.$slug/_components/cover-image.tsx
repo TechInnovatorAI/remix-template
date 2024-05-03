@@ -6,20 +6,16 @@ type Props = {
   className?: string;
 };
 
-export const CoverImage: React.FC<Props> = ({
-  title,
-  src,
-  className,
-}) => {
+export function CoverImage({ title, src, className }: Props) {
   return (
     <img
       className={cn(
         'duration-250 block rounded-xl object-cover' +
           ' transition-all hover:opacity-90',
-          className
+        className,
       )}
       src={src}
-      alt={`Cover Image for ${title}`}
+      alt={`Cover for ${title}`}
     />
   );
-};
+}

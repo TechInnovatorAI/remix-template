@@ -5,9 +5,7 @@ import { cn } from '@kit/ui/utils';
 import { CoverImage } from './cover-image';
 import { DateFormatter } from './date-formatter';
 
-export const PostHeader: React.FC<{
-  post: Cms.ContentItem;
-}> = ({ post }) => {
+export function PostHeader({ post }: { post: Cms.ContentItem }) {
   const { title, publishedAt, description, image } = post;
 
   return (
@@ -34,14 +32,10 @@ export const PostHeader: React.FC<{
       <If condition={image}>
         {(imageUrl) => (
           <div className="relative mx-auto mt-8 flex h-[378px] w-full max-w-3xl justify-center">
-            <CoverImage
-              className="rounded-md"
-              title={title}
-              src={imageUrl}
-            />
+            <CoverImage className="rounded-md" title={title} src={imageUrl} />
           </div>
         )}
       </If>
     </div>
   );
-};
+}

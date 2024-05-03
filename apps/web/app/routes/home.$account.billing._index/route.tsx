@@ -113,7 +113,7 @@ export default function TeamAccountBillingPage() {
         <BillingPortalCard />
       </form>
     );
-  }, [accountId, accountSlug, canManageBilling, customerId]);
+  }, [accountId, accountSlug, canManageBilling, customerId, fetcher]);
 
   return (
     <>
