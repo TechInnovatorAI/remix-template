@@ -263,6 +263,10 @@ function LeaveTeamContainer(props: {
           message: 'Confirmation required to leave team',
           path: ['confirmation'],
         }),
+        accountId: z.string().refine((value) => value === props.account.id, {
+          message: 'Account ID does not match',
+          path: ['accountId'],
+        }),
       }),
     ),
     defaultValues: {
@@ -320,6 +324,9 @@ function LeaveTeamContainer(props: {
                       accountId: data.accountId,
                       confirmation: data.confirmation,
                     },
+                  }, {
+                    method: 'POST',
+                    encType: 'application/json',
                   });
                 })}
               >
