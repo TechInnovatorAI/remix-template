@@ -61,7 +61,7 @@ export function RootErrorBoundary() {
                 {status === 404 ? (
                   <Trans i18nKey={'common:pageNotFoundSubHeading'} />
                 ) : (
-                  <Trans i18nKey={'common:genericErrorSubheading'} />
+                  <Trans i18nKey={'common:genericErrorSubHeading'} />
                 )}
               </p>
             </div>
