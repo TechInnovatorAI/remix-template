@@ -1,6 +1,8 @@
+import { useMemo } from 'react';
+
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { Form, json, useLoaderData } from '@remix-run/react';
+import { json, useFetcher, useLoaderData } from '@remix-run/react';
 
 import {
   BillingPortalCard,
@@ -21,7 +23,6 @@ import { TeamAccountLayoutPageHeader } from '~/routes/home.$account/_components/
 import { loadTeamWorkspace } from '~/routes/home.$account/_lib/team-account-workspace-loader.server';
 
 import { loadTeamAccountBillingPage } from './_lib/load-team-account-billing-page.server';
-import {useMemo} from "react";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
@@ -67,6 +68,8 @@ export default function TeamAccountBillingPage() {
   const canManageBilling =
     workspace.account.permissions.includes('billing.manage');
 
+  const fetcher = useFetcher();
+
   const Checkout = useMemo(() => {
     if (!canManageBilling) {
       return <CannotManageBillingAlert />;
@@ -87,13 +90,28 @@ export default function TeamAccountBillingPage() {
     }
 
     return (
-      <Form method={'POST'} action={'/api/billing/customer-portal'}>
-        <input type="hidden" name={'intent'} value={'account-billing-portal'} />
-        <input type="hidden" name={'payload.accountId'} value={accountId} />
-        <input type="hidden" name={'payload.slug'} value={accountSlug} />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
 
+          fetcher.submit(
+            {
+              intent: 'account-billing-portal',
+              payload: {
+                accountId,
+                slug: accountSlug,
+              },
+            },
+            {
+              action: '/api/billing/customer-portal',
+              method: 'POST',
+              encType: 'application/json',
+            },
+          );
+        }}
+      >
         <BillingPortalCard />
-      </Form>
+      </form>
     );
   }, [accountId, accountSlug, canManageBilling, customerId]);
 
@@ -111,14 +129,7 @@ export default function TeamAccountBillingPage() {
             'mx-auto max-w-2xl': data,
           })}
         >
-          <If
-            condition={data}
-            fallback={
-              <div>
-                {Checkout}
-              </div>
-            }
-          >
+          <If condition={data} fallback={<div>{Checkout}</div>}>
             {(data) => {
               if ('active' in data) {
                 return (

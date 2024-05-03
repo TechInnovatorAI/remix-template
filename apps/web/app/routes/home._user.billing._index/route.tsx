@@ -99,7 +99,7 @@ export default function PersonalAccountBillingPage() {
 
 function CustomerBillingPortalForm() {
   return (
-    <Form action={'/api/billing/customer-portal'}>
+    <Form method={'POST'} action={'/api/billing/customer-portal'}>
       <input type="hidden" name={'intent'} value={'personal-account-billing-portal'} />
 
       <BillingPortalCard />

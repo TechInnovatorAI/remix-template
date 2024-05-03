@@ -1,20 +1,10 @@
 import { ActionFunctionArgs } from '@remix-run/node';
-import { json } from '@remix-run/react';
+import { json, redirect } from '@remix-run/react';
 import { z } from 'zod';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { TeamBillingPortalSchema } from '~/lib/billing/schema/team-billing.schema';
-
-const Schema = z.union([
-  z.object({
-    intent: z.literal('account-billing-portal'),
-    payload: TeamBillingPortalSchema,
-  }),
-  z.object({
-    intent: z.literal('personal-account-billing-portal'),
-  }),
-]);
 
 /**
  * @name action
@@ -22,8 +12,22 @@ const Schema = z.union([
  * @param args
  */
 export async function action(args: ActionFunctionArgs) {
-  const formData = await args.request.formData();
-  const data = Schema.parse(Object.fromEntries(formData));
+  let data;
+
+  if (args.request.headers.get('Content-Type')?.includes('application/json')) {
+    data = z
+      .object({
+        intent: z.literal('account-billing-portal'),
+        payload: TeamBillingPortalSchema,
+      })
+      .parse(await args.request.json());
+  } else {
+    data = z
+      .object({
+        intent: z.literal('personal-account-billing-portal'),
+      })
+      .parse(Object.fromEntries(await args.request.formData()));
+  }
 
   const client = getSupabaseServerClient(args.request);
 
@@ -35,8 +39,9 @@ export async function action(args: ActionFunctionArgs) {
         );
 
         const service = createTeamBillingService(client);
+        const url = await service.createBillingPortalSession(data.payload);
 
-        return service.createBillingPortalSession(data.payload);
+        return redirect(url);
       }
 
       case 'personal-account-billing-portal': {
@@ -45,8 +50,9 @@ export async function action(args: ActionFunctionArgs) {
         );
 
         const service = createUserBillingService(client);
+        const url = await service.createBillingPortalSession();
 
-        return service.createBillingPortalSession();
+        return redirect(url);
       }
     }
   } catch (e) {

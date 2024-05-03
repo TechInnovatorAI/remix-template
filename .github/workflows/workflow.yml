@@ -105,7 +105,7 @@ jobs:
 
       - name: Stripe CLI
         run: |
-          docker run --add-host=host.docker.internal:host-gateway --rm -it --name=stripe -d stripe/stripe-cli:latest listen --forward-to http://host.docker.internal:3000/api/billing/webhook --skip-verify --api-key "$STRIPE_SECRET_KEY" --log-level debug &
+          docker run --add-host=host.docker.internal:host-gateway --rm -it --name=stripe -d stripe/stripe-cli:latest listen --forward-to http://host.docker.internal:5173/api/billing/webhook --skip-verify --api-key "$STRIPE_SECRET_KEY" --log-level debug &
 
       - name: Production Build (test env)
         run: pnpm --filter web build:test

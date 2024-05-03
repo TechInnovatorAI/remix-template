@@ -20,7 +20,7 @@ test.describe('Team Accounts', () => {
     await teamAccounts.updateName(teamName);
 
     // the slug should be updated to match the new team name
-    await page.waitForURL(`http://localhost:3000/home/${slug}/settings`);
+    await page.waitForURL(`http://localhost:5173/home/${slug}/settings`);
 
     await teamAccounts.openAccountsSelector();
 

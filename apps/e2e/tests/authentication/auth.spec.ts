@@ -26,9 +26,9 @@ test.describe('Auth flow', () => {
 
     await auth.visitConfirmEmailLink(email);
 
-    await page.waitForURL('http://localhost:3000/home');
+    await page.waitForURL('http://localhost:5173/home');
 
-    expect(page.url()).toContain('http://localhost:3000/home');
+    expect(page.url()).toContain('http://localhost:5173/home');
   });
 
   test('will sign-in with the correct credentials', async ({ page }) => {
@@ -42,7 +42,7 @@ test.describe('Auth flow', () => {
       password: 'password',
     });
 
-    await page.waitForURL('http://localhost:3000/home');
+    await page.waitForURL('http://localhost:5173/home');
 
     expect(page.url()).toContain('/home');
 
