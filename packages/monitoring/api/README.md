@@ -4,7 +4,6 @@ Please set the following environment variable to your preferred monitoring provi
 
 ```
 REMIX_PUBLIC_MONITORING_PROVIDER=
-MONITORING_INSTRUMENTATION_ENABLED=true
 ```
 
 ## Available Providers
@@ -28,12 +27,4 @@ To use Sentry, set the `REMIX_PUBLIC_MONITORING_PROVIDER` environment variable t
 
 ```
 REMIX_PUBLIC_MONITORING_PROVIDER=sentry
-```
-
-## Instrumentation
-
-To enable instrumentation, set the `MONITORING_INSTRUMENTATION_ENABLED` environment variable to `true`.
-
-```
-MONITORING_INSTRUMENTATION_ENABLED=true
 ```

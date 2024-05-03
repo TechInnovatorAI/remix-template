@@ -55,7 +55,7 @@ export function AccountMembersTable({
   const [search, setSearch] = useState('');
   const { t } = useTranslation('teams');
 
-  const permissions = {
+  const permissions = useMemo(() => ({
     canUpdateRole: (targetRole: number) => {
       return (
         isPrimaryOwner || (canManageRoles && userRoleHierarchy < targetRole)
@@ -67,13 +67,17 @@ export function AccountMembersTable({
       );
     },
     canTransferOwnership: isPrimaryOwner,
-  };
+  }), [canManageRoles, isPrimaryOwner, userRoleHierarchy]);
 
-  const columns = useGetColumns(permissions, {
-    currentUserId,
-    currentAccountId,
-    currentRoleHierarchy: userRoleHierarchy,
-  });
+  const columnsParams = useMemo(() => {
+    return {
+      currentUserId,
+      currentAccountId,
+      currentRoleHierarchy: userRoleHierarchy,
+    }
+  }, [currentUserId, currentAccountId, userRoleHierarchy])
+
+  const columns = useGetColumns(permissions, columnsParams);
 
   const filteredMembers = members
     .filter((member) => {
@@ -274,7 +278,7 @@ function ActionsDropdown({
 
       <If condition={isRemoving}>
         <RemoveMemberDialog
-          isOpen
+          isOpen={isRemoving}
           setIsOpen={setIsRemoving}
           teamAccountId={currentTeamAccountId}
           userId={member.user_id}
@@ -283,7 +287,7 @@ function ActionsDropdown({
 
       <If condition={isUpdatingRole}>
         <UpdateMemberRoleDialog
-          isOpen
+          isOpen={isUpdatingRole}
           setIsOpen={setIsUpdatingRole}
           userId={member.user_id}
           userRole={member.role}

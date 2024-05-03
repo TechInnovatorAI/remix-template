@@ -1,9 +1,4 @@
-import {
-  Link,
-  isRouteErrorResponse,
-  useRouteError,
-  useRouteLoaderData,
-} from '@remix-run/react';
+import { Link, isRouteErrorResponse, useRouteError } from '@remix-run/react';
 import { ArrowLeft } from 'lucide-react';
 
 import { useCaptureException } from '@kit/monitoring/hooks';
@@ -11,12 +6,10 @@ import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';
 
-import { loader } from '~/root';
-import {SiteHeader} from "~/routes/_marketing/_components/site-header";
-import {SiteFooter} from "~/routes/_marketing/_components/site-footer";
+import { SiteFooter } from '~/routes/_marketing/_components/site-footer';
+import { SiteHeader } from '~/routes/_marketing/_components/site-header';
 
 export function RootErrorBoundary() {
-  const data = useRouteLoaderData<typeof loader>('root');
   const routeError = useRouteError();
 
   const error =
@@ -30,7 +23,7 @@ export function RootErrorBoundary() {
     <div className={'flex h-screen flex-1 flex-col'}>
       <script
         dangerouslySetInnerHTML={{
-          __html: `window.process = {env: ${JSON.stringify(data?.env)}}`,
+          __html: `window.process = {env: ${JSON.stringify({})}}`,
         }}
       />
 

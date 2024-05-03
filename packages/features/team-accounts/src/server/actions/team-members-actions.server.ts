@@ -7,8 +7,11 @@ import { z } from 'zod';
 import { Database } from '@kit/supabase/database';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
-import { RemoveMemberSchema, TransferOwnershipConfirmationSchema } from '../../schema';
-import { UpdateMemberRoleSchema } from '../../schema/update-member-role.schema';
+import {
+  RemoveMemberSchema,
+  TransferOwnershipSchema,
+  UpdateMemberRoleSchema,
+} from '../../schema';
 import { createAccountMembersService } from '../services/account-members.service';
 
 /**
@@ -26,7 +29,7 @@ export const removeMemberFromAccountAction = async (params: {
   await service.removeMemberFromAccount(data);
 
   return {
-    success: true
+    success: true,
   };
 };
 
@@ -48,7 +51,7 @@ export const updateMemberRoleAction = async (params: {
   await service.updateMemberRole(data, adminClient);
 
   return {
-    success: true
+    success: true,
   };
 };
 
@@ -58,10 +61,10 @@ export const updateMemberRoleAction = async (params: {
  */
 export const transferOwnershipAction = async (params: {
   client: SupabaseClient<Database>;
-  data: z.infer<typeof TransferOwnershipConfirmationSchema>;
+  data: z.infer<typeof TransferOwnershipSchema>;
 }) => {
   const client = params.client;
-  const data = TransferOwnershipConfirmationSchema.parse(params.data);
+  const data = TransferOwnershipSchema.parse(params.data);
 
   // assert that the user is the owner of the account
   const { data: isOwner, error } = await client.rpc('is_account_owner', {

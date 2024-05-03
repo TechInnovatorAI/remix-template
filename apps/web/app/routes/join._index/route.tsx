@@ -21,7 +21,7 @@ import { AppLogo } from '~/components/app-logo';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 
-export const meta: MetaFunction<typeof loader> = async ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     {
       title: data?.title,

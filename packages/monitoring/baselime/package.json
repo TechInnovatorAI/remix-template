@@ -12,7 +12,6 @@
   "exports": {
     "./server": "./src/server.ts",
     "./client": "./src/client.ts",
-    "./instrumentation": "./src/instrumentation.ts",
     "./provider": "./src/components/provider.tsx"
   },
   "dependencies": {

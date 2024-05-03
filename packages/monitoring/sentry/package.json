@@ -13,7 +13,6 @@
     ".": "./src/index.ts",
     "./server": "./src/server.ts",
     "./provider": "./src/components/provider.tsx",
-    "./instrumentation": "./src/instrumentation.ts",
     "./config/client": "./src/config/sentry.client.config.ts",
     "./config/server": "./src/config/sentry.server.config.ts",
     "./config/edge": "./src/config/sentry.server.edge.ts"

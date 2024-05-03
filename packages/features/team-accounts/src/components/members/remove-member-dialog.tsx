@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useFetcher } from '@remix-run/react';
 
@@ -22,38 +22,6 @@ export const RemoveMemberDialog: React.FC<{
   teamAccountId: string;
   userId: string;
 }> = ({ isOpen, setIsOpen, teamAccountId, userId }) => {
-  return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            <Trans i18nKey="teamS:removeMemberModalHeading" />
-          </AlertDialogTitle>
-
-          <AlertDialogDescription>
-            <Trans i18nKey={'teams:removeMemberModalDescription'} />
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-
-        <RemoveMemberForm
-          setIsOpen={setIsOpen}
-          accountId={teamAccountId}
-          userId={userId}
-        />
-      </AlertDialogContent>
-    </AlertDialog>
-  );
-};
-
-function RemoveMemberForm({
-  accountId,
-  userId,
-  setIsOpen,
-}: {
-  accountId: string;
-  userId: string;
-  setIsOpen: (isOpen: boolean) => void;
-}) {
   const [error, setError] = useState<boolean>();
 
   const fetcher = useFetcher<{
@@ -70,23 +38,58 @@ function RemoveMemberForm({
         setError(true);
       }
     }
-  }, []);
+  }, [fetcher.data, setIsOpen]);
 
-  const onMemberRemoved = () => {
-    fetcher.submit({
-      intent: 'remove-member',
-      payload: {
-        accountId,
-        userId,
+  const onMemberRemoved = useCallback(() => {
+    fetcher.submit(
+      {
+        intent: 'remove-member',
+        payload: {
+          accountId: teamAccountId,
+          userId,
+        },
       },
-    }, {
-      method: 'POST',
-      encType: 'application/json',
-    });
-  };
+      {
+        method: 'POST',
+        encType: 'application/json',
+      },
+    );
+  }, [fetcher, teamAccountId, userId]);
 
   return (
-    <form action={onMemberRemoved}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            <Trans i18nKey="teamS:removeMemberModalHeading" />
+          </AlertDialogTitle>
+
+          <AlertDialogDescription>
+            <Trans i18nKey={'teams:removeMemberModalDescription'} />
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <RemoveMemberForm
+          onSubmit={onMemberRemoved}
+          pending={pending}
+          error={error}
+        />
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+function RemoveMemberForm({
+  onSubmit,
+  pending,
+  error,
+}: {
+  onSubmit: () => void;
+  pending: boolean;
+  error: boolean | undefined;
+}) {
+  return (
+    <form onSubmit={onSubmit}>
       <div className={'flex flex-col space-y-6'}>
         <p className={'text-muted-foreground text-sm'}>
           <Trans i18nKey={'common:modalConfirmationQuestion'} />
@@ -105,7 +108,6 @@ function RemoveMemberForm({
             data-test={'confirm-remove-member'}
             variant={'destructive'}
             disabled={pending}
-            onClick={onMemberRemoved}
           >
             <Trans i18nKey={'teams:removeMemberSubmitLabel'} />
           </Button>

@@ -25,15 +25,9 @@ export async function getMailer() {
 }
 
 async function getNodemailer() {
-  if (process.env.NEXT_RUNTIME === 'nodejs') {
-    const { Nodemailer } = await import('./impl/nodemailer');
+  const { Nodemailer } = await import('./impl/nodemailer');
 
-    return new Nodemailer();
-  } else {
-    throw new Error(
-      'Nodemailer is not available on the edge runtime. Please use another mailer.',
-    );
-  }
+  return new Nodemailer();
 }
 
 async function getCloudflareMailer() {

@@ -31,7 +31,7 @@ import { If } from '@kit/ui/if';
 import { Input } from '@kit/ui/input';
 import { Trans } from '@kit/ui/trans';
 
-import { TransferOwnershipConfirmationSchema } from '../../schema/transfer-ownership-confirmation.schema';
+import {TransferOwnershipConfirmationSchema, TransferOwnershipSchema} from '../../schema';
 
 export const TransferOwnershipDialog: React.FC<{
   isOpen: boolean;
@@ -111,7 +111,7 @@ function TransferOrganizationOwnershipForm({
             {
               intent: 'transfer-ownership',
               payload,
-            } satisfies z.infer<typeof TransferOwnershipConfirmationSchema>,
+            } satisfies z.infer<typeof TransferOwnershipSchema>,
             {
               method: 'POST',
               encType: 'application/json',

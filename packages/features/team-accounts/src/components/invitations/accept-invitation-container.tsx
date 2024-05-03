@@ -63,7 +63,7 @@ export function AcceptInvitationContainer(props: {
       </div>
 
       <div className={'flex flex-col space-y-4'}>
-        <Form data-test={'join-team-form'} className={'w-full'}>
+        <Form method={'POST'} data-test={'join-team-form'} className={'w-full'}>
           <input type="hidden" name={'inviteToken'} value={props.inviteToken} />
 
           <input

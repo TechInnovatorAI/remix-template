@@ -1,19 +1,16 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
-
-
 import { z } from 'zod';
-
-
 
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
 
-
-
-import { RemoveMemberSchema, TransferOwnershipConfirmationSchema, UpdateMemberRoleSchema } from '../../schema';
+import {
+  RemoveMemberSchema,
+  TransferOwnershipSchema,
+  UpdateMemberRoleSchema,
+} from '../../schema';
 import { createAccountPerSeatBillingService } from './account-per-seat-billing.service';
-
 
 export function createAccountMembersService(client: SupabaseClient<Database>) {
   return new AccountMembersService(client);
@@ -150,7 +147,7 @@ class AccountMembersService {
    * @param adminClient
    */
   async transferOwnership(
-    { payload }: z.infer<typeof TransferOwnershipConfirmationSchema>,
+    { payload }: z.infer<typeof TransferOwnershipSchema>,
     adminClient: SupabaseClient<Database>,
   ) {
     const logger = await getLogger();

@@ -19,7 +19,7 @@ import {
   InviteMembersSchema,
   RemoveMemberSchema,
   RenewInvitationSchema,
-  TransferOwnershipConfirmationSchema,
+  TransferOwnershipSchema,
   UpdateInvitationSchema,
   UpdateMemberRoleSchema,
 } from '@kit/team-accounts/schema';
@@ -49,7 +49,7 @@ const MembersActionsSchema = z.union([
   DeleteInvitationSchema,
   UpdateInvitationSchema,
   RemoveMemberSchema,
-  TransferOwnershipConfirmationSchema,
+  TransferOwnershipSchema,
 ]);
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {

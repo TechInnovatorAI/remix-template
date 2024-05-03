@@ -108,7 +108,7 @@ async function getTheme(request: Request) {
   const cookie = request.headers.get('Cookie');
   const theme = await themeCookie.parse(cookie);
 
-  if (Object.keys(theme).length === 0) {
+  if (Object.keys(theme ?? {}).length === 0) {
     return undefined;
   }
 

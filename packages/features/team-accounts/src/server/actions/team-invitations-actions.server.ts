@@ -7,9 +7,13 @@ import { Database } from '@kit/supabase/database';
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
+import {
+  DeleteInvitationSchema,
+  InviteMembersSchema,
+  RenewInvitationSchema,
+  UpdateInvitationSchema,
+} from '../../schema';
 import { AcceptInvitationSchema } from '../../schema/accept-invitation.schema';
-import { RenewInvitationSchema, InviteMembersSchema, DeleteInvitationSchema } from '../../schema';
-import { UpdateInvitationSchema } from '../../schema/update-invitation.schema';
 import { createAccountInvitationsService } from '../services/account-invitations.service';
 import { createAccountPerSeatBillingService } from '../services/account-per-seat-billing.service';
 
