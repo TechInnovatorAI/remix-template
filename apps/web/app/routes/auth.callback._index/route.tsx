@@ -38,7 +38,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
         return onError({ error: error.message });
       }
 
-      return redirect(nextUrl);
+      return redirect(nextUrl, {
+        headers: request.headers
+      });
     } catch (error) {
       const logger = await getLogger();
 
@@ -60,7 +62,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return onError({ error });
   }
 
-  return redirect(nextUrl);
+  return redirect(pathsConfig.auth.signIn);
 }
 
 async function onError({ error }: { error: string }) {

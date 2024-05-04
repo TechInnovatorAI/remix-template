@@ -40,8 +40,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
       token_hash,
     });
 
+    // if no error - proceed to the next page
     if (!error) {
-      return redirect(pathname + '?' + nextSearchParams.toString());
+      return redirect(pathname + '?' + nextSearchParams.toString(), {
+        headers: request.headers,
+      });
     }
   }
 
