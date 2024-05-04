@@ -11,13 +11,15 @@ export async function loadAdminAccountPage(accountId: string) {
   const account = await getAccount(client, accountId);
 
   if (account.is_personal_account) {
-    const [subscription, memberships] = await Promise.all([
+    const [user, subscription, memberships] = await Promise.all([
+      client.auth.admin.getUserById(accountId).then(data => data.data.user),
       getSubscription(client, accountId),
       getMemberships(client, accountId),
     ]);
 
     return {
       is_personal_account: true as const,
+      user,
       account,
       subscription,
       memberships,

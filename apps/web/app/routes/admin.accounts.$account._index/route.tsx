@@ -30,16 +30,13 @@ export const meta = [
 
 export const loader = async function (args: LoaderFunctionArgs) {
   const client = getSupabaseServerClient(args.request);
-  const user = await getSuperAdminUser(client);
+
+   await getSuperAdminUser(client);
 
   const account = args.params.account as string;
-
   const data = await loadAdminAccountPage(account);
 
-  return json({
-    ...data,
-    user,
-  });
+  return json(data);
 };
 
 export default function AdminPage() {
