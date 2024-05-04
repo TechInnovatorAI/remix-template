@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import {json, useLoaderData} from '@remix-run/react';
 
-import { createCmsClient } from '@kit/cms';
+import {Cms, createCmsClient} from '@kit/cms';
 import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
@@ -31,7 +31,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
     offset,
   );
 
-  return {
+  return json({
     title: t('marketing:blog'),
     description: t('marketing:blogSubtitle'),
     posts,
@@ -39,7 +39,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
     page,
     canGoToNextPage: offset + limit < total,
     canGoToPreviousPage: page > 0,
-  };
+  });
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -89,7 +89,7 @@ export default function BlogPage() {
         >
           <PostsGridList>
             {posts.map((post, idx) => {
-              return <PostPreview key={idx} post={post} />;
+              return <PostPreview key={idx} post={post as Cms.ContentItem} />;
             })}
           </PostsGridList>
 

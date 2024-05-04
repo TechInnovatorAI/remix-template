@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { DocumentElement } from '@keystatic/core';
 import { DocumentRenderer } from '@keystatic/core/renderer';
 

@@ -1,5 +1,3 @@
-import type { Config } from 'tailwindcss';
-
 import baseConfig from '@kit/tailwind-config';
 
 export default {
@@ -7,4 +5,4 @@ export default {
   // those classes are included correctly.
   content: [...baseConfig.content],
   presets: [baseConfig],
-} satisfies Config;
+}

@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { json, redirect, useLoaderData } from '@remix-run/react';
 
-import { ContentRenderer, createCmsClient } from '@kit/cms';
+import { Cms, ContentRenderer, createCmsClient } from '@kit/cms';
 import { If } from '@kit/ui/if';
 import { Separator } from '@kit/ui/separator';
 
@@ -55,7 +55,7 @@ export default function DocumentationPage() {
         <If condition={page.children.length > 0}>
           <Separator />
 
-          <DocsCards cards={page.children ?? []} />
+          <DocsCards cards={(page.children ?? []) as Cms.ContentItem[]} />
         </If>
       </div>
     </div>

@@ -23,7 +23,9 @@ export default function DocsLayout() {
 
   return (
     <div className={'flex'}>
-      <DocsNavigation pages={buildDocumentationTree(pages)} />
+      <DocsNavigation
+        pages={buildDocumentationTree(pages as Cms.ContentItem[])}
+      />
 
       <Outlet />
     </div>

@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 
+import { Cms } from '@kit/cms';
 import { PageBody } from '@kit/ui/page';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
@@ -41,7 +42,7 @@ export default function DocsPage() {
 
         <div className={'flex flex-col items-center'}>
           <div className={'container mx-auto max-w-5xl'}>
-            <DocsCards cards={items} />
+            <DocsCards cards={items as Cms.ContentItem[]} />
           </div>
         </div>
       </div>

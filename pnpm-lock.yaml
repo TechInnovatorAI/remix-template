@@ -442,6 +442,12 @@ importers:
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
+      '@types/react':
+        specifier: ^18.3.1
+        version: 18.3.1
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
       zod:
         specifier: ^3.23.5
         version: 3.23.5
@@ -466,6 +472,12 @@ importers:
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
+      '@types/react':
+        specifier: ^18.3.1
+        version: 18.3.1
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
       wp-types:
         specifier: ^3.65.0
         version: 3.65.0
