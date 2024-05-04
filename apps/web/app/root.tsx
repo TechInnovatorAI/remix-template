@@ -7,22 +7,15 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from 'next-themes';
 
-import { CaptchaProvider, CaptchaTokenSetter } from '@kit/auth/captcha/client';
-import { MonitoringProvider } from '@kit/monitoring/components';
-import { useAuthChangeListener } from '@kit/supabase/hooks/use-auth-change-listener';
 import { cn } from '@kit/ui/utils';
 
 import { RootErrorBoundary } from '~/components/root-error-boundary';
-import authConfig from '~/config/auth.config';
-import pathsConfig from '~/config/paths.config';
+import { RootHead } from '~/components/root-head';
+import { RootProviders } from '~/components/root-providers';
 import { themeCookie } from '~/lib/cookies';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { PUBLIC_ENV } from '~/lib/public-env';
-
-const captchaSiteKey = authConfig.captchaTokenSiteKey;
 
 // error boundary
 export const ErrorBoundary = RootErrorBoundary;
@@ -40,18 +33,14 @@ export async function loader({ request }: LoaderFunctionArgs) {
   };
 }
 
-const queryClient = new QueryClient();
-
-export function Layout(props: React.PropsWithChildren) {
+export default function App() {
   const data = useLoaderData<typeof loader>();
   const { language, className, theme, env } = data ?? {};
 
   return (
     <html lang={language} className={className}>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+        <RootHead />
         <Meta />
         <Links />
 
@@ -63,35 +52,15 @@ export function Layout(props: React.PropsWithChildren) {
       </head>
 
       <body>
-        <QueryClientProvider client={queryClient}>
-          <MonitoringProvider>
-            <CaptchaProvider>
-              <CaptchaTokenSetter siteKey={captchaSiteKey} />
-
-              <AuthProvider>
-                <ThemeProvider
-                  attribute="class"
-                  enableSystem
-                  disableTransitionOnChange
-                  defaultTheme={theme}
-                  enableColorScheme={false}
-                >
-                  {props.children}
-                </ThemeProvider>
-              </AuthProvider>
-            </CaptchaProvider>
-          </MonitoringProvider>
-        </QueryClientProvider>
+        <RootProviders theme={theme}>
+          <Outlet />
+        </RootProviders>
 
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
-}
-
-export default function App() {
-  return <Outlet />;
 }
 
 function getClassName(theme?: string) {
@@ -113,13 +82,4 @@ async function getTheme(request: Request) {
   }
 
   return theme;
-}
-
-// we place this below React Query since it uses the QueryClient
-function AuthProvider(props: React.PropsWithChildren) {
-  useAuthChangeListener({
-    appHomePath: pathsConfig.app.home,
-  });
-
-  return props.children;
 }
