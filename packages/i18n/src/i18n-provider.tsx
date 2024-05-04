@@ -2,8 +2,6 @@
 
 import type { InitOptions, i18n } from 'i18next';
 
-import { initializeI18nClient } from './i18n.client';
-
 let i18nInstance: i18n;
 
 type Resolver = (
@@ -43,5 +41,11 @@ function useI18nClient(settings: InitOptions, resolver: Resolver) {
 }
 
 async function loadI18nInstance(settings: InitOptions, resolver: Resolver) {
-  i18nInstance = await initializeI18nClient(settings, resolver);
+  if (typeof document === 'undefined') {
+    const { initializeI18nClient } = await import('./i18n-client');
+    i18nInstance = await initializeI18nClient(settings, resolver);
+  } else {
+    const { initializeServerI18n } = await import('./i18n-server');
+    i18nInstance = await initializeServerI18n(settings, resolver);
+  }
 }

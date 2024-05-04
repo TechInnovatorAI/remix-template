@@ -11,8 +11,8 @@
   "prettier": "@kit/prettier-config",
   "exports": {
     ".": "./src/index.ts",
-    "./server": "./src/i18n.server.ts",
-    "./client": "./src/i18n.client.ts",
+    "./server": "./src/i18n-server.ts",
+    "./client": "./src/i18n-client.ts",
     "./provider": "./src/i18n-provider.tsx"
   },
   "devDependencies": {

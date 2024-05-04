@@ -13,6 +13,7 @@ import { cn } from '@kit/ui/utils';
 import { RootErrorBoundary } from '~/components/root-error-boundary';
 import { RootHead } from '~/components/root-head';
 import { RootProviders } from '~/components/root-providers';
+import appConfig from '~/config/app.config';
 import { themeCookie } from '~/lib/cookies';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { PUBLIC_ENV } from '~/lib/public-env';
@@ -52,7 +53,7 @@ export default function App() {
       </head>
 
       <body>
-        <RootProviders theme={theme}>
+        <RootProviders theme={theme} language={language}>
           <Outlet />
         </RootProviders>
 
@@ -78,7 +79,7 @@ async function getTheme(request: Request) {
   const theme = await themeCookie.parse(cookie);
 
   if (Object.keys(theme ?? {}).length === 0) {
-    return undefined;
+    return appConfig.theme;
   }
 
   return theme;

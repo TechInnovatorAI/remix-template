@@ -217,8 +217,6 @@ function DeleteTeamConfirmationForm({
                   <FormDescription>
                     <Trans i18nKey={'teams:deleteTeamInputField'} />
                   </FormDescription>
-
-                  <FormMessage />
                 </FormItem>
               )}
               name={'name'}

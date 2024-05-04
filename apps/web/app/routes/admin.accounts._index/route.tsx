@@ -13,7 +13,6 @@ import { AdminAccountsTable } from '@kit/admin/components/admin-accounts-table';
 import { AdminActionsSchema } from '@kit/admin/schema';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { PageBody, PageHeader } from '@kit/ui/page';
 
 export const meta = [
   {
@@ -23,6 +22,8 @@ export const meta = [
 
 export const loader = async function (args: LoaderFunctionArgs) {
   const client = getSupabaseServerClient(args.request);
+
+  // admin protected route
   await getSuperAdminUser(client);
 
   const params = new URL(args.request.url).searchParams;
@@ -31,7 +32,10 @@ export const loader = async function (args: LoaderFunctionArgs) {
   const perPage = Number(params.get('perPage') || '10');
   const query = params.get('query') ?? '';
 
-  const type = (params.get('account_type') ?? 'all') as 'all' | 'team' | 'personal';
+  const type = (params.get('account_type') ?? 'all') as
+    | 'all'
+    | 'team'
+    | 'personal';
 
   const startOffset = (page - 1) * perPage;
   const endOffset = page * perPage;
@@ -57,7 +61,6 @@ export const loader = async function (args: LoaderFunctionArgs) {
     filter = filter.eq('is_personal_account', onlyPersonal);
   }
 
-
   const { data, error, count } = await filter;
 
   if (error) {
@@ -79,18 +82,7 @@ export const loader = async function (args: LoaderFunctionArgs) {
 export default function AdminAccountsPage() {
   const data = useLoaderData<typeof loader>();
 
-  return (
-    <>
-      <PageHeader
-        title={'Accounts'}
-        description={`Your SaaS stats at a glance`}
-      />
-
-      <PageBody>
-        <AdminAccountsTable {...data} />
-      </PageBody>
-    </>
-  );
+  return <AdminAccountsTable {...data} />;
 }
 
 export const action = async function (args: ActionFunctionArgs) {
@@ -99,6 +91,7 @@ export const action = async function (args: ActionFunctionArgs) {
 
   const client = getSupabaseServerClient(args.request);
 
+  // admin protected route
   await getSuperAdminUser(client);
 
   switch (data.intent) {

@@ -11,16 +11,11 @@ import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { useUser } from '@kit/supabase/hooks/use-user';
 import { Button } from '@kit/ui/button';
+import { ModeToggle } from '@kit/ui/mode-toggle';
 import { Trans } from '@kit/ui/trans';
 
 import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
-
-const ModeToggle = lazy(() =>
-  import('@kit/ui/mode-toggle').then((mod) => ({
-    default: mod.ModeToggle,
-  })),
-);
 
 const paths = {
   home: pathsConfig.app.home,

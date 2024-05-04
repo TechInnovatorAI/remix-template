@@ -1,9 +1,9 @@
 import appConfig from '~/config/app.config';
 
-export function RootHead() {
-  const siteUrl = appConfig.url;
-  const name = appConfig.name;
+const siteUrl = appConfig.url;
+const name = appConfig.name;
 
+export function RootHead() {
   const structuredData = {
     name: name,
     url: siteUrl,

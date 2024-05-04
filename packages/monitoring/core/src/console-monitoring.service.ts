@@ -6,8 +6,10 @@ export class ConsoleMonitoringService implements MonitoringService {
   }
 
   captureException(error: Error) {
+    const message = error?.message || JSON.stringify(error);
+
     console.error(
-      `[Console Monitoring] Caught exception: ${JSON.stringify(error)}`,
+      `[Console Monitoring] Caught exception: ${message}`,
     );
   }
 

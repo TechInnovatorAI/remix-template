@@ -23,6 +23,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@kit/ui/form';
 import { Input } from '@kit/ui/input';
 
@@ -98,6 +99,8 @@ export function AdminDeleteAccountDialog(
                     Are you sure you want to do this? This action cannot be
                     undone.
                   </FormDescription>
+
+                  <FormMessage />
                 </FormItem>
               )}
             />

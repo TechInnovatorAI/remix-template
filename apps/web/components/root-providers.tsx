@@ -1,39 +1,56 @@
+import { Suspense, useMemo } from 'react';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 
 import { CaptchaProvider, CaptchaTokenSetter } from '@kit/auth/captcha/client';
+import { I18nProvider } from '@kit/i18n/provider';
 import { MonitoringProvider } from '@kit/monitoring/components';
 import { useAuthChangeListener } from '@kit/supabase/hooks/use-auth-change-listener';
 
 import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
+import { i18nResolver } from '~/lib/i18n/i18n.resolver';
+import { getI18nSettings } from '~/lib/i18n/i18n.settings';
 
 const queryClient = new QueryClient();
 const captchaSiteKey = authConfig.captchaTokenSiteKey;
 
 export function RootProviders(
-  props: React.PropsWithChildren<{ theme: string }>,
+  props: React.PropsWithChildren<{
+    theme: string;
+    language: string;
+  }>,
 ) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <MonitoringProvider>
-        <CaptchaProvider>
-          <CaptchaTokenSetter siteKey={captchaSiteKey} />
+  const settings = useMemo(
+    () => getI18nSettings(props.language),
+    [props.language],
+  );
 
-          <AuthProvider>
-            <ThemeProvider
-              attribute="class"
-              enableSystem
-              disableTransitionOnChange
-              defaultTheme={props.theme}
-              enableColorScheme={false}
-            >
-              {props.children}
-            </ThemeProvider>
-          </AuthProvider>
-        </CaptchaProvider>
-      </MonitoringProvider>
-    </QueryClientProvider>
+  return (
+    <Suspense>
+      <I18nProvider settings={settings} resolver={i18nResolver}>
+        <QueryClientProvider client={queryClient}>
+          <MonitoringProvider>
+            <CaptchaProvider>
+              <CaptchaTokenSetter siteKey={captchaSiteKey} />
+
+              <AuthProvider>
+                <ThemeProvider
+                  attribute="class"
+                  enableSystem
+                  disableTransitionOnChange
+                  defaultTheme={props.theme}
+                  enableColorScheme={false}
+                >
+                  {props.children}
+                </ThemeProvider>
+              </AuthProvider>
+            </CaptchaProvider>
+          </MonitoringProvider>
+        </QueryClientProvider>
+      </I18nProvider>
+    </Suspense>
   );
 }
 

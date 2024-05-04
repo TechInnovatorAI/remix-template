@@ -15,7 +15,7 @@ import { ProfileAccountDropdownContainer } from '~/components/personal-account-d
 export function AdminSidebar(props: { user: User }) {
   return (
     <Sidebar>
-      <SidebarContent className={'py-4'}>
+      <SidebarContent className={'py-5'}>
         <AppLogo href={'/admin'} />
       </SidebarContent>
 

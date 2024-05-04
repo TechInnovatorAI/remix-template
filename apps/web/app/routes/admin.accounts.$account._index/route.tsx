@@ -31,7 +31,8 @@ export const meta = [
 export const loader = async function (args: LoaderFunctionArgs) {
   const client = getSupabaseServerClient(args.request);
 
-   await getSuperAdminUser(client);
+  // admin protected route
+  await getSuperAdminUser(client);
 
   const account = args.params.account as string;
   const data = await loadAdminAccountPage(account);
@@ -74,6 +75,7 @@ export const action = async function (args: ActionFunctionArgs) {
   const data = AdminAccountActions.parse(await args.request.json());
   const client = getSupabaseServerClient(args.request);
 
+  // admin protected route
   await getSuperAdminUser(client);
 
   switch (data.intent) {

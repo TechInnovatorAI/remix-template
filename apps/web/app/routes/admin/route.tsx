@@ -16,6 +16,8 @@ export const meta = [
 
 export const loader = async function ({ request }: LoaderFunctionArgs) {
   const client = getSupabaseServerClient(request);
+
+  // admin protected route
   const user = await getSuperAdminUser(client);
 
   return json({

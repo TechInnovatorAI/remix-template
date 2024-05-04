@@ -1,7 +1,8 @@
 import {
   initializeServerI18n,
-  parseAcceptLanguageHeader,
 } from '@kit/i18n/server';
+
+import { parseAcceptLanguageHeader } from '@kit/i18n';
 
 import featuresFlagConfig from '~/config/feature-flags.config';
 import { languageCookie } from '~/lib/cookies';
