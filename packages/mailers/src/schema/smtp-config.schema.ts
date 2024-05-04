@@ -1,5 +1,3 @@
-
-
 import { z } from 'zod';
 
 export const SmtpConfigSchema = z.object({

@@ -1,3 +1,4 @@
+import { Link } from '@remix-run/react';
 import { LogOut, Menu } from 'lucide-react';
 
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
@@ -15,11 +16,10 @@ import { Trans } from '@kit/ui/trans';
 
 import featuresFlagConfig from '~/config/feature-flags.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
+import { UserWorkspace } from '~/routes/home._user/_lib/load-user-workspace.server';
 
 // home imports
 import { HomeAccountSelector } from '../_components/home-account-selector';
-import {UserWorkspace} from "~/routes/home._user/_lib/load-user-workspace.server";
-import {Link} from "@remix-run/react";
 
 export function HomeMobileNavigation(props: { workspace: UserWorkspace }) {
   const signOut = useSignOut();

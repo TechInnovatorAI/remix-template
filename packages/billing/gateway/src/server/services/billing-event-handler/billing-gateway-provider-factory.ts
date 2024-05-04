@@ -1,6 +1,7 @@
+import { SupabaseClient } from '@supabase/supabase-js';
+
 import { BillingConfig } from '@kit/billing';
 import { Database } from '@kit/supabase/database';
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { BillingEventHandlerService } from './billing-event-handler.service';
 import { BillingEventHandlerFactoryService } from './billing-gateway-factory.service';
@@ -11,7 +12,7 @@ import { BillingEventHandlerFactoryService } from './billing-gateway-factory.ser
  * defined in the host application.
  */
 export async function getBillingEventHandlerService(
-  clientProvider: () => ReturnType<typeof getSupabaseServerClient>,
+  clientProvider: () => SupabaseClient<Database>,
   provider: Database['public']['Enums']['billing_provider'],
   config: BillingConfig,
 ) {

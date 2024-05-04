@@ -1,5 +1,3 @@
-'use client';
-
 import { lazy, useEffect, useState } from 'react';
 
 import { useFetcher } from '@remix-run/react';
@@ -76,19 +74,22 @@ export function TeamAccountCheckoutForm(params: {
             config={billingConfig}
             canStartTrial={canStartTrial}
             onSubmit={({ planId, productId }) => {
-              fetcher.submit({
-                intent: 'account-checkout',
-                payload: {
-                  planId,
-                  productId,
-                  slug: params.accountSlug,
-                  accountId: params.accountId,
+              fetcher.submit(
+                {
+                  intent: 'account-checkout',
+                  payload: {
+                    planId,
+                    productId,
+                    slug: params.accountSlug,
+                    accountId: params.accountId,
+                  },
                 },
-              }, {
-                action: '/api/billing/checkout',
-                method: 'POST',
-                encType: 'application/json',
-              });
+                {
+                  action: '/api/billing/checkout',
+                  method: 'POST',
+                  encType: 'application/json',
+                },
+              );
             }}
           />
         </CardContent>

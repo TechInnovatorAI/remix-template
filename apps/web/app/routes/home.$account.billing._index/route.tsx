@@ -18,6 +18,7 @@ import { cn } from '@kit/ui/utils';
 
 import billingConfig from '~/config/billing.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
+import { requireUserLoader } from '~/lib/require-user-loader';
 import { TeamAccountCheckoutForm } from '~/routes/home.$account.billing._index/_components/team-account-checkout-form';
 import { TeamAccountLayoutPageHeader } from '~/routes/home.$account/_components/team-account-layout-page-header';
 import { loadTeamWorkspace } from '~/routes/home.$account/_lib/team-account-workspace-loader.server';
@@ -38,6 +39,9 @@ export async function loader(args: LoaderFunctionArgs) {
 
   const i18n = await createI18nServerInstance(args.request);
   const title = i18n.t('teams:billing.pageTitle');
+
+  // require user
+  await requireUserLoader(client);
 
   const workspace = await loadTeamWorkspace({
     client,

@@ -38,6 +38,7 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
+import { requireUserLoader } from '~/lib/require-user-loader';
 import { TeamAccountLayoutPageHeader } from '~/routes/home.$account/_components/team-account-layout-page-header';
 import { loader as accountWorkspaceLoader } from '~/routes/home.$account/route';
 
@@ -67,6 +68,9 @@ export async function loader(args: LoaderFunctionArgs) {
   const title = i18n.t('teams:members.pageTitle');
 
   const accountSlug = args.params.account as string;
+
+  // require user
+  await requireUserLoader(client);
 
   const [members, invitations, user, canAddMember] = await loadMembersPageData(
     client,

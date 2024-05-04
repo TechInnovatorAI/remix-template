@@ -1,5 +1,3 @@
-
-
 import { z } from 'zod';
 
 import { Mailer } from '../../mailer';

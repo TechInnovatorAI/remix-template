@@ -1,5 +1,3 @@
-'use client';
-
 import { useMemo } from 'react';
 
 import { ArrowDown, ArrowUp, Menu } from 'lucide-react';
@@ -235,7 +233,7 @@ function Chart(
   return (
     <div
       className={
-        'h-36 py-2 duration-200 animate-in fade-in slide-in-from-left-4 slide-in-from-top-4'
+        'animate-in fade-in slide-in-from-left-4 slide-in-from-top-4 h-36 py-2 duration-200'
       }
     >
       <ResponsiveContainer width={'100%'} height={'100%'}>
@@ -368,7 +366,7 @@ function Trend(
       case 'up':
         return <ArrowUp className={'h-4 text-green-500'} />;
       case 'down':
-        return <ArrowDown className={'h-4 text-destructive'} />;
+        return <ArrowDown className={'text-destructive h-4'} />;
       case 'stale':
         return <Menu className={'h-4 text-orange-500'} />;
     }

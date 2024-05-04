@@ -1,6 +1,5 @@
 import { KeystaticDocumentRenderer } from '../../keystatic/src/content-renderer';
 import { WordpressContentRenderer } from '../../wordpress/src/content-renderer';
-
 import { CmsType } from './cms.type';
 
 export function ContentRenderer({

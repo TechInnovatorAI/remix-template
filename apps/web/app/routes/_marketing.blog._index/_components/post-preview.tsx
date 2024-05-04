@@ -28,7 +28,11 @@ export function PostPreview({
         {(imageUrl) => (
           <div className="relative mb-2 w-full" style={{ height }}>
             <Link to={slug}>
-              <CoverImage className={'absolute w-full h-full'} title={title} src={imageUrl} />
+              <CoverImage
+                className={'absolute h-full w-full'}
+                title={title}
+                src={imageUrl}
+              />
             </Link>
           </div>
         )}

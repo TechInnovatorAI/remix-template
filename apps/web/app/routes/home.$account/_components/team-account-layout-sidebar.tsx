@@ -1,4 +1,3 @@
-
 import { User } from '@supabase/supabase-js';
 
 import { ArrowLeftCircle, ArrowRightCircle } from 'lucide-react';
@@ -15,10 +14,10 @@ import { Trans } from '@kit/ui/trans';
 import { cn } from '@kit/ui/utils';
 
 import { ProfileAccountDropdownContainer } from '~/components//personal-account-dropdown-container';
+import { TeamAccountNotifications } from '~/routes/home.$account/_components/team-account-notifications';
 
 import { TeamAccountAccountsSelector } from '../_components/team-account-accounts-selector';
 import { TeamAccountLayoutSidebarNavigation } from './team-account-layout-sidebar-navigation';
-import {TeamAccountNotifications} from "~/routes/home.$account/_components/team-account-notifications";
 
 type AccountModel = {
   label: string | null;

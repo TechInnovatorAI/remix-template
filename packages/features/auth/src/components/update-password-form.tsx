@@ -6,6 +6,7 @@ import {
   CheckIcon,
   ExclamationTriangleIcon,
 } from '@radix-ui/react-icons';
+import { Link } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
@@ -25,7 +26,6 @@ import { Input } from '@kit/ui/input';
 import { Trans } from '@kit/ui/trans';
 
 import { PasswordResetSchema } from '../schemas/password-reset.schema';
-import {Link} from "@remix-run/react";
 
 export function UpdatePasswordForm(params: { redirectTo: string }) {
   const updateUser = useUpdateUser();

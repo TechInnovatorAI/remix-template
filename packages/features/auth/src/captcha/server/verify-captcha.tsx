@@ -1,5 +1,3 @@
-
-
 const verifyEndpoint =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 

@@ -17,7 +17,8 @@ export function AdminSubscriptionTable({
   subscription:
     | (Database['public']['Tables']['subscriptions']['Row'] & {
         subscription_items: Database['public']['Tables']['subscription_items']['Row'][];
-      }) | null;
+      })
+    | null;
 }) {
   return (
     <div className={'flex flex-col space-y-2.5'}>

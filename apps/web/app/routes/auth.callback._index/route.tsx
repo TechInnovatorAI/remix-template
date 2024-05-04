@@ -39,7 +39,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       }
 
       return redirect(nextUrl, {
-        headers: request.headers
+        headers: request.headers,
       });
     } catch (error) {
       const logger = await getLogger();

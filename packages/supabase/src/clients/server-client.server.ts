@@ -1,5 +1,3 @@
-
-
 import {
   CookieOptions,
   createServerClient,
@@ -8,7 +6,6 @@ import {
 } from '@supabase/ssr';
 
 import { Database } from '../database.types';
-
 import { getSupabaseClientKeys } from '../get-supabase-client-keys';
 
 const keys = getSupabaseClientKeys();
@@ -17,9 +14,9 @@ const keys = getSupabaseClientKeys();
  * @name getSupabaseServerClient
  * @description Get a Supabase client for use in server-side functions.
  */
-export function getSupabaseServerClient<
-  GenericSchema = Database,
->(request: Request) {
+export function getSupabaseServerClient<GenericSchema = Database>(
+  request: Request,
+) {
   const headers = request.headers || new Headers();
 
   const setCookieHeader = (

@@ -1,7 +1,3 @@
-'use client';
-
-import { lazy } from 'react';
-
 import type { User } from '@supabase/supabase-js';
 
 import { Link } from '@remix-run/react';

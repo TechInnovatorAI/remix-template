@@ -316,16 +316,19 @@ function LeaveTeamContainer(props: {
               <form
                 className={'flex flex-col space-y-4'}
                 onSubmit={form.handleSubmit((data) => {
-                  fetcher.submit({
-                    intent: 'leave-team',
-                    payload: {
-                      accountId: data.accountId,
-                      confirmation: data.confirmation,
+                  fetcher.submit(
+                    {
+                      intent: 'leave-team',
+                      payload: {
+                        accountId: data.accountId,
+                        confirmation: data.confirmation,
+                      },
                     },
-                  }, {
-                    method: 'POST',
-                    encType: 'application/json',
-                  });
+                    {
+                      method: 'POST',
+                      encType: 'application/json',
+                    },
+                  );
                 })}
               >
                 <FormField

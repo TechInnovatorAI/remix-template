@@ -31,7 +31,10 @@ import { If } from '@kit/ui/if';
 import { Input } from '@kit/ui/input';
 import { Trans } from '@kit/ui/trans';
 
-import {TransferOwnershipConfirmationSchema, TransferOwnershipSchema} from '../../schema';
+import {
+  TransferOwnershipConfirmationSchema,
+  TransferOwnershipSchema,
+} from '../../schema';
 
 export const TransferOwnershipDialog: React.FC<{
   isOpen: boolean;

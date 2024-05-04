@@ -15,10 +15,12 @@ import { SitePageHeader } from '~/routes/_marketing/_components/site-page-header
 import { sendContactEmailAction } from './_lib/server/send-contact-email-action.server';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return [{
-    title: data?.title,
-    description: data?.subtitle,
-  }];
+  return [
+    {
+      title: data?.title,
+      description: data?.subtitle,
+    },
+  ];
 };
 
 export const loader = async function ({ request }: LoaderFunctionArgs) {

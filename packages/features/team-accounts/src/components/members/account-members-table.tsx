@@ -55,27 +55,30 @@ export function AccountMembersTable({
   const [search, setSearch] = useState('');
   const { t } = useTranslation('teams');
 
-  const permissions = useMemo(() => ({
-    canUpdateRole: (targetRole: number) => {
-      return (
-        isPrimaryOwner || (canManageRoles && userRoleHierarchy < targetRole)
-      );
-    },
-    canRemoveFromAccount: (targetRole: number) => {
-      return (
-        isPrimaryOwner || (canManageRoles && userRoleHierarchy < targetRole)
-      );
-    },
-    canTransferOwnership: isPrimaryOwner,
-  }), [canManageRoles, isPrimaryOwner, userRoleHierarchy]);
+  const permissions = useMemo(
+    () => ({
+      canUpdateRole: (targetRole: number) => {
+        return (
+          isPrimaryOwner || (canManageRoles && userRoleHierarchy < targetRole)
+        );
+      },
+      canRemoveFromAccount: (targetRole: number) => {
+        return (
+          isPrimaryOwner || (canManageRoles && userRoleHierarchy < targetRole)
+        );
+      },
+      canTransferOwnership: isPrimaryOwner,
+    }),
+    [canManageRoles, isPrimaryOwner, userRoleHierarchy],
+  );
 
   const columnsParams = useMemo(() => {
     return {
       currentUserId,
       currentAccountId,
       currentRoleHierarchy: userRoleHierarchy,
-    }
-  }, [currentUserId, currentAccountId, userRoleHierarchy])
+    };
+  }, [currentUserId, currentAccountId, userRoleHierarchy]);
 
   const columns = useGetColumns(permissions, columnsParams);
 

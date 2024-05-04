@@ -1,15 +1,15 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import {Link, redirect} from '@remix-run/react';
+import { Link, redirect } from '@remix-run/react';
 
 import { PasswordResetRequestContainer } from '@kit/auth/password-reset';
+import { requireUser } from '@kit/supabase/require-user';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';
 
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import {requireUser} from "@kit/supabase/require-user";
-import {getSupabaseServerClient} from "@kit/supabase/server-client";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const i18n = await createI18nServerInstance(request);

@@ -38,7 +38,8 @@ export function AdminPersonalAccountPage(props: {
   subscription:
     | (Db['subscriptions']['Row'] & {
         subscription_items: Db['subscription_items']['Row'][];
-      }) | null
+      })
+    | null;
 }) {
   const isBanned =
     'banned_until' in props.user && props.user.banned_until !== 'none';

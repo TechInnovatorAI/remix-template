@@ -2,7 +2,6 @@ import { NotificationsPopover } from '@kit/notifications/components';
 
 import featuresFlagConfig from '../../../../config/feature-flags.config';
 
-
 export function TeamAccountNotifications(params: {
   userId: string;
   accountId: string;

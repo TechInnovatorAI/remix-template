@@ -1,6 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
-import { redirectDocument, redirect } from '@remix-run/react';
+import { redirect, redirectDocument } from '@remix-run/react';
 import { z } from 'zod';
 
 import { Database } from '@kit/supabase/database';

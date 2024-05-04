@@ -5,11 +5,11 @@ import { AppLogo } from '~/components/app-logo';
 import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
 import featuresFlagConfig from '~/config/feature-flags.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
+import { UserNotifications } from '~/routes/home._user/_components/user-notifications';
+import { UserWorkspace } from '~/routes/home._user/_lib/load-user-workspace.server';
 
 // home imports
 import { HomeAccountSelector } from './home-account-selector';
-import {UserNotifications} from "~/routes/home._user/_components/user-notifications";
-import {UserWorkspace} from "~/routes/home._user/_lib/load-user-workspace.server";
 
 export function HomeSidebar(props: { workspace: UserWorkspace }) {
   const { workspace, user, accounts } = props.workspace;

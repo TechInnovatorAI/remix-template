@@ -1,9 +1,9 @@
+import { useNavigate } from '@remix-run/react';
 
 import { AccountSelector } from '@kit/accounts/account-selector';
 
 import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
-import {useNavigate} from "@remix-run/react";
 
 const features = {
   enableTeamCreation: featureFlagsConfig.enableTeamCreation,

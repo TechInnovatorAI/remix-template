@@ -1,4 +1,9 @@
-import type { ActionFunctionArgs, SerializeFrom } from '@remix-run/node';
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+  SerializeFrom,
+} from '@remix-run/node';
 import { useRouteLoaderData } from '@remix-run/react';
 import { z } from 'zod';
 
@@ -18,6 +23,8 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import pathsConfig from '~/config/paths.config';
+import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
+import { requireUserLoader } from '~/lib/require-user-loader';
 import { TeamAccountLayoutPageHeader } from '~/routes/home.$account/_components/team-account-layout-page-header';
 import { loader as accountWorkspaceLoader } from '~/routes/home.$account/route';
 
@@ -30,6 +37,27 @@ const ActionSchema = z.union([
   DeleteTeamAccountSchema,
   UpdateTeamNameSchema,
 ]);
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [
+    {
+      title: data?.title,
+    },
+  ];
+};
+
+export async function loader(args: LoaderFunctionArgs) {
+  const client = getSupabaseServerClient(args.request);
+  const i18n = await createI18nServerInstance(args.request);
+  const title = i18n.t('teams:settings.pageTitle');
+
+  // require user
+  await requireUserLoader(client);
+
+  return {
+    title,
+  };
+}
 
 export default function TeamAccountSettingsPage() {
   const data = useRouteLoaderData('routes/home.$account') as SerializeFrom<

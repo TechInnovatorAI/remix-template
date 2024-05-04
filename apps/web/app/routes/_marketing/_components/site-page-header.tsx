@@ -12,7 +12,7 @@ export function SitePageHeader(props: {
           {props.title}
         </h1>
 
-        <h2 className={'text-lg text-muted-foreground 2xl:text-2xl'}>
+        <h2 className={'text-muted-foreground text-lg 2xl:text-2xl'}>
           {props.subtitle}
         </h2>
       </div>

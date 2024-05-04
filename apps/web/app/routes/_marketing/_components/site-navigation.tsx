@@ -1,4 +1,4 @@
-
+import { Link } from '@remix-run/react';
 import { Menu } from 'lucide-react';
 
 import {
@@ -11,7 +11,6 @@ import { NavigationMenu, NavigationMenuList } from '@kit/ui/navigation-menu';
 import { Trans } from '@kit/ui/trans';
 
 import { SiteNavigationItem } from './site-navigation-item';
-import {Link} from "@remix-run/react";
 
 const links = {
   Blog: {

@@ -5,10 +5,10 @@ import { ContentRenderer, createCmsClient } from '@kit/cms';
 import { If } from '@kit/ui/if';
 import { Separator } from '@kit/ui/separator';
 
+import { DocsCards } from '~/routes/_marketing.docs/_components/docs-cards';
 import { SitePageHeader } from '~/routes/_marketing/_components/site-page-header';
 
 import styles from '../_marketing.blog.$slug/_components/html-renderer.module.css';
-import {DocsCards} from "~/routes/_marketing.docs/_components/docs-cards";
 
 const getPageBySlug = async (slug: string) => {
   const client = await createCmsClient();
@@ -19,10 +19,12 @@ const getPageBySlug = async (slug: string) => {
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { title, description } = data?.page ?? {};
 
-  return [{
-    title,
-    description,
-  }];
+  return [
+    {
+      title,
+      description,
+    },
+  ];
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {

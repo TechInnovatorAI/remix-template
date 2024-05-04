@@ -5,12 +5,12 @@ import { getLogger } from '@kit/shared/logger';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
 import billingConfig from '~/config/billing.config';
+const provider = billingConfig.provider;
 
 /**
  * @description Handle the webhooks from Stripe related to checkouts
  */
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const provider = billingConfig.provider;
   const logger = await getLogger();
 
   const ctx = {

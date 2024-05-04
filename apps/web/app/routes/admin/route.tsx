@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
-import {json, Outlet, useLoaderData} from '@remix-run/react';
+import { Outlet, json, useLoaderData } from '@remix-run/react';
 
 import { getSuperAdminUser } from '@kit/admin';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';

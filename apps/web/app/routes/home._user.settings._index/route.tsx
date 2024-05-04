@@ -14,6 +14,7 @@ import { Trans } from '@kit/ui/trans';
 import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
+import { requireUserLoader } from '~/lib/require-user-loader';
 import { HomeLayoutPageHeader } from '~/routes/home._user/_components/home-page-header';
 
 const features = {
@@ -37,6 +38,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export const loader = async (args: LoaderFunctionArgs) => {
   const i18n = await createI18nServerInstance(args.request);
   const title = i18n.t('account:settingsTab');
+
+  // require user
+  await requireUserLoader(getSupabaseServerClient(args.request));
 
   return {
     title,

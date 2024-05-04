@@ -1,5 +1,3 @@
-
-
 import { createServerClient } from '@supabase/ssr';
 
 import { Database } from '../database.types';

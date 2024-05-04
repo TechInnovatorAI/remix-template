@@ -65,14 +65,7 @@ export function useAuthChangeListener({
 
     // destroy listener on un-mounts
     return () => listener.data.subscription.unsubscribe();
-  }, [
-    client.auth,
-    accessToken,
-    revalidateUserSession,
-    pathName,
-    appHomePath,
-    privatePathPrefixes,
-  ]);
+  }, [client.auth, accessToken, revalidateUserSession, pathName, appHomePath, privatePathPrefixes, navigate]);
 }
 
 /**

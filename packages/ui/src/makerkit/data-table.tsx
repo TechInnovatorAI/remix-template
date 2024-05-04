@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 
+import { useSearchParams } from '@remix-run/react';
 import {
   flexRender,
   getCoreRowModel,
@@ -34,7 +35,6 @@ import {
   TableRow,
 } from '../shadcn/table';
 import { Trans } from './trans';
-import {useSearchParams} from "@remix-run/react";
 
 interface ReactTableProps<T extends object> {
   data: T[];

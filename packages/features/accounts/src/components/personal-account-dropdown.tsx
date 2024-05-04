@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 
 import type { User } from '@supabase/supabase-js';
 
+import { Link } from '@remix-run/react';
 import {
   EllipsisVertical,
   Home,
@@ -26,7 +27,6 @@ import { Trans } from '@kit/ui/trans';
 import { cn } from '@kit/ui/utils';
 
 import { usePersonalAccountData } from '../hooks/use-personal-account-data';
-import {Link} from "@remix-run/react";
 
 export function PersonalAccountDropdown({
   className,

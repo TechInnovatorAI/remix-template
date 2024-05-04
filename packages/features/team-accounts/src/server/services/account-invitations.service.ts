@@ -1,20 +1,13 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
-
-
 import { addDays, formatISO } from 'date-fns';
 import { z } from 'zod';
-
-
 
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
 
-
-
 import { DeleteInvitationSchema, InviteMembersSchema } from '../../schema';
 import { UpdateInvitationSchema } from '../../schema/update-invitation.schema';
-
 
 export function createAccountInvitationsService(
   client: SupabaseClient<Database>,
