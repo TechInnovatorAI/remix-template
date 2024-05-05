@@ -17,14 +17,11 @@ test.describe('Team Accounts', () => {
     const { teamName, slug } = teamAccounts.createTeamName();
 
     await teamAccounts.goToSettings();
-    await teamAccounts.updateName(teamName);
-
-    // the slug should be updated to match the new team name
-    await page.waitForURL(`http://localhost:5173/home/${slug}/settings`);
+    await teamAccounts.updateName(teamName, slug);
 
     await teamAccounts.openAccountsSelector();
 
-    await expect(teamAccounts.getTeamFromSelector(slug)).toBeVisible();
+    await expect(teamAccounts.getTeamFromSelector(teamName)).toBeVisible();
   });
 });
 
@@ -40,7 +37,7 @@ test.describe('Account Deletion', () => {
     await teamAccounts.openAccountsSelector();
 
     await expect(
-      teamAccounts.getTeamFromSelector(params.slug),
+      teamAccounts.getTeamFromSelector(params.teamName),
     ).not.toBeVisible();
   });
 });

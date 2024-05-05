@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 import { StripePageObject } from './stripe.po';
 
@@ -13,10 +13,17 @@ export class BillingPageObject {
     return this.page.locator('[data-test-plan]');
   }
 
-  selectPlan(index: number = 0) {
-    const plans = this.plans();
+  async selectPlan(index = 0) {
+    await expect(async () => {
+      const plans = this.plans();
+      const plan = plans.nth(index);
 
-    return plans.nth(index).click();
+      await expect(plan).toBeVisible();
+
+      await this.page.waitForTimeout(500);
+
+      await plan.click();
+    }).toPass();
   }
 
   manageBillingButton() {

@@ -13,19 +13,14 @@ export class TeamAccountsPageObject {
 
   async setup(params = this.createTeamName()) {
     await this.auth.signUpFlow('/home');
+
     await this.createTeam(params);
   }
 
-  getTeamFromSelector(teamSlug: string) {
-    return this.page.locator(
-      `[data-test="account-selector-team"][data-value="${teamSlug}"]`,
-    );
-  }
-
-  selectAccount(teamName: string) {
-    return this.page.click(
-      `[data-test="account-selector-team"][data-name="${teamName}"]`,
-    );
+  getTeamFromSelector(teamName: string) {
+    return this.page.locator(`[data-test="account-selector-team"]`, {
+      hasText: teamName,
+    });
   }
 
   getTeams() {
@@ -48,8 +43,14 @@ export class TeamAccountsPageObject {
       .click();
   }
 
-  openAccountsSelector() {
-    return this.page.click('[data-test="account-selector-trigger"]');
+  async openAccountsSelector() {
+    await expect(async () => {
+      await this.page.click('[data-test="account-selector-trigger"]');
+
+      return expect(
+        this.page.locator('[data-test="account-selector-content"]'),
+      ).toBeVisible();
+    }).toPass();
   }
 
   async createTeam({ teamName, slug } = this.createTeamName()) {
@@ -62,29 +63,37 @@ export class TeamAccountsPageObject {
     await this.page.waitForURL(`/home/${slug}`);
   }
 
-  async updateName(name: string) {
-    await this.page.fill(
-      '[data-test="update-team-account-name-form"] input',
-      name,
-    );
+  async updateName(name: string, slug: string) {
+    await expect(async () => {
+      await this.page.fill(
+          '[data-test="update-team-account-name-form"] input',
+          name,
+      );
 
-    await this.page.click('[data-test="update-team-account-name-form"] button');
+      await this.page.click('[data-test="update-team-account-name-form"] button');
+
+      // the slug should be updated to match the new team name
+      await expect(this.page).toHaveURL(`http://localhost:5173/home/${slug}/settings`);
+    }).toPass();
   }
 
   async deleteAccount(teamName: string) {
-    await this.page.click('[data-test="delete-team-trigger"]');
+    await expect(async () => {
+      await this.page.click('[data-test="delete-team-trigger"]');
 
-    expect(
-      await this.page
-        .locator('[data-test="delete-team-form-confirm-input"]')
-        .isVisible(),
-    ).toBeTruthy();
+      await expect(
+        this.page.locator('[data-test="delete-team-form-confirm-input"]'),
+      ).toBeVisible();
 
-    await this.page.fill(
-      '[data-test="delete-team-form-confirm-input"]',
-      teamName,
-    );
-    await this.page.click('[data-test="delete-team-form-confirm-button"]');
+      await this.page.fill(
+        '[data-test="delete-team-form-confirm-input"]',
+        teamName,
+      );
+
+      await this.page.click('[data-test="delete-team-form-confirm-button"]');
+
+      await this.page.waitForURL('http://localhost:5173/home');
+    }).toPass();
   }
 
   createTeamName() {

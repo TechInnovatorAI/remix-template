@@ -150,7 +150,11 @@ export function AccountSelector({
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="w-full p-0" collisionPadding={20}>
+        <PopoverContent
+          data-test={'account-selector-content'}
+          className="w-full p-0"
+          collisionPadding={20}
+        >
           <Command>
             <CommandInput placeholder={t('searchAccount')} className="h-9" />
 

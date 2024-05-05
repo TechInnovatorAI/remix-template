@@ -75,7 +75,6 @@ test.describe('Full Invitation Flow', () => {
 
   test('should invite users and let users accept an invite', async () => {
     await invitations.navigateToMembers();
-    await invitations.openInviteForm();
 
     const invites = [
       {
@@ -88,6 +87,7 @@ test.describe('Full Invitation Flow', () => {
       },
     ];
 
+    await invitations.openInviteForm();
     await invitations.inviteMembers(invites);
 
     const firstEmail = invites[0]!.email;

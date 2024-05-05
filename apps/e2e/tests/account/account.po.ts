@@ -1,4 +1,5 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
+
 import { AuthPageObject } from '../authentication/auth.po';
 
 export class AccountPageObject {
@@ -20,21 +21,57 @@ export class AccountPageObject {
   }
 
   async updateEmail(email: string) {
-    await this.page.fill('[data-test="account-email-form-email-input"]', email);
-    await this.page.fill('[data-test="account-email-form-repeat-email-input"]', email);
-    await this.page.click('[data-test="account-email-form"] button');
+    await expect(async () => {
+      await this.page.fill(
+        '[data-test="account-email-form-email-input"]',
+        email,
+      );
+
+      await this.page.fill(
+        '[data-test="account-email-form-repeat-email-input"]',
+        email,
+      );
+
+      await this.page.click('[data-test="account-email-form"] button');
+
+      const req = await this.page.waitForResponse((resp) => {
+        return resp.url().includes('auth/v1/user');
+      });
+
+      expect(req.status()).toBe(200);
+    }).toPass();
   }
 
   async updatePassword(password: string) {
-    await this.page.fill('[data-test="account-password-form-password-input"]', password);
-    await this.page.fill('[data-test="account-password-form-repeat-password-input"]', password);
+    await this.page.fill(
+      '[data-test="account-password-form-password-input"]',
+      password,
+    );
+    await this.page.fill(
+      '[data-test="account-password-form-repeat-password-input"]',
+      password,
+    );
     await this.page.click('[data-test="account-password-form"] button');
   }
 
   async deleteAccount() {
-    await this.page.click('[data-test="delete-account-button"]');
-    await this.page.fill('[data-test="delete-account-input-field"]', 'DELETE');
-    await this.page.click('[data-test="confirm-delete-account-button"]');
+    await expect(async () => {
+      await this.page.click('[data-test="delete-account-button"]');
+      await this.page.fill(
+        '[data-test="delete-account-input-field"]',
+        'DELETE',
+      );
+      await this.page.click('[data-test="confirm-delete-account-button"]');
+
+      const response = await this.page.waitForResponse((resp) => {
+        return (
+          resp.url().includes('home/settings') &&
+          resp.request().method() === 'POST'
+        );
+      });
+
+      expect(response.status()).toBe(204);
+    }).toPass();
   }
 
   getProfileName() {

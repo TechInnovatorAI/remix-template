@@ -28,12 +28,6 @@ test.describe('Account Settings', () => {
     const email = account.auth.createRandomEmail();
 
     await account.updateEmail(email);
-
-    const req = await page.waitForResponse((resp) => {
-      return resp.url().includes('auth/v1/user');
-    });
-
-    expect(req.status()).toBe(200);
   });
 
   test('user can update their password', async () => {
@@ -55,12 +49,5 @@ test.describe('Account Deletion', () => {
 
     await account.setup();
     await account.deleteAccount();
-
-    const response = await page.waitForResponse((resp) => {
-      return resp.url().includes('home/settings') &&
-        resp.request().method() === 'POST';
-    });
-
-    expect(response.status()).toBe(204);
   });
 });

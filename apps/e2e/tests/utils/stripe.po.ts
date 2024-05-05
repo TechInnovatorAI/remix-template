@@ -11,6 +11,12 @@ export class StripePageObject {
     return this.page.frameLocator('[name="embedded-checkout"]');
   }
 
+  async waitForForm() {
+    return expect(async () => {
+      await expect(this.billingCountry()).toBeVisible();
+    }).toPass();
+  }
+
   async fillForm(params: {
     billingName?: string;
     cardNumber?: string;
@@ -18,10 +24,6 @@ export class StripePageObject {
     cvc?: string;
     billingCountry?: string;
   } = {}) {
-    expect(() => {
-      return this.getStripeCheckoutIframe().locator('form').isVisible();
-    });
-
     const billingName = this.billingName();
     const cardNumber = this.cardNumber();
     const expiry = this.expiry();
@@ -53,10 +55,6 @@ export class StripePageObject {
 
   billingName() {
     return this.getStripeCheckoutIframe().locator('#billingName');
-  }
-
-  cardForm() {
-    return this.getStripeCheckoutIframe().locator('form');
   }
 
   billingCountry() {

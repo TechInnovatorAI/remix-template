@@ -59,9 +59,9 @@ export function PlanPicker(
     resolver: zodResolver(
       z
         .object({
-          planId: z.string().min(1),
-          productId: z.string().min(1),
-          interval: z.string().min(1),
+          planId: z.string(),
+          productId: z.string(),
+          interval: z.string(),
         })
         .refine(
           (data) => {

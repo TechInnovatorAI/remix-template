@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 import { AuthPageObject } from '../authentication/auth.po';
 import { TeamAccountsPageObject } from '../team-accounts/team-accounts.po';
@@ -14,8 +14,8 @@ export class InvitationsPageObject {
     this.teamAccounts = new TeamAccountsPageObject(page);
   }
 
-  async setup() {
-    await this.teamAccounts.setup();
+  setup() {
+    return this.teamAccounts.setup();
   }
 
   public async inviteMembers(
@@ -41,9 +41,11 @@ export class InvitationsPageObject {
         `[data-test="invite-member-form-item"]:nth-child(${nth}) [data-test="invite-email-input"]`,
         invite.email,
       );
+
       await this.page.click(
         `[data-test="invite-member-form-item"]:nth-child(${nth}) [data-test="role-selector-trigger"]`,
       );
+
       await this.page.click(`[data-test="role-option-${invite.role}"]`);
 
       if (index < invites.length - 1) {
@@ -62,10 +64,12 @@ export class InvitationsPageObject {
       .click();
   }
 
-  openInviteForm() {
-    return this.page
-      .locator('[data-test="invite-members-form-trigger"]')
-      .click();
+  async openInviteForm() {
+    await expect(async () => {
+      await this.page.click('[data-test="invite-members-form-trigger"]');
+
+      return await expect(this.getInviteForm()).toBeVisible();
+    }).toPass();
   }
 
   getInvitations() {
