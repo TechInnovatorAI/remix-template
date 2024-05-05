@@ -108,7 +108,7 @@ jobs:
           docker run --add-host=host.docker.internal:host-gateway --rm -it --name=stripe -d stripe/stripe-cli:latest listen --forward-to http://host.docker.internal:5173/api/billing/webhook --skip-verify --api-key "$STRIPE_SECRET_KEY" --log-level debug &
 
       - name: Start Remix Server
-        run: pnpm --filter web dev
+        run: pnpm --filter web dev &
 
       - name: Run Playwright tests
         run: pnpm run test
