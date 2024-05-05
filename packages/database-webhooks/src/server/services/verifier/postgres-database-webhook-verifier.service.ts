@@ -20,11 +20,6 @@ class PostgresDatabaseWebhookVerifierService
   verifySignatureOrThrow(request: Request) {
     const header = request.headers.get('X-Supabase-Event-Signature');
 
-    console.log({
-      header,
-      webhooksSecret,
-    });
-
     if (header !== webhooksSecret) {
       throw new Error('Invalid signature');
     }

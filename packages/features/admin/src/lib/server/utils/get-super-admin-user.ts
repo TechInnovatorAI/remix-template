@@ -1,5 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+import { redirect } from '@remix-run/react';
+
 import { Database } from '@kit/supabase/database';
 
 /**
@@ -11,11 +13,11 @@ export async function getSuperAdminUser(client: SupabaseClient<Database>) {
   const { data, error } = await client.auth.getUser();
 
   if (error) {
-    throw error;
+    throw redirectToSignIn();
   }
 
   if (!data.user) {
-    throw new Error('User not found');
+    throw redirectToSignIn();
   }
 
   const appMetadata = data.user.app_metadata;
@@ -23,8 +25,12 @@ export async function getSuperAdminUser(client: SupabaseClient<Database>) {
   const isSuperAdmin = appMetadata?.role === 'super-admin';
 
   if (!isSuperAdmin) {
-    throw new Error('User is not a super admin');
+    throw redirectToSignIn();
   }
 
   return data.user;
+}
+
+function redirectToSignIn() {
+  return redirect('/auth/sign-in');
 }

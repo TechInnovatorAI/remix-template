@@ -1,8 +1,9 @@
-import { lazy, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useFetcher } from '@remix-run/react';
 
+import { EmbeddedCheckout } from '@kit/billing-gateway/checkout';
 import { PlanPicker } from '@kit/billing-gateway/components';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
@@ -16,8 +17,6 @@ import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
 import billingConfig from '~/config/billing.config';
-
-import { EmbeddedCheckout } from '@kit/billing-gateway/checkout';
 
 export function PersonalAccountCheckoutForm(props: {
   customerId: string | null | undefined;

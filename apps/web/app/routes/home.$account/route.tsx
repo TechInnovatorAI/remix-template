@@ -11,6 +11,7 @@ import {
 } from '@kit/ui/page';
 
 import { AppLogo } from '~/components/app-logo';
+import pathsConfig from '~/config/paths.config';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 import { layoutStyleCookie } from '~/lib/cookies';
 
@@ -18,7 +19,6 @@ import { TeamAccountLayoutMobileNavigation } from './_components/team-account-la
 import { TeamAccountLayoutSidebar } from './_components/team-account-layout-sidebar';
 import { TeamAccountNavigationMenu } from './_components/team-account-navigation-menu';
 import { loadTeamWorkspace } from './_lib/team-account-workspace-loader.server';
-import pathsConfig from "~/config/paths.config";
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const accountSlug = args.params.account as string;

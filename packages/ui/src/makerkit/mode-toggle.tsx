@@ -10,6 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -94,19 +95,33 @@ export function SubMenuModeToggle() {
   );
 
   return (
-    <DropdownMenuSub>
-      <DropdownMenuSubTrigger>
-        <span className={'flex w-full items-center space-x-2'}>
-          <Icon theme={resolvedTheme} />
+    <>
+      <DropdownMenuSub>
+        <DropdownMenuSubTrigger
+          className={
+            'hidden w-full items-center justify-between space-x-2 lg:flex'
+          }
+        >
+          <span className={'space-x-2 flex'}>
+            <Icon theme={resolvedTheme} />
 
-          <span>
-            <Trans i18nKey={'common:theme'} />
+            <span>
+              <Trans i18nKey={'common:theme'} />
+            </span>
           </span>
-        </span>
-      </DropdownMenuSubTrigger>
+        </DropdownMenuSubTrigger>
 
-      <DropdownMenuSubContent>{MenuItems}</DropdownMenuSubContent>
-    </DropdownMenuSub>
+        <DropdownMenuSubContent>{MenuItems}</DropdownMenuSubContent>
+      </DropdownMenuSub>
+
+      <div className={'lg:hidden'}>
+        <DropdownMenuLabel>
+          <Trans i18nKey={'common:theme'} />
+        </DropdownMenuLabel>
+
+        {MenuItems}
+      </div>
+    </>
   );
 }
 

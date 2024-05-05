@@ -4,7 +4,6 @@ import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { PlusCircle } from 'lucide-react';
 
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Button } from '@kit/ui/button';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
@@ -19,7 +18,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
   const i18n = await createI18nServerInstance(args.request);
 
   // require user
-  await requireUserLoader(getSupabaseServerClient(args.request));
+  await requireUserLoader(args.request);
 
   const account = args.params.account as string;
   const title = i18n.t('teams:home.pageTitle');

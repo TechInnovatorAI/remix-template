@@ -24,14 +24,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export async function loader(args: LoaderFunctionArgs) {
+  // require user
+  await requireUserLoader(args.request);
+
   const client = getSupabaseServerClient(args.request);
   const i18n = await createI18nServerInstance(args.request);
 
   const searchParams = new URL(args.request.url).searchParams;
   const title = i18n.t('teams:billing.pageTitle');
-
-  // require user
-  await requireUserLoader(client);
 
   const sessionId = searchParams.get('session_id');
 

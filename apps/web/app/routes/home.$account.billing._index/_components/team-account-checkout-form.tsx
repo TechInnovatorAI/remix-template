@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useFetcher } from '@remix-run/react';
 
+import { EmbeddedCheckout } from '@kit/billing-gateway/checkout';
 import { PlanPicker } from '@kit/billing-gateway/components';
 import {
   Card,
@@ -14,8 +15,6 @@ import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
 import billingConfig from '~/config/billing.config';
-
-import { EmbeddedCheckout } from '@kit/billing-gateway/checkout';
 
 export function TeamAccountCheckoutForm(params: {
   accountId: string;

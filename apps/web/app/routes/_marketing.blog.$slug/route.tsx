@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 
-import {Cms, createCmsClient} from '@kit/cms';
+import { Cms, createCmsClient } from '@kit/cms';
 
 import { Post } from './_components/post';
 
@@ -16,7 +16,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
   }
 
   return {
-    post
+    post,
   };
 };
 
@@ -27,10 +27,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   const { title, description } = data.post;
 
-  return [
-    { title },
-    { description },
-  ];
+  return [{ title }, { description }];
 };
 
 export default function BlogPost() {

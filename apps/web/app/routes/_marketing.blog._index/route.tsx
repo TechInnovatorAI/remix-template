@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import {json, useLoaderData} from '@remix-run/react';
+import { json, useLoaderData } from '@remix-run/react';
 
-import {Cms, createCmsClient} from '@kit/cms';
+import { Cms, createCmsClient } from '@kit/cms';
 import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 

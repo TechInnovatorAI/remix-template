@@ -28,9 +28,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const client = getSupabaseServerClient(request);
-  const user = await requireUserLoader(client);
+  const user = await requireUserLoader(request);
   const { t } = await createI18nServerInstance(request);
+
+  const client = getSupabaseServerClient(request);
 
   const [data, customerId] = await loadPersonalAccountBillingPageData({
     userId: user.id,
@@ -66,9 +67,7 @@ export default function PersonalAccountBillingPage() {
 
           <If condition={data}>
             {(data) => (
-              <div
-                className={'flex w-full max-w-2xl flex-col space-y-6'}
-              >
+              <div className={'flex w-full max-w-2xl flex-col space-y-6'}>
                 {'active' in data ? (
                   <CurrentSubscriptionCard
                     subscription={data}

@@ -5,4 +5,4 @@ export default {
   // those classes are included correctly.
   content: [...baseConfig.content],
   presets: [baseConfig],
-}
+};

@@ -61,7 +61,6 @@ test.describe('Account Deletion', () => {
         resp.request().method() === 'POST';
     });
 
-    // The server should respond with a 303 redirect
-    expect(response.status()).toBe(303);
+    expect(response.status()).toBe(204);
   });
 });

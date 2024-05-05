@@ -8,7 +8,7 @@ import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { requireUserLoader } from '~/lib/require-user-loader';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await requireUserLoader(getSupabaseServerClient(request));
+  await requireUserLoader(request);
 
   const i18n = await createI18nServerInstance(request);
   const title = i18n.t('account:homePage');

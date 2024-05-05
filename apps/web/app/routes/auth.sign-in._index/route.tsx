@@ -14,9 +14,10 @@ import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const i18n = await createI18nServerInstance(request);
-  const user = await requireUser(getSupabaseServerClient(request));
+  const client = getSupabaseServerClient(request);
+  const { data: user } = await requireUser(client);
 
-  if (user.data) {
+  if (user) {
     return redirect(pathsConfig.app.home);
   }
 

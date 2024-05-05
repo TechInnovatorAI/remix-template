@@ -36,11 +36,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export const loader = async (args: LoaderFunctionArgs) => {
+  // require user
+  await requireUserLoader(args.request);
+
   const i18n = await createI18nServerInstance(args.request);
   const title = i18n.t('account:settingsTab');
-
-  // require user
-  await requireUserLoader(getSupabaseServerClient(args.request));
 
   return {
     title,

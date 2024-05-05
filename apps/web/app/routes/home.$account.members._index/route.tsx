@@ -63,14 +63,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export async function loader(args: LoaderFunctionArgs) {
+  // require user
+  await requireUserLoader(args.request);
+
   const client = getSupabaseServerClient(args.request);
   const i18n = await createI18nServerInstance(args.request);
   const title = i18n.t('teams:members.pageTitle');
 
   const accountSlug = args.params.account as string;
-
-  // require user
-  await requireUserLoader(client);
 
   const [members, invitations, user, canAddMember] = await loadMembersPageData(
     client,

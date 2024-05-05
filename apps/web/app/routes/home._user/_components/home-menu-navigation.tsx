@@ -5,13 +5,13 @@ import {
 
 import { AppLogo } from '~/components/app-logo';
 import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
+import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 import { UserWorkspace } from '~/routes/home._user/_lib/load-user-workspace.server';
 
 // home imports
 import { HomeAccountSelector } from '../_components/home-account-selector';
 import { UserNotifications } from '../_components/user-notifications';
-import pathsConfig from "~/config/paths.config";
 
 export function HomeMenuNavigation(props: { workspace: UserWorkspace }) {
   const { workspace, user, accounts } = props.workspace;
