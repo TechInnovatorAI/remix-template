@@ -4,7 +4,7 @@ import type {
   WP_REST_API_Tag,
 } from 'wp-types';
 
-import { Cms, CmsClient } from '@kit/cms';
+import type { Cms, CmsClient } from '@kit/cms';
 
 import GetTagsOptions = Cms.GetTagsOptions;
 
