@@ -75,7 +75,7 @@ export default function ReturnCheckoutSessionPage() {
     <>
       <div className={'fixed left-0 top-48 z-50 mx-auto w-full'}>
         <BillingSessionStatus
-          redirectPath={'../'}
+          redirectPath={'../billing'}
           customerEmail={customerEmail ?? ''}
         />
       </div>

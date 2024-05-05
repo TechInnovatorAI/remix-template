@@ -102,7 +102,7 @@ export function SubMenuModeToggle() {
             'hidden w-full items-center justify-between space-x-2 lg:flex'
           }
         >
-          <span className={'space-x-2 flex'}>
+          <span className={'flex space-x-2'}>
             <Icon theme={resolvedTheme} />
 
             <span>

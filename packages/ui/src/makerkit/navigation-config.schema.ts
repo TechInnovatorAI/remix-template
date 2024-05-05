@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const NavigationConfigSchema = z.object({
-  style: z.enum(['custom', 'sidebar', 'header']).default('header'),
+  style: z.enum(['custom', 'sidebar', 'header']).default('sidebar'),
   routes: z.array(
     z.union([
       z.object({

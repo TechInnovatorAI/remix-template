@@ -1,6 +1,4 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
-
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PageBody, PageHeader } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
