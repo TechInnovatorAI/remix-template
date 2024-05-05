@@ -10,6 +10,7 @@ import {
 } from '@kit/ui/page';
 
 import { AppLogo } from '~/components/app-logo';
+import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 import { layoutStyleCookie } from '~/lib/cookies';
 import { loadUserWorkspace } from '~/routes/home._user/_lib/load-user-workspace.server';
@@ -21,13 +22,7 @@ import { HomeSidebar } from './_components/home-sidebar';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const workspace = await loadUserWorkspace(args.request);
-  const cookieHeader = args.request.headers.get('Cookie');
-  const cookie = await layoutStyleCookie.parse(cookieHeader);
-
-  const style =
-    typeof cookie === 'string'
-      ? (cookie as PageLayoutStyle)
-      : personalAccountNavigationConfig.style;
+  const style = await getLayoutStyle(args.request);
 
   return json({
     workspace,
@@ -51,11 +46,24 @@ export default function UserHomeLayout() {
       </PageNavigation>
 
       <PageMobileNavigation className={'flex items-center justify-between'}>
-        <AppLogo />
+        <AppLogo href={pathsConfig.app.home} />
+
         <HomeMobileNavigation workspace={workspace} />
       </PageMobileNavigation>
 
       <Outlet />
     </Page>
   );
+}
+
+async function getLayoutStyle(request: Request) {
+  const value = await layoutStyleCookie.parse(
+    request.headers.get('cookie') ?? '',
+  );
+
+  if (typeof value === 'string') {
+    return value as PageLayoutStyle;
+  }
+
+  return personalAccountNavigationConfig.style;
 }

@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useFetcher } from '@remix-run/react';
 
@@ -15,13 +15,7 @@ import { Trans } from '@kit/ui/trans';
 
 import billingConfig from '~/config/billing.config';
 
-const EmbeddedCheckout = lazy(async () => {
-  const { EmbeddedCheckout } = await import('@kit/billing-gateway/checkout');
-
-  return {
-    default: EmbeddedCheckout,
-  };
-});
+import { EmbeddedCheckout } from '@kit/billing-gateway/checkout';
 
 export function TeamAccountCheckoutForm(params: {
   accountId: string;

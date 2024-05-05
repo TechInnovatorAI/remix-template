@@ -130,7 +130,7 @@ export default function TeamAccountBillingPage() {
       <PageBody>
         <div
           className={cn(`flex w-full flex-col space-y-4`, {
-            'mx-auto max-w-2xl': data,
+            'max-w-2xl': data,
           })}
         >
           <If condition={data} fallback={<div>{Checkout}</div>}>

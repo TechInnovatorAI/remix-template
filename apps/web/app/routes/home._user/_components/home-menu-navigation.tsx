@@ -11,6 +11,7 @@ import { UserWorkspace } from '~/routes/home._user/_lib/load-user-workspace.serv
 // home imports
 import { HomeAccountSelector } from '../_components/home-account-selector';
 import { UserNotifications } from '../_components/user-notifications';
+import pathsConfig from "~/config/paths.config";
 
 export function HomeMenuNavigation(props: { workspace: UserWorkspace }) {
   const { workspace, user, accounts } = props.workspace;
@@ -37,7 +38,7 @@ export function HomeMenuNavigation(props: { workspace: UserWorkspace }) {
   return (
     <div className={'flex w-full flex-1 justify-between'}>
       <div className={'flex items-center space-x-8'}>
-        <AppLogo />
+        <AppLogo href={pathsConfig.app.home} />
 
         <BorderedNavigationMenu>
           {routes.map((route) => (

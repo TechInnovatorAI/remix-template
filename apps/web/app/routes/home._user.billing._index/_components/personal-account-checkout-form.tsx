@@ -17,13 +17,7 @@ import { Trans } from '@kit/ui/trans';
 
 import billingConfig from '~/config/billing.config';
 
-const EmbeddedCheckout = lazy(async () => {
-  const { EmbeddedCheckout } = await import('@kit/billing-gateway/checkout');
-
-  return {
-    default: EmbeddedCheckout,
-  };
-});
+import { EmbeddedCheckout } from '@kit/billing-gateway/checkout';
 
 export function PersonalAccountCheckoutForm(props: {
   customerId: string | null | undefined;

@@ -24,24 +24,27 @@ export function BorderedNavigationMenu(props: React.PropsWithChildren) {
 export function BorderedNavigationMenuItem(props: {
   path: string;
   label: string;
+  end?: boolean;
   active?: boolean;
 }) {
   return (
     <NavigationMenuItem>
       <Button asChild variant={'ghost'} className={'relative'}>
-        <NavLink
-          to={props.path}
-          className={({ isActive }) => {
-            return 'text-sm' && isActive ? 'group-active' : '';
-          }}
-        >
-          <Trans i18nKey={props.label} defaults={props.label} />
+        <NavLink to={props.path} end={props.end}>
+          {({ isActive }) => (
+            <>
+              <Trans i18nKey={props.label} defaults={props.label} />
 
-          <span
-            className={cn(
-              'absolute -bottom-2.5 left-0 hidden h-1 w-full bg-primary animate-in fade-in zoom-in-90 group-active:block',
-            )}
-          />
+              <span
+                className={cn(
+                  'absolute -bottom-2.5 left-0 hidden h-1 w-full bg-primary animate-in fade-in zoom-in-90',
+                  {
+                    block: isActive,
+                  },
+                )}
+              />
+            </>
+          )}
         </NavLink>
       </Button>
     </NavigationMenuItem>

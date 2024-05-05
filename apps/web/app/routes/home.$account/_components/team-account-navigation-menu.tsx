@@ -5,6 +5,7 @@ import {
 
 import { AppLogo } from '~/components/app-logo';
 import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
+import pathsConfig from '~/config/paths.config';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 import { TeamAccountAccountsSelector } from '~/routes/home.$account/_components/team-account-accounts-selector';
 import { TeamAccountWorkspace } from '~/routes/home.$account/_lib/team-account-workspace-loader.server';
@@ -39,7 +40,7 @@ export function TeamAccountNavigationMenu(props: {
   return (
     <div className={'flex w-full flex-1 justify-between'}>
       <div className={'flex items-center space-x-8'}>
-        <AppLogo />
+        <AppLogo href={pathsConfig.app.home} />
 
         <BorderedNavigationMenu>
           {routes.map((route) => (
