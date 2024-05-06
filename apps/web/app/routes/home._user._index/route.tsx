@@ -1,4 +1,5 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
+
 import { PageBody, PageHeader } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 

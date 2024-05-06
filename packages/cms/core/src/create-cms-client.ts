@@ -9,7 +9,7 @@ import { CmsType } from './cms.type';
  * @throws {Error} If the specified CMS type is unknown.
  */
 export async function createCmsClient(
-  type: CmsType =import.meta.env.VITE_CMS_CLIENT as CmsType,
+  type: CmsType = import.meta.env.VITE_CMS_CLIENT as CmsType,
 ): Promise<CmsClient> {
   return cmsClientFactory(type);
 }

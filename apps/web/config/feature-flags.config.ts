@@ -18,23 +18,19 @@ const FeatureFlagsSchema = z.object({
   }),
   enableTeamAccounts: z.boolean({
     description: 'Enable team accounts.',
-    required_error:
-      'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_DELETION',
+    required_error: 'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_DELETION',
   }),
   enableTeamCreation: z.boolean({
     description: 'Enable team creation.',
-    required_error:
-      'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_CREATION',
+    required_error: 'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_CREATION',
   }),
   enablePersonalAccountBilling: z.boolean({
     description: 'Enable personal account billing.',
-    required_error:
-      'Provide the variable VITE_ENABLE_PERSONAL_ACCOUNT_BILLING',
+    required_error: 'Provide the variable VITE_ENABLE_PERSONAL_ACCOUNT_BILLING',
   }),
   enableTeamAccountBilling: z.boolean({
     description: 'Enable team account billing.',
-    required_error:
-      'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_BILLING',
+    required_error: 'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_BILLING',
   }),
   languagePriority: z
     .enum(['user', 'application'], {
@@ -53,10 +49,7 @@ const FeatureFlagsSchema = z.object({
 });
 
 const featuresFlagConfig = FeatureFlagsSchema.parse({
-  enableThemeToggle: getBoolean(
-    import.meta.env.VITE_ENABLE_THEME_TOGGLE,
-    true,
-  ),
+  enableThemeToggle: getBoolean(import.meta.env.VITE_ENABLE_THEME_TOGGLE, true),
   enableAccountDeletion: getBoolean(
     import.meta.env.VITE_ENABLE_PERSONAL_ACCOUNT_DELETION,
     false,
@@ -81,8 +74,7 @@ const featuresFlagConfig = FeatureFlagsSchema.parse({
     import.meta.env.VITE_ENABLE_TEAM_ACCOUNTS_BILLING,
     false,
   ),
-  languagePriority: import.meta.env
-    .VITE_LANGUAGE_PRIORITY as LanguagePriority,
+  languagePriority: import.meta.env.VITE_LANGUAGE_PRIORITY as LanguagePriority,
   enableNotifications: getBoolean(
     import.meta.env.VITE_ENABLE_NOTIFICATIONS,
     true,

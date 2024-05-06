@@ -16,7 +16,7 @@ export function BaselimeProvider({
   enableWebVitals?: boolean;
   ErrorPage?: React.ReactElement;
 }>) {
-  const key = apiKey ??import.meta.env.VITE_BASELIME_KEY ?? '';
+  const key = apiKey ?? import.meta.env.VITE_BASELIME_KEY ?? '';
 
   if (!key) {
     console.warn(

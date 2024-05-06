@@ -60,6 +60,6 @@ function getEmailSettingsFromEnvironment() {
     })
     .parse({
       fromEmail: process.env.EMAIL_SENDER,
-      productName:import.meta.env.VITE_PRODUCT_NAME,
+      productName: import.meta.env.VITE_PRODUCT_NAME,
     });
 }

@@ -13,7 +13,7 @@ export async function createKeystaticReader() {
       const { createReader } = await import('@keystatic/core/reader');
 
       const contentPath =import.meta.env.VITE_KEYSTATIC_CONTENT_PATH;
-      const repositoryPath = path.join(process.cwd(), contentPath as string);
+      const repositoryPath = path.join(process.cwd(), contentPath);
 
       return createReader(repositoryPath, config);
     }
