@@ -54,12 +54,12 @@ function getEmailSettingsFromEnvironment() {
         .email(),
       productName: z
         .string({
-          required_error: 'Provide the variable REMIX_PUBLIC_PRODUCT_NAME',
+          required_error: 'Provide the variable VITE_PRODUCT_NAME',
         })
         .min(1),
     })
     .parse({
       fromEmail: process.env.EMAIL_SENDER,
-      productName: process.env.REMIX_PUBLIC_PRODUCT_NAME,
+      productName:import.meta.env.VITE_PRODUCT_NAME,
     });
 }

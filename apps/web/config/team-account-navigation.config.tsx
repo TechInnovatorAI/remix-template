@@ -42,7 +42,7 @@ const getRoutes = (account: string) => [
 export function getTeamAccountSidebarConfig(account: string) {
   return NavigationConfigSchema.parse({
     routes: getRoutes(account),
-    style: process.env.REMIX_PUBLIC_TEAM_NAVIGATION_STYLE,
+    style: import.meta.env.VITE_TEAM_NAVIGATION_STYLE,
   });
 }
 

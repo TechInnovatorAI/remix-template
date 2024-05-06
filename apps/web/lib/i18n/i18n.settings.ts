@@ -5,7 +5,7 @@ import { createI18nSettings } from '@kit/i18n';
  * This is used as a fallback language when the selected language is not supported.
  *
  */
-const defaultLanguage = process.env.REMIX_PUBLIC_LOCALE ?? 'en';
+const defaultLanguage = import.meta.env.VITE_LOCALE ?? 'en';
 
 /**
  * The list of supported languages.

@@ -3,28 +3,28 @@
 Please set the following environment variable to your preferred monitoring provider:
 
 ```
-REMIX_PUBLIC_MONITORING_PROVIDER=
+VITE_MONITORING_PROVIDER=
 ```
 
 ## Available Providers
 
-To use a specific provider, set the `REMIX_PUBLIC_MONITORING_PROVIDER` environment variable to one of the following values:
+To use a specific provider, set the `VITE_MONITORING_PROVIDER` environment variable to one of the following values:
 
 1. Baselime: `baselime`
 2. Sentry: `sentry`
 
 ## Baselime
 
-To use Baselime, set the `REMIX_PUBLIC_MONITORING_PROVIDER` environment variable to `baselime`.
+To use Baselime, set the `VITE_MONITORING_PROVIDER` environment variable to `baselime`.
 
 ```
-REMIX_PUBLIC_MONITORING_PROVIDER=baselime
+VITE_MONITORING_PROVIDER=baselime
 ```
 
 ## Sentry
 
-To use Sentry, set the `REMIX_PUBLIC_MONITORING_PROVIDER` environment variable to `sentry`.
+To use Sentry, set the `VITE_MONITORING_PROVIDER` environment variable to `sentry`.
 
 ```
-REMIX_PUBLIC_MONITORING_PROVIDER=sentry
+VITE_MONITORING_PROVIDER=sentry
 ```

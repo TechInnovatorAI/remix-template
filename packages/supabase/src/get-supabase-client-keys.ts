@@ -10,7 +10,7 @@ export function getSupabaseClientKeys() {
       anonKey: z.string().min(1),
     })
     .parse({
-      url: process.env.REMIX_PUBLIC_SUPABASE_URL,
-      anonKey: process.env.REMIX_PUBLIC_SUPABASE_ANON_KEY,
+      url: import.meta.env.VITE_SUPABASE_URL,
+      anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY,
     });
 }

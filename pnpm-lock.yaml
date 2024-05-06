@@ -1404,19 +1404,10 @@ importers:
         version: 5.4.5
 
   tooling/typescript:
-    dependencies:
-      '@tanstack/react-table':
-        specifier: ^8.16.0
-        version: 8.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      next:
-        specifier: 14.2.3
-        version: 14.2.3(@babel/core@7.24.5)(@opentelemetry/api@1.8.0)(@playwright/test@1.43.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
-      zod:
-        specifier: ^3.23.5
-        version: 3.23.5
+    devDependencies:
+      vite:
+        specifier: ^5.2.11
+        version: 5.2.11(@types/node@20.12.7)
 
 packages:
 

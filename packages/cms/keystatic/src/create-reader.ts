@@ -12,7 +12,7 @@ export async function createKeystaticReader() {
       const { default: config } = await import('./keystatic.config');
       const { createReader } = await import('@keystatic/core/reader');
 
-      const contentPath = process.env.REMIX_PUBLIC_KEYSTATIC_CONTENT_PATH;
+      const contentPath =import.meta.env.VITE_KEYSTATIC_CONTENT_PATH;
       const repositoryPath = path.join(process.cwd(), contentPath as string);
 
       return createReader(repositoryPath, config);

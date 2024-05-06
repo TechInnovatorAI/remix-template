@@ -13,7 +13,6 @@ import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';
 
 import { RootHead } from '~/components/root-head';
-import { PUBLIC_ENV } from '~/lib/public-env';
 import { SiteFooter } from '~/routes/_marketing/_components/site-footer';
 import { SiteHeader } from '~/routes/_marketing/_components/site-header';
 
@@ -33,21 +32,9 @@ export function RootErrorBoundary() {
         <RootHead />
         <Meta />
         <Links />
-
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.process = {env: ${JSON.stringify(PUBLIC_ENV)}}`,
-          }}
-        />
       </head>
 
       <div className={'flex h-screen flex-1 flex-col'}>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.process = {env: ${JSON.stringify(PUBLIC_ENV)}}`,
-          }}
-        />
-
         <SiteHeader />
 
         <div

@@ -7,7 +7,7 @@ Please add the following environment variables to your `.env.local` file during 
 ```env
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOKS_SECRET=
-REMIX_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+VITE_STRIPE_PUBLISHABLE_KEY=
 ```
 
 Add the variables to your production environment as well using your CI.

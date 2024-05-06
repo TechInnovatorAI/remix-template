@@ -21,7 +21,7 @@ Once you have the proxy running, you can add the URL to your Lemon Squeezy accou
 Please set your app configuration URL to the following:
 
 ```
-REMIX_PUBLIC_SITE_URL=https://<your-proxy-url>
+VITE_SITE_URL=https://<your-proxy-url>
 ```
 
 Replace `<your-proxy-url>` with the URL provided by the proxy service.

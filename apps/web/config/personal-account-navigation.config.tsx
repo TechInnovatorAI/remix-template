@@ -31,5 +31,5 @@ if (featureFlagsConfig.enablePersonalAccountBilling) {
 
 export const personalAccountNavigationConfig = NavigationConfigSchema.parse({
   routes,
-  style: process.env.REMIX_PUBLIC_USER_NAVIGATION_STYLE,
+  style: import.meta.env.VITE_USER_NAVIGATION_STYLE,
 });

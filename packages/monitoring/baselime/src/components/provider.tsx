@@ -16,12 +16,12 @@ export function BaselimeProvider({
   enableWebVitals?: boolean;
   ErrorPage?: React.ReactElement;
 }>) {
-  const key = apiKey ?? process.env.REMIX_PUBLIC_BASELIME_KEY ?? '';
+  const key = apiKey ??import.meta.env.VITE_BASELIME_KEY ?? '';
 
   if (!key) {
     console.warn(
       'You configured Baselime as monitoring provider but did not provide a key. ' +
-        'Please provide a key to enable monitoring with Baselime using the variable REMIX_PUBLIC_BASELIME_KEY.',
+        'Please provide a key to enable monitoring with Baselime using the variable VITE_BASELIME_KEY.',
     );
 
     return children;

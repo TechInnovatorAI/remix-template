@@ -11,7 +11,7 @@ import { Dialog, DialogContent } from '@kit/ui/dialog';
 import { StripeClientEnvSchema } from '../schema/stripe-client-env.schema';
 
 const { publishableKey } = StripeClientEnvSchema.parse({
-  publishableKey: process.env.REMIX_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+  publishableKey:import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
 });
 
 const stripePromise = loadStripe(publishableKey);

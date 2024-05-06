@@ -3,8 +3,8 @@
 Please set the following environment variable:
 
 ```bash
-REMIX_PUBLIC_MONITORING_PROVIDER=sentry
-REMIX_PUBLIC_SENTRY_DSN=your_dsn
+VITE_MONITORING_PROVIDER=sentry
+VITE_SENTRY_DSN=your_dsn
 ```
 
 Create the following file at the root of your project:

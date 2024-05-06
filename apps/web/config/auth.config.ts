@@ -20,13 +20,13 @@ const AuthConfigSchema = z.object({
 const authConfig = AuthConfigSchema.parse({
   // NB: This is a public key, so it's safe to expose.
   // Copy the value from the Supabase Dashboard.
-  captchaTokenSiteKey: process.env.REMIX_PUBLIC_CAPTCHA_SITE_KEY,
+  captchaTokenSiteKey: import.meta.env.VITE_CAPTCHA_SITE_KEY,
 
   // NB: Enable the providers below in the Supabase Console
   // in your production project
   providers: {
-    password: process.env.REMIX_PUBLIC_AUTH_PASSWORD === 'true',
-    magicLink: process.env.REMIX_PUBLIC_AUTH_MAGIC_LINK === 'true',
+    password: import.meta.env.VITE_AUTH_PASSWORD === 'true',
+    magicLink: import.meta.env.VITE_AUTH_MAGIC_LINK === 'true',
     oAuth: ['google'],
   },
 } satisfies z.infer<typeof AuthConfigSchema>);

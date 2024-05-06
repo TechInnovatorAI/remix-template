@@ -16,7 +16,6 @@ import { RootProviders } from '~/components/root-providers';
 import appConfig from '~/config/app.config';
 import { themeCookie } from '~/lib/cookies';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { PUBLIC_ENV } from '~/lib/public-env';
 
 // error boundary
 export const ErrorBoundary = RootErrorBoundary;
@@ -30,13 +29,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
     language,
     className,
     theme,
-    env: PUBLIC_ENV,
   };
 }
 
 export default function App() {
   const data = useLoaderData<typeof loader>();
-  const { language, className, theme, env } = data ?? {};
+  const { language, className, theme } = data ?? {};
 
   return (
     <html lang={language} className={className}>
@@ -44,12 +42,6 @@ export default function App() {
         <RootHead />
         <Meta />
         <Links />
-
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.process = {env: ${JSON.stringify(env)}}`,
-          }}
-        />
       </head>
 
       <body>

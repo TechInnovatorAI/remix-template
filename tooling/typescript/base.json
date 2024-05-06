@@ -18,5 +18,6 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
+  "files": ["env.d.ts"],
   "exclude": ["node_modules", "build", "dist"]
 }

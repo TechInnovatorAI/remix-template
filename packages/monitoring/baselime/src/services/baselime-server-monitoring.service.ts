@@ -4,9 +4,9 @@ import { MonitoringService } from '@kit/monitoring-core';
 
 const apiKey = z
   .string({
-    required_error: 'REMIX_PUBLIC_BASELIME_KEY is required',
+    required_error: 'VITE_BASELIME_KEY is required',
   })
-  .parse(process.env.REMIX_PUBLIC_BASELIME_KEY);
+  .parse(process.env.VITE_BASELIME_KEY);
 
 export class BaselimeServerMonitoringService implements MonitoringService {
   userId: string | null = null;

@@ -4,7 +4,7 @@ import { CmsType } from './cms.type';
 
 export function ContentRenderer({
   content,
-  type = process.env.REMIX_PUBLIC_CMS_CLIENT as CmsType,
+  type =import.meta.env.VITE_CMS_CLIENT as CmsType,
 }: {
   content: unknown;
   type?: CmsType;

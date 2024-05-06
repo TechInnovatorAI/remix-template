@@ -69,7 +69,7 @@ class AccountWebhooksService {
   }
 
   private getEmailSettings() {
-    const productName = process.env.REMIX_PUBLIC_PRODUCT_NAME;
+    const productName =import.meta.env.VITE_PRODUCT_NAME;
     const fromEmail = process.env.EMAIL_SENDER;
 
     return z

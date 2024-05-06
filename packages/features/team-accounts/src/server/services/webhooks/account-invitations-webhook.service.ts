@@ -8,8 +8,8 @@ import { Database } from '@kit/supabase/database';
 type Invitation = Database['public']['Tables']['invitations']['Row'];
 
 const invitePath = '/join';
-const siteURL = process.env.REMIX_PUBLIC_SITE_URL;
-const productName = process.env.REMIX_PUBLIC_PRODUCT_NAME ?? '';
+const siteURL =import.meta.env.VITE_SITE_URL;
+const productName =import.meta.env.VITE_PRODUCT_NAME ?? '';
 const emailSender = process.env.EMAIL_SENDER;
 
 const env = z
