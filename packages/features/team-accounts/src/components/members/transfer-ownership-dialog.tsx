@@ -7,6 +7,7 @@ import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
   AlertDialog,
@@ -79,6 +80,7 @@ function TransferOrganizationOwnershipForm({
   setIsOpen: (isOpen: boolean) => void;
 }) {
   const [error, setError] = useState<boolean>();
+  const csrfToken = useCsrfToken();
 
   const fetcher = useFetcher<{
     success: boolean;
@@ -90,6 +92,7 @@ function TransferOrganizationOwnershipForm({
       confirmation: '',
       accountId,
       userId,
+      csrfToken,
     },
   });
 

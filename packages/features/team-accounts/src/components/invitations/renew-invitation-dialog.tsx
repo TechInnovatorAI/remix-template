@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useFetcher } from '@remix-run/react';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
   AlertDialog,
@@ -58,6 +59,7 @@ function RenewInvitationForm({
     success: boolean;
   }>();
 
+  const csrfToken = useCsrfToken();
   const pending = fetcher.state === 'submitting';
 
   const [error, setError] = useState<boolean>();
@@ -76,7 +78,10 @@ function RenewInvitationForm({
     fetcher.submit(
       {
         intent: 'renew-invitation',
-        payload: { invitationId },
+        payload: {
+          invitationId,
+          csrfToken,
+        },
       },
       {
         method: 'POST',

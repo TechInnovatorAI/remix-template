@@ -5,6 +5,7 @@ import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -38,12 +39,14 @@ export function AdminDeleteAccountDialog(
   }>,
 ) {
   const fetcher = useFetcher();
+  const csrfToken = useCsrfToken();
 
   const form = useForm({
     resolver: zodResolver(DeleteAccountForm),
     defaultValues: {
       accountId: props.accountId,
       confirmation: '',
+      csrfToken,
     },
   });
 

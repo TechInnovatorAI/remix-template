@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
-export const PersonalAccountCheckoutSchema = z.object({
+import { CsrfTokenSchema } from '@kit/csrf/schema';
+
+export const PersonalAccountCheckoutSchema = CsrfTokenSchema.extend({
   planId: z.string().min(1),
   productId: z.string().min(1),
 });

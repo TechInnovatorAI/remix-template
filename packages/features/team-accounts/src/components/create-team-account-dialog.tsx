@@ -5,6 +5,7 @@ import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { CsrfTokenFormField, useCsrfToken } from '@kit/csrf/client';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { Button } from '@kit/ui/button';
 import {
@@ -62,9 +63,12 @@ function CreateTeamAccountForm(props: { onClose: () => void }) {
     success: boolean;
   }>();
 
+  const csrfToken = useCsrfToken();
+
   const form = useForm<z.infer<typeof CreateTeamSchema>>({
     defaultValues: {
       name: '',
+      csrfToken,
     },
     resolver: zodResolver(CreateTeamSchema),
   });
@@ -97,6 +101,8 @@ function CreateTeamAccountForm(props: { onClose: () => void }) {
           });
         })}
       >
+        <CsrfTokenFormField field={form.register('csrfToken')} />
+
         <div className={'flex flex-col space-y-4'}>
           <If condition={error}>
             <CreateOrganizationErrorAlert />

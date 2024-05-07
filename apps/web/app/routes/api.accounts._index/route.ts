@@ -2,10 +2,12 @@ import { ActionFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/react';
 import { z } from 'zod';
 
+import { CsrfTokenSchema } from '@kit/csrf/schema';
+import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 const Schema = z.object({
-  payload: z.object({
+  payload: CsrfTokenSchema.extend({
     name: z.string(),
   }),
   intent: z.literal('create-account'),
@@ -14,6 +16,8 @@ const Schema = z.object({
 export async function action({ request }: ActionFunctionArgs) {
   const body = Schema.parse(await request.json());
   const client = getSupabaseServerClient(request);
+
+  await verifyCsrfToken(request, body.payload.csrfToken);
 
   try {
     switch (body.intent) {

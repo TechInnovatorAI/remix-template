@@ -2,6 +2,7 @@ import { ActionFunctionArgs } from '@remix-run/node';
 import { json, redirect } from '@remix-run/react';
 import { z } from 'zod';
 
+import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { TeamBillingPortalSchema } from '~/lib/billing/schema/team-billing.schema';
@@ -21,12 +22,17 @@ export async function action(args: ActionFunctionArgs) {
         payload: TeamBillingPortalSchema,
       })
       .parse(await args.request.json());
+
+    await verifyCsrfToken(args.request, data.payload.csrfToken);
   } else {
     data = z
       .object({
         intent: z.literal('personal-account-billing-portal'),
+        csrfToken: z.string(),
       })
       .parse(Object.fromEntries(await args.request.formData()));
+
+    await verifyCsrfToken(args.request, data.csrfToken);
   }
 
   const client = getSupabaseServerClient(args.request);

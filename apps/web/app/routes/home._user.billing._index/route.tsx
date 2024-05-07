@@ -6,6 +6,7 @@ import {
   CurrentLifetimeOrderCard,
   CurrentSubscriptionCard,
 } from '@kit/billing-gateway/components';
+import { CsrfTokenFormField, useCsrfToken } from '@kit/csrf/client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { If } from '@kit/ui/if';
 import { PageBody } from '@kit/ui/page';
@@ -97,6 +98,8 @@ export default function PersonalAccountBillingPage() {
 }
 
 function CustomerBillingPortalForm() {
+  const csrfToken = useCsrfToken();
+
   return (
     <Form method={'POST'} action={'/api/billing/customer-portal'}>
       <input
@@ -104,6 +107,8 @@ function CustomerBillingPortalForm() {
         name={'intent'}
         value={'personal-account-billing-portal'}
       />
+
+      <CsrfTokenFormField value={csrfToken} />
 
       <BillingPortalCard />
     </Form>

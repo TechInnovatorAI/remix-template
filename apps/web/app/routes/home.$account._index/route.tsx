@@ -5,6 +5,7 @@ import { useLoaderData } from '@remix-run/react';
 import { PlusCircle } from 'lucide-react';
 
 import { Button } from '@kit/ui/button';
+import { ClientOnly } from '@kit/ui/client-only';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
@@ -54,7 +55,9 @@ export default function TeamAccountHomePage() {
       </TeamAccountLayoutPageHeader>
 
       <PageBody>
-        <DashboardDemo />
+        <ClientOnly>
+          <DashboardDemo />
+        </ClientOnly>
       </PageBody>
     </>
   );

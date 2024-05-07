@@ -20,6 +20,7 @@ import {
   ImpersonateUserSchema,
   ReactivateUserSchema,
 } from '@kit/admin/schema';
+import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export const meta = [
@@ -72,7 +73,12 @@ const AdminAccountActions = z.union([
 ]);
 
 export const action = async function (args: ActionFunctionArgs) {
-  const data = AdminAccountActions.parse(await args.request.json());
+  const json = await args.request.json();
+  const data = AdminAccountActions.parse(json);
+
+  // verify CSRF token
+  await verifyCsrfToken(args.request, data.payload.csrfToken);
+
   const client = getSupabaseServerClient(args.request);
 
   // admin protected route

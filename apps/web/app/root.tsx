@@ -5,9 +5,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  json,
   useLoaderData,
 } from '@remix-run/react';
 
+import { CsrfTokenMeta } from '@kit/csrf/client';
+import { createCsrfProtect } from '@kit/csrf/server';
 import { cn } from '@kit/ui/utils';
 
 import { RootErrorBoundary } from '~/components/root-error-boundary';
@@ -20,16 +23,25 @@ import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 // error boundary
 export const ErrorBoundary = RootErrorBoundary;
 
+const csrfProtect = createCsrfProtect();
+
 export async function loader({ request }: LoaderFunctionArgs) {
   const { language } = await createI18nServerInstance(request);
   const theme = await getTheme(request);
   const className = getClassName(theme);
+  const csrfToken = await csrfProtect(request);
 
-  return {
-    language,
-    className,
-    theme,
-  };
+  return json(
+    {
+      language,
+      className,
+      theme,
+      csrfToken,
+    },
+    {
+      headers: request.headers,
+    },
+  );
 }
 
 export default function App() {
@@ -42,6 +54,7 @@ export default function App() {
         <RootHead />
         <Meta />
         <Links />
+        <CsrfTokenMeta csrf={data.csrfToken} />
       </head>
 
       <body>

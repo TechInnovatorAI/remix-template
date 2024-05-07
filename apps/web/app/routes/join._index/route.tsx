@@ -7,6 +7,7 @@ import { Link, redirect, useLoaderData } from '@remix-run/react';
 import { ArrowLeft } from 'lucide-react';
 
 import { AuthLayoutShell } from '@kit/auth/shared';
+import { verifyCsrfToken } from '@kit/csrf/server';
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -143,6 +144,10 @@ export default function JoinTeamAccountPage() {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const data = await request.formData();
   const client = getSupabaseServerClient(request);
+
+  const csrfToken = data.get('csrfToken') as string;
+
+  await verifyCsrfToken(request, csrfToken);
 
   return acceptInvitationAction({
     client,

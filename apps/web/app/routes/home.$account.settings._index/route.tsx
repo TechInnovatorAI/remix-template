@@ -7,6 +7,7 @@ import {
 import { useRouteLoaderData } from '@remix-run/react';
 import { z } from 'zod';
 
+import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import {
   deleteTeamAccountAction,
@@ -91,7 +92,11 @@ export default function TeamAccountSettingsPage() {
 }
 
 export const action = async (args: ActionFunctionArgs) => {
-  const data = ActionSchema.parse(await args.request.json());
+  const json = await args.request.json();
+  const data = ActionSchema.parse(json);
+
+  await verifyCsrfToken(args.request, data.payload.csrfToken);
+
   const client = getSupabaseServerClient(args.request);
 
   switch (data.intent) {

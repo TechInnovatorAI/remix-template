@@ -5,6 +5,7 @@ import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -35,6 +36,7 @@ export function AdminReactivateUserDialog(
   }>,
 ) {
   const fetcher = useFetcher();
+  const csrfToken = useCsrfToken();
 
   const form = useForm({
     resolver: zodResolver(
@@ -48,6 +50,7 @@ export function AdminReactivateUserDialog(
     defaultValues: {
       userId: props.userId,
       confirmation: '',
+      csrfToken,
     },
   });
 

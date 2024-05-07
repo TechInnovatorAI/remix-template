@@ -66,15 +66,14 @@ export function TeamAccountCheckoutForm(params: {
             pending={pending}
             config={billingConfig}
             canStartTrial={canStartTrial}
-            onSubmit={({ planId, productId }) => {
+            onSubmit={(payload) => {
               fetcher.submit(
                 {
                   intent: 'account-checkout',
                   payload: {
-                    planId,
-                    productId,
                     slug: params.accountSlug,
                     accountId: params.accountId,
+                    ...payload,
                   },
                 },
                 {

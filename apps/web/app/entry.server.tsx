@@ -101,6 +101,7 @@ async function handleBrowserRequest(
 
   return new Promise((resolve, reject) => {
     let shellRendered = false;
+
     const { pipe, abort } = renderToPipeableStream(
       <RemixServer
         context={remixContext}
@@ -141,4 +142,18 @@ async function handleBrowserRequest(
 
     setTimeout(abort, ABORT_DELAY);
   });
+}
+
+export async function handleError(error: unknown) {
+  const { getServerMonitoringService } = await import('@kit/monitoring/server');
+
+  const service = await getServerMonitoringService();
+
+  if (error instanceof Error) {
+    return service.captureException(error);
+  } else {
+    const serverError = new Error(`Server Error: ${JSON.stringify(error)}`);
+
+    return service.captureException(serverError);
+  }
 }

@@ -11,6 +11,7 @@ import {
 } from '@kit/admin/actions';
 import { AdminAccountsTable } from '@kit/admin/components/admin-accounts-table';
 import { AdminActionsSchema } from '@kit/admin/schema';
+import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
@@ -88,6 +89,9 @@ export default function AdminAccountsPage() {
 export const action = async function (args: ActionFunctionArgs) {
   const json = await args.request.json();
   const data = AdminActionsSchema.parse(json);
+
+  // verify csrf token
+  await verifyCsrfToken(args.request, data.payload.csrfToken);
 
   const client = getSupabaseServerClient(args.request);
 

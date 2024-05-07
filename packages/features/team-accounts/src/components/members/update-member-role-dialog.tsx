@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { Button } from '@kit/ui/button';
 import {
@@ -93,6 +94,7 @@ function UpdateMemberForm({
   const [error, setError] = useState<boolean>();
   const { t } = useTranslation('teams');
 
+  const csrfToken = useCsrfToken();
   const fetcher = useFetcher<{
     success: boolean;
   }>();
@@ -117,6 +119,7 @@ function UpdateMemberForm({
           accountId: teamAccountId,
           userId,
           role,
+          csrfToken,
         },
       } satisfies z.infer<typeof UpdateMemberRoleSchema>,
       {

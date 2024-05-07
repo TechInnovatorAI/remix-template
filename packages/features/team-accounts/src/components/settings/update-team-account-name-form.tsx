@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { Button } from '@kit/ui/button';
 import {
   Form,
@@ -30,6 +31,7 @@ export const UpdateTeamAccountNameForm = (props: {
 
   path: string;
 }) => {
+  const csrfToken = useCsrfToken();
   const { t } = useTranslation('teams');
 
   const fetcher = useFetcher<{
@@ -42,6 +44,7 @@ export const UpdateTeamAccountNameForm = (props: {
     resolver: zodResolver(TeamNameFormSchema),
     defaultValues: {
       name: props.account.name,
+      csrfToken,
     },
   });
 
@@ -65,11 +68,11 @@ export const UpdateTeamAccountNameForm = (props: {
             fetcher.submit(
               {
                 intent: 'update-team-name',
-                name: data.name,
                 payload: {
                   slug: props.account.slug,
                   name: data.name,
                   path: props.path,
+                  csrfToken,
                 },
               } satisfies z.infer<typeof UpdateTeamNameSchema>,
               {

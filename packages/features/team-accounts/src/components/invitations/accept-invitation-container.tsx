@@ -1,5 +1,6 @@
 import { Form, useNavigation } from '@remix-run/react';
 
+import { CsrfTokenFormField, useCsrfToken } from '@kit/csrf/client';
 import { Heading } from '@kit/ui/heading';
 import { If } from '@kit/ui/if';
 import { Separator } from '@kit/ui/separator';
@@ -28,6 +29,8 @@ export function AcceptInvitationContainer(props: {
   };
 }) {
   const { state } = useNavigation();
+  const csrfToken = useCsrfToken();
+
   const pending = state === 'submitting';
 
   return (
@@ -65,6 +68,8 @@ export function AcceptInvitationContainer(props: {
       <div className={'flex flex-col space-y-4'}>
         <Form method={'POST'} data-test={'join-team-form'} className={'w-full'}>
           <input type="hidden" name={'inviteToken'} value={props.inviteToken} />
+
+          <CsrfTokenFormField value={csrfToken} />
 
           <input
             type={'hidden'}

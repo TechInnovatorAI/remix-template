@@ -9,5 +9,6 @@ export const UpdateMemberRoleSchema = z.object({
   payload: RoleSchema.extend({
     accountId: z.string().uuid(),
     userId: z.string().uuid(),
+    csrfToken: z.string(),
   }),
 });

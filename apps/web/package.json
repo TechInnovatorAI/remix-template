@@ -26,6 +26,7 @@
     "supabase:db:dump:local": "supabase db dump --local --data-only"
   },
   "dependencies": {
+    "@edge-csrf/core": "^2.0.0",
     "@hookform/resolvers": "^3.3.4",
     "@kit/accounts": "workspace:^",
     "@kit/admin": "workspace:^",
@@ -33,6 +34,7 @@
     "@kit/billing": "workspace:^",
     "@kit/billing-gateway": "workspace:^",
     "@kit/cms": "workspace:^",
+    "@kit/csrf": "workspace:^",
     "@kit/database-webhooks": "workspace:^",
     "@kit/email-templates": "workspace:^",
     "@kit/i18n": "workspace:^",

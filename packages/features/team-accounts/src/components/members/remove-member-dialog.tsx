@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useFetcher } from '@remix-run/react';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
   AlertDialog,
@@ -23,6 +24,8 @@ export const RemoveMemberDialog: React.FC<{
   userId: string;
 }> = ({ isOpen, setIsOpen, teamAccountId, userId }) => {
   const [error, setError] = useState<boolean>();
+
+  const csrfToken = useCsrfToken();
 
   const fetcher = useFetcher<{
     success: boolean;
@@ -47,6 +50,7 @@ export const RemoveMemberDialog: React.FC<{
         payload: {
           accountId: teamAccountId,
           userId,
+          csrfToken,
         },
       },
       {
@@ -54,7 +58,7 @@ export const RemoveMemberDialog: React.FC<{
         encType: 'application/json',
       },
     );
-  }, [fetcher, teamAccountId, userId]);
+  }, [fetcher, teamAccountId, userId, csrfToken]);
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>

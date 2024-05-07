@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useFetcher } from '@remix-run/react';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
   AlertDialog,
@@ -22,6 +23,7 @@ export const DeleteInvitationDialog: React.FC<{
   invitationId: number;
 }> = ({ isOpen, setIsOpen, invitationId }) => {
   const [error, setError] = useState<boolean>();
+  const csrfToken = useCsrfToken();
 
   const fetcher = useFetcher<{
     success: boolean;
@@ -41,14 +43,14 @@ export const DeleteInvitationDialog: React.FC<{
     fetcher.submit(
       {
         intent: 'delete-invitation',
-        payload: { invitationId },
+        payload: { invitationId, csrfToken },
       },
       {
         method: 'POST',
         encType: 'application/json',
       },
     );
-  }, [fetcher, invitationId]);
+  }, [fetcher, invitationId, csrfToken]);
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>

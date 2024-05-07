@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
-const ConfirmationSchema = z.object({
+import { CsrfTokenSchema } from '@kit/csrf/schema';
+
+const ConfirmationSchema = CsrfTokenSchema.extend({
   confirmation: z.custom<string>((value) => value === 'CONFIRM'),
 });
 

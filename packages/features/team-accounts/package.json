@@ -22,6 +22,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@kit/accounts": "workspace:^",
     "@kit/billing-gateway": "workspace:*",
+    "@kit/csrf": "workspace:^",
     "@kit/email-templates": "workspace:^",
     "@kit/eslint-config": "workspace:*",
     "@kit/mailers": "workspace:^",

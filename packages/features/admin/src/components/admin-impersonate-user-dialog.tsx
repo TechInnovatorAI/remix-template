@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import {
   AlertDialog,
@@ -42,6 +43,8 @@ export function AdminImpersonateUserDialog(
     refreshToken: string;
   }>();
 
+  const csrfToken = useCsrfToken();
+
   const form = useForm({
     resolver: zodResolver(
       z.object({
@@ -54,6 +57,7 @@ export function AdminImpersonateUserDialog(
     defaultValues: {
       userId: props.userId,
       confirmation: '',
+      csrfToken,
     },
   });
 

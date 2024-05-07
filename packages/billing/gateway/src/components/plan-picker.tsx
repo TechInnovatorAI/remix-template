@@ -15,6 +15,7 @@ import {
   getPrimaryLineItem,
   getProductPlanPair,
 } from '@kit/billing';
+import { useCsrfToken } from '@kit/csrf/client';
 import { formatCurrency } from '@kit/shared/utils';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -43,11 +44,13 @@ import { LineItemDetails } from './line-item-details';
 export function PlanPicker(
   props: React.PropsWithChildren<{
     config: BillingConfig;
-    onSubmit: (data: { planId: string; productId: string }) => void;
+    onSubmit: (data: { planId: string; productId: string; csrfToken: string; }) => void;
     canStartTrial?: boolean;
     pending?: boolean;
   }>,
 ) {
+  const csrfToken = useCsrfToken();
+
   const intervals = useMemo(
     () => getPlanIntervals(props.config),
     [props.config],
@@ -62,6 +65,7 @@ export function PlanPicker(
           planId: z.string(),
           productId: z.string(),
           interval: z.string(),
+          csrfToken: z.string(),
         })
         .refine(
           (data) => {
@@ -83,6 +87,7 @@ export function PlanPicker(
       interval: intervals[0],
       planId: '',
       productId: '',
+      csrfToken,
     },
   });
 

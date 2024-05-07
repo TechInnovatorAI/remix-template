@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { Button } from '@kit/ui/button';
 import {
@@ -42,6 +43,7 @@ export const UpdateInvitationDialog: React.FC<{
   userRoleHierarchy: number;
 }> = ({ isOpen, setIsOpen, invitationId, userRole, userRoleHierarchy }) => {
   const [error, setError] = useState<boolean>();
+  const csrfToken = useCsrfToken();
 
   const fetcher = useFetcher<{
     success: boolean;
@@ -64,7 +66,7 @@ export const UpdateInvitationDialog: React.FC<{
       fetcher.submit(
         {
           intent: 'update-invitation',
-          payload: { invitationId, role },
+          payload: { invitationId, role, csrfToken },
         } satisfies z.infer<typeof UpdateInvitationSchema>,
         {
           method: 'POST',
@@ -72,7 +74,7 @@ export const UpdateInvitationDialog: React.FC<{
         },
       );
     },
-    [fetcher, invitationId],
+    [fetcher, invitationId, csrfToken],
   );
 
   return (

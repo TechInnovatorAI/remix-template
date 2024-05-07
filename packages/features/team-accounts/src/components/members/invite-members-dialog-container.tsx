@@ -39,6 +39,7 @@ import { Trans } from '@kit/ui/trans';
 import { InvitationsSchema } from '../../schema';
 import { MembershipRoleSelector } from './membership-role-selector';
 import { RolesDataProvider } from './roles-data-provider';
+import {useCsrfToken} from "@kit/csrf/client";
 
 type InviteModel = ReturnType<typeof createEmptyInviteModel>;
 
@@ -131,6 +132,7 @@ function InviteMembersForm({
   accountSlug: string;
 }) {
   const { t } = useTranslation('teams');
+  const csrfToken = useCsrfToken();
 
   const form = useForm({
     resolver: zodResolver(InvitationsSchema),
@@ -139,6 +141,7 @@ function InviteMembersForm({
     defaultValues: {
       invitations: [createEmptyInviteModel()],
       accountSlug,
+      csrfToken,
     },
   });
 

@@ -11,6 +11,7 @@
   "prettier": "@kit/prettier-config",
   "devDependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@kit/csrf": "workspace:^",
     "@kit/eslint-config": "workspace:*",
     "@kit/prettier-config": "workspace:*",
     "@kit/supabase": "workspace:^",

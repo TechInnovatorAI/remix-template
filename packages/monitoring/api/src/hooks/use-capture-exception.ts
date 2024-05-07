@@ -1,7 +1,22 @@
+import { useEffect } from 'react';
+
 import { useMonitoring } from './use-monitoring';
 
-export function useCaptureException(error: Error) {
+export function useCaptureException(
+  error: Error,
+  params: {
+    reportError?: boolean;
+  } = {
+    reportError: true,
+  },
+) {
   const service = useMonitoring();
 
-  return service.captureException(error);
+  useEffect(() => {
+    if (!params.reportError) {
+      return;
+    }
+
+    service.captureException(error);
+  }, [error, service, params]);
 }

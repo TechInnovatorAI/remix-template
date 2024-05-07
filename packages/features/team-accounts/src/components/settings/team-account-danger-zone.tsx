@@ -5,6 +5,7 @@ import { useFetcher } from '@remix-run/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { ErrorBoundary } from '@kit/monitoring/components';
 import { useUser } from '@kit/supabase/hooks/use-user';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
@@ -130,6 +131,8 @@ function DeleteTeamConfirmationForm({
   name: string;
   id: string;
 }) {
+  const csrfToken = useCsrfToken();
+
   const fetcher = useFetcher<{
     success: boolean;
   }>();
@@ -143,10 +146,12 @@ function DeleteTeamConfirmationForm({
           message: 'Name does not match',
           path: ['name'],
         }),
+        csrfToken: z.string(),
       }),
     ),
     defaultValues: {
       name: '',
+      csrfToken,
     },
   });
 
@@ -158,12 +163,13 @@ function DeleteTeamConfirmationForm({
         <form
           data-test={'delete-team-form'}
           className={'flex flex-col space-y-4'}
-          onSubmit={form.handleSubmit(() => {
+          onSubmit={form.handleSubmit((payload) => {
             fetcher.submit(
               {
                 intent: 'delete-team-account',
                 payload: {
                   accountId: id,
+                  csrfToken: payload.csrfToken,
                 },
               },
               {
@@ -254,6 +260,8 @@ function LeaveTeamContainer(props: {
     id: string;
   };
 }) {
+  const csrfToken = useCsrfToken();
+
   const form = useForm({
     resolver: zodResolver(
       z.object({
@@ -265,11 +273,13 @@ function LeaveTeamContainer(props: {
           message: 'Account ID does not match',
           path: ['accountId'],
         }),
+        csrfToken: z.string(),
       }),
     ),
     defaultValues: {
       confirmation: '',
       accountId: props.account.id,
+      csrfToken,
     },
   });
 
@@ -315,14 +325,11 @@ function LeaveTeamContainer(props: {
             <Form {...form}>
               <form
                 className={'flex flex-col space-y-4'}
-                onSubmit={form.handleSubmit((data) => {
+                onSubmit={form.handleSubmit((payload) => {
                   fetcher.submit(
                     {
                       intent: 'leave-team',
-                      payload: {
-                        accountId: data.accountId,
-                        confirmation: data.confirmation,
-                      },
+                      payload,
                     },
                     {
                       method: 'POST',

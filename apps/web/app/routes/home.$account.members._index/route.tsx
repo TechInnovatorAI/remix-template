@@ -10,6 +10,7 @@ import { json, useLoaderData, useRouteLoaderData } from '@remix-run/react';
 import { PlusCircle } from 'lucide-react';
 import { z } from 'zod';
 
+import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import {
   AccountInvitationsTable,
@@ -190,6 +191,8 @@ export const action = async function (args: ActionFunctionArgs) {
   const client = getSupabaseServerClient(args.request);
   const json = await args.request.json();
   const data = await MembersActionsSchema.parseAsync(json);
+
+  await verifyCsrfToken(args.request, data.payload.csrfToken);
 
   switch (data.intent) {
     case 'create-invitations': {
