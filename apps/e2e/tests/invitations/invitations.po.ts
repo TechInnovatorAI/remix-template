@@ -111,16 +111,18 @@ export class InvitationsPageObject {
   async acceptInvitation() {
     console.log('Accepting invitation...');
 
-    await this.page
+    const click = this.page
       .locator('[data-test="join-team-form"] button[type="submit"]')
       .click();
 
-    await this.page.waitForResponse((response) => {
+    const response = this.page.waitForResponse((response) => {
       return (
         response.url().includes('/join') &&
         response.request().method() === 'POST'
       );
     });
+
+    await Promise.all([click, response]);
   }
 
   private getInviteForm() {

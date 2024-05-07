@@ -17,7 +17,8 @@ test.describe('Team Accounts', () => {
     const { teamName, slug } = teamAccounts.createTeamName();
 
     await teamAccounts.goToSettings();
-    await teamAccounts.updateName(teamName, slug);
+
+    const request = teamAccounts.updateName(teamName, slug);
 
     await teamAccounts.openAccountsSelector();
 

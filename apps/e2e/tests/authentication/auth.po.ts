@@ -27,11 +27,15 @@ export class AuthPageObject {
     email: string,
     password: string
   }) {
-    await this.page.waitForTimeout(1000);
+    await expect(async() => {
+      await this.page.waitForTimeout(1000);
 
-    await this.page.fill('input[name="email"]', params.email);
-    await this.page.fill('input[name="password"]', params.password);
-    await this.page.click('button[type="submit"]');
+      await this.page.fill('input[name="email"]', params.email);
+      await this.page.fill('input[name="password"]', params.password);
+      await this.page.click('button[type="submit"]');
+
+      await this.page.waitForURL('**/home');
+    }).toPass();
   }
 
   async signUp(params: {
@@ -39,13 +43,21 @@ export class AuthPageObject {
     password: string,
     repeatPassword: string
   }) {
-    await this.page.waitForTimeout(1000);
+    await expect(async() => {
+      await this.page.waitForTimeout(1000);
 
-    await this.page.fill('input[name="email"]', params.email);
-    await this.page.fill('input[name="password"]', params.password);
-    await this.page.fill('input[name="repeatPassword"]', params.repeatPassword);
+      await this.page.fill('input[name="email"]', params.email);
+      await this.page.fill('input[name="password"]', params.password);
+      await this.page.fill('input[name="repeatPassword"]', params.repeatPassword);
 
-    await this.page.click('button[type="submit"]');
+      const signUp = this.page.click('button[type="submit"]');
+
+      const response = this.page.waitForResponse((resp) => {
+        return resp.url().includes('auth');
+      });
+
+      await Promise.all([signUp, response]);
+    }).toPass();
   }
 
   async visitConfirmEmailLink(email: string, params: {

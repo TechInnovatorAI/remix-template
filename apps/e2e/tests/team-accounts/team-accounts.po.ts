@@ -28,23 +28,31 @@ export class TeamAccountsPageObject {
   }
 
   goToSettings() {
-    return this.page
-      .locator('a', {
-        hasText: 'Settings',
-      })
-      .click();
+    return expect(async () => {
+      await this.page
+        .locator('a', {
+          hasText: 'Settings',
+        })
+        .click();
+
+      await this.page.waitForURL('**/home/*/settings');
+    }).toPass();
   }
 
   goToBilling() {
-    return this.page
-      .locator('a', {
-        hasText: 'Billing',
-      })
-      .click();
+    return expect(async () => {
+      await this.page
+        .locator('a', {
+          hasText: 'Billing',
+        })
+        .click();
+
+      return await this.page.waitForURL('**/home/*/billing');
+    }).toPass();
   }
 
-  async openAccountsSelector() {
-    await expect(async () => {
+  openAccountsSelector() {
+    return expect(async () => {
       await this.page.click('[data-test="account-selector-trigger"]');
 
       return expect(
@@ -58,9 +66,14 @@ export class TeamAccountsPageObject {
 
     await this.page.click('[data-test="create-team-account-trigger"]');
     await this.page.fill('[data-test="create-team-form"] input', teamName);
-    await this.page.click('[data-test="create-team-form"] button:last-child');
 
-    await this.page.waitForURL(`/home/${slug}`);
+    const click = this.page.click(
+      '[data-test="create-team-form"] button:last-child',
+    );
+
+    const response = this.page.waitForURL(`**/home/${slug}`);
+
+    await Promise.all([click, response]);
   }
 
   async updateName(name: string, slug: string) {
@@ -70,14 +83,16 @@ export class TeamAccountsPageObject {
         name,
       );
 
-      await this.page.click(
+      const click = this.page.click(
         '[data-test="update-team-account-name-form"] button',
       );
 
       // the slug should be updated to match the new team name
-      await expect(this.page).toHaveURL(
+      const response = expect(this.page).toHaveURL(
         `http://localhost:5173/home/${slug}/settings`,
       );
+
+      return Promise.all([click, response]);
     }).toPass();
   }
 
@@ -94,9 +109,11 @@ export class TeamAccountsPageObject {
         teamName,
       );
 
-      await this.page.click('[data-test="delete-team-form-confirm-button"]');
+      const click = this.page.click(
+        '[data-test="delete-team-form-confirm-button"]',
+      );
 
-      await this.page.waitForURL('http://localhost:5173/home');
+      await this.page.waitForURL('**/home');
     }).toPass();
   }
 
