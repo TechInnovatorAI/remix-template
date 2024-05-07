@@ -30,10 +30,10 @@ export class TeamAccountsPageObject {
   goToSettings() {
     return expect(async () => {
       await this.page
-        .locator('a', {
-          hasText: 'Settings',
-        })
-        .click();
+          .locator('a', {
+            hasText: 'Settings',
+          })
+          .click();
 
       await this.page.waitForURL('**/home/*/settings');
     }).toPass();
@@ -42,10 +42,10 @@ export class TeamAccountsPageObject {
   goToBilling() {
     return expect(async () => {
       await this.page
-        .locator('a', {
-          hasText: 'Billing',
-        })
-        .click();
+          .locator('a', {
+            hasText: 'Billing',
+          })
+          .click();
 
       return await this.page.waitForURL('**/home/*/billing');
     }).toPass();
@@ -56,7 +56,7 @@ export class TeamAccountsPageObject {
       await this.page.click('[data-test="account-selector-trigger"]');
 
       return expect(
-        this.page.locator('[data-test="account-selector-content"]'),
+          this.page.locator('[data-test="account-selector-content"]'),
       ).toBeVisible();
     }).toPass();
   }
@@ -68,10 +68,10 @@ export class TeamAccountsPageObject {
     await this.page.fill('[data-test="create-team-form"] input', teamName);
 
     const click = this.page.click(
-      '[data-test="create-team-form"] button:last-child',
+        '[data-test="create-team-form"] button:last-child',
     );
 
-    const response = this.page.waitForURL(`**/home/${slug}`);
+    const response = this.page.waitForURL(`/home/${slug}`);
 
     await Promise.all([click, response]);
   }
@@ -79,18 +79,16 @@ export class TeamAccountsPageObject {
   async updateName(name: string, slug: string) {
     await expect(async () => {
       await this.page.fill(
-        '[data-test="update-team-account-name-form"] input',
-        name,
+          '[data-test="update-team-account-name-form"] input',
+          name,
       );
 
       const click = this.page.click(
-        '[data-test="update-team-account-name-form"] button',
+          '[data-test="update-team-account-name-form"] button',
       );
 
       // the slug should be updated to match the new team name
-      const response = expect(this.page).toHaveURL(
-        `http://localhost:5173/home/${slug}/settings`,
-      );
+      const response = this.page.waitForURL(`**/home/${slug}/settings`);
 
       return Promise.all([click, response]);
     }).toPass();
@@ -101,19 +99,21 @@ export class TeamAccountsPageObject {
       await this.page.click('[data-test="delete-team-trigger"]');
 
       await expect(
-        this.page.locator('[data-test="delete-team-form-confirm-input"]'),
+          this.page.locator('[data-test="delete-team-form-confirm-input"]'),
       ).toBeVisible();
 
       await this.page.fill(
-        '[data-test="delete-team-form-confirm-input"]',
-        teamName,
+          '[data-test="delete-team-form-confirm-input"]',
+          teamName,
       );
 
       const click = this.page.click(
-        '[data-test="delete-team-form-confirm-button"]',
+          '[data-test="delete-team-form-confirm-button"]',
       );
 
-      await this.page.waitForURL('**/home');
+      const response = this.page.waitForURL('**/home');
+
+      return Promise.all([click, response]);
     }).toPass();
   }
 

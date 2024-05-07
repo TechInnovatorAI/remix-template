@@ -1,4 +1,4 @@
-import { KeystaticDocumentRenderer } from '../../keystatic/src/content-renderer';
+import { KeystaticContentRenderer } from '../../keystatic/src/content-renderer';
 import { WordpressContentRenderer } from '../../wordpress/src/content-renderer';
 import { CmsType } from './cms.type';
 
@@ -11,7 +11,7 @@ export function ContentRenderer({
 }) {
   switch (type) {
     case 'keystatic':
-      return KeystaticDocumentRenderer({ content });
+      return KeystaticContentRenderer({ content });
 
     case 'wordpress':
       return WordpressContentRenderer({ content });

@@ -20,6 +20,11 @@ test.describe('Team Accounts', () => {
 
     const request = teamAccounts.updateName(teamName, slug);
 
+    // the slug should be updated to match the new team name
+    const newUrl = page.waitForURL(`**/home/${slug}/settings`);
+
+    await Promise.all([request, newUrl]);
+
     await teamAccounts.openAccountsSelector();
 
     await expect(teamAccounts.getTeamFromSelector(teamName)).toBeVisible();
@@ -38,7 +43,7 @@ test.describe('Account Deletion', () => {
     await teamAccounts.openAccountsSelector();
 
     await expect(
-      teamAccounts.getTeamFromSelector(params.teamName),
+        teamAccounts.getTeamFromSelector(params.teamName),
     ).not.toBeVisible();
   });
 });

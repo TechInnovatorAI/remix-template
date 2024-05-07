@@ -8,14 +8,16 @@ const STORAGE_KIND = process.env.KEYSTATIC_STORAGE_KIND ?? 'local';
 export async function createKeystaticReader() {
   switch (STORAGE_KIND) {
     case 'local': {
-      const path = await import('node:path');
-      const { default: config } = await import('./keystatic.config');
-      const { createReader } = await import('@keystatic/core/reader');
+      if (process.env.NEXT_RUNTIME === 'nodejs') {
+        const { default: config } = await import('./keystatic.config');
+        const { createReader } = await import('@keystatic/core/reader');
 
-      const contentPath = import.meta.env.VITE_KEYSTATIC_CONTENT_PATH;
-      const repositoryPath = path.join(process.cwd(), contentPath);
-
-      return createReader(repositoryPath, config);
+        return createReader(process.cwd(), config);
+      } else {
+        // we should never get here but the compiler requires the check
+        // to ensure we don't parse the package at build time
+        throw new Error();
+      }
     }
 
     case 'github':

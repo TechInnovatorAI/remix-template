@@ -1,8 +1,5 @@
-import React from 'react';
+import * as React from 'react';
 
-import { DocumentElement } from '@keystatic/core';
-import { DocumentRenderer } from '@keystatic/core/renderer';
-
-export function KeystaticDocumentRenderer(props: { content: unknown }) {
-  return <DocumentRenderer document={props.content as DocumentElement[]} />;
+export function KeystaticContentRenderer(props: { content: unknown }) {
+  return <div dangerouslySetInnerHTML={{ __html: props.content as string }} />;
 }

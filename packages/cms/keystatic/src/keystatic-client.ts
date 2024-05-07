@@ -1,3 +1,5 @@
+import Markdoc from '@markdoc/markdoc';
+
 import { Cms, CmsClient } from '@kit/cms';
 
 import { createKeystaticReader } from './create-reader';
@@ -138,7 +140,9 @@ class KeystaticClient implements CmsClient {
       ? new Date(item.entry.publishedAt)
       : new Date();
 
-    const content = await item.entry.content();
+    const markdoc = await item.entry.content();
+    const content = Markdoc.transform(markdoc.node);
+    const html = Markdoc.renderers.html(content);
 
     return {
       id: item.slug,
@@ -147,7 +151,7 @@ class KeystaticClient implements CmsClient {
       slug: item.slug,
       description: item.entry.description,
       publishedAt: publishedAt.toISOString(),
-      content,
+      content: html,
       image: item.entry.image ?? undefined,
       categories:
         item.entry.categories.map((item) => {
