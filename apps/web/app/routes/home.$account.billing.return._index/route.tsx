@@ -36,7 +36,7 @@ export async function loader(args: LoaderFunctionArgs) {
   const sessionId = searchParams.get('session_id');
 
   if (!sessionId) {
-    return redirect('../');
+    return redirect('../billing');
   }
 
   const { customerEmail, checkoutToken } = await loadCheckoutSession(
@@ -113,7 +113,7 @@ async function loadCheckoutSession(
   });
 
   if (!session) {
-    throw redirect('../');
+    throw redirect('../billing');
   }
 
   const checkoutToken = session.isSessionOpen ? session.checkoutToken : null;

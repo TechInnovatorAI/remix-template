@@ -18,9 +18,13 @@ export class AuthPageObject {
     return this.page.goto('/auth/sign-up');
   }
 
-  async signOut() {
-    await this.page.click('[data-test="account-dropdown-trigger"]');
-    await this.page.click('[data-test="account-dropdown-sign-out"]');
+  signOut() {
+    return expect(async () => {
+      await this.page.click('[data-test="account-dropdown-trigger"]');
+      await this.page.click('[data-test="account-dropdown-sign-out"]');
+
+      await this.page.waitForURL('**/');
+    }).toPass();
   }
 
   async signIn(params: {

@@ -30,11 +30,6 @@ export async function verifyCsrfToken(
 
   const verified = await verifyToken(atou(token), atou(secretStr));
 
-  console.log({
-    secretStr,
-    token,
-  });
-
   if (!verified) {
     console.error(`Invalid CSRF token`);
 
