@@ -80,6 +80,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Environment variables
+        uses: aarcangeli/load-dotenv@v1.0.0
+        with:
+          filenames: |
+            apps/web/.env.template
+          quiet: true
+          if-file-not-found: error
+
       - name: Store Playwright's Version
         run: |
           PLAYWRIGHT_VERSION=$(pnpm ls @playwright/test --filter web-e2e | grep @playwright | sed 's/.*@//')

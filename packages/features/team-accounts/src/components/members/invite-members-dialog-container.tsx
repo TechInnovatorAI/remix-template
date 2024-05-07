@@ -9,6 +9,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
+import { useCsrfToken } from '@kit/csrf/client';
 import { Button } from '@kit/ui/button';
 import {
   Dialog,
@@ -39,7 +40,6 @@ import { Trans } from '@kit/ui/trans';
 import { InvitationsSchema } from '../../schema';
 import { MembershipRoleSelector } from './membership-role-selector';
 import { RolesDataProvider } from './roles-data-provider';
-import {useCsrfToken} from "@kit/csrf/client";
 
 type InviteModel = ReturnType<typeof createEmptyInviteModel>;
 

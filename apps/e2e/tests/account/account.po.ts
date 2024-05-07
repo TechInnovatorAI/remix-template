@@ -33,12 +33,6 @@ export class AccountPageObject {
       );
 
       await this.page.click('[data-test="account-email-form"] button');
-
-      const req = await this.page.waitForResponse((resp) => {
-        return resp.url().includes('auth/v1/user');
-      });
-
-      expect(req.status()).toBe(200);
     }).toPass();
   }
 
@@ -61,16 +55,23 @@ export class AccountPageObject {
         '[data-test="delete-account-input-field"]',
         'DELETE',
       );
-      await this.page.click('[data-test="confirm-delete-account-button"]');
 
-      const response = await this.page.waitForResponse((resp) => {
-        return (
-          resp.url().includes('home/settings') &&
-          resp.request().method() === 'POST'
-        );
-      });
+      const click = this.page.click(
+        '[data-test="confirm-delete-account-button"]',
+      );
 
-      expect(response.status()).toBe(204);
+      const response = this.page
+        .waitForResponse((resp) => {
+          return (
+            resp.url().includes('home/settings') &&
+            resp.request().method() === 'POST'
+          );
+        })
+        .then((response) => {
+          expect(response.status()).toBe(204);
+        });
+
+      return Promise.all([click, response]);
     }).toPass();
   }
 

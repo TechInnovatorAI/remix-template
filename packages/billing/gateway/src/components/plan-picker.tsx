@@ -44,7 +44,11 @@ import { LineItemDetails } from './line-item-details';
 export function PlanPicker(
   props: React.PropsWithChildren<{
     config: BillingConfig;
-    onSubmit: (data: { planId: string; productId: string; csrfToken: string; }) => void;
+    onSubmit: (data: {
+      planId: string;
+      productId: string;
+      csrfToken: string;
+    }) => void;
     canStartTrial?: boolean;
     pending?: boolean;
   }>,

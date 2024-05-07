@@ -66,14 +66,18 @@ export class TeamAccountsPageObject {
   async updateName(name: string, slug: string) {
     await expect(async () => {
       await this.page.fill(
-          '[data-test="update-team-account-name-form"] input',
-          name,
+        '[data-test="update-team-account-name-form"] input',
+        name,
       );
 
-      await this.page.click('[data-test="update-team-account-name-form"] button');
+      await this.page.click(
+        '[data-test="update-team-account-name-form"] button',
+      );
 
       // the slug should be updated to match the new team name
-      await expect(this.page).toHaveURL(`http://localhost:5173/home/${slug}/settings`);
+      await expect(this.page).toHaveURL(
+        `http://localhost:5173/home/${slug}/settings`,
+      );
     }).toPass();
   }
 
