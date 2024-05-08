@@ -45,6 +45,11 @@ select is(
   'The member can check if they have a role on the account'
 );
 
+select isnt_empty(
+  $$ select * from public.get_account_members('makerkit') $$,
+  'The member can query the team account memberships using the get_account_members function'
+);
+
 select tests.authenticate_as('test');
 
 -- Foreigners
@@ -75,6 +80,11 @@ select is_empty(
 select is_empty(
   $$ select * from public.accounts where id = makerkit.get_account_id_by_slug('makerkit') $$,
   'The foreigner cannot query the team account'
+);
+
+select is_empty(
+  $$ select * from public.get_account_members('makerkit') $$,
+  'The foreigner cannot query the team members'
 );
 
 select * from finish();

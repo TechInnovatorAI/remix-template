@@ -357,6 +357,11 @@ add constraint accounts_slug_null_if_personal_account_true check (
   )
 );
 
+-- Indexes
+create index if not exists ix_accounts_primary_owner_user_id on public.accounts (primary_owner_user_id);
+
+create index if not exists ix_accounts_is_personal_account on public.accounts (is_personal_account);
+
 -- constraint to ensure that the primary_owner_user_id is unique for personal accounts
 create unique index unique_personal_account on public.accounts (primary_owner_user_id)
 where
@@ -701,7 +706,7 @@ set
             from
                 public.accounts_memberships membership
             where
-                membership.user_id = auth.uid()
+                membership.user_id = (select auth.uid())
                 and membership.account_id = has_role_on_account.account_id
                 and((membership.account_role = has_role_on_account.account_role
                     or has_role_on_account.account_role is null)));
@@ -2375,13 +2380,20 @@ select
   accounts.id as id,
   accounts.name as name,
   accounts.picture_url as picture_url,
-  accounts.public_data as public_data,
-  subscriptions.status as subscription_status
+  (
+    select
+      status
+    from
+      public.subscriptions
+    where
+      account_id = accounts.id
+    limit
+      1
+  ) as subscription_status
 from
   public.accounts
-  left join public.subscriptions on accounts.id = subscriptions.account_id
 where
-  primary_owner_user_id = auth.uid ()
+  primary_owner_user_id = (select auth.uid ())
   and accounts.is_personal_account = true
 limit
   1;
@@ -2396,21 +2408,29 @@ select
 -- we create a view to load the user's accounts and memberships
 -- useful to display the user's accounts in the app
 create or replace view
-  public.user_accounts
+  public.user_accounts (id, name, picture_url, slug, role)
 with
   (security_invoker = true) as
 select
-  accounts.id as id,
-  accounts.name as name,
-  accounts.picture_url as picture_url,
-  accounts.slug as slug,
-  accounts_memberships.account_role as role
+  account.id,
+  account.name,
+  account.picture_url,
+  account.slug,
+  membership.account_role
 from
-  public.accounts
-  join public.accounts_memberships on accounts.id = accounts_memberships.account_id
+  public.accounts account
+  join public.accounts_memberships membership on account.id = membership.account_id
 where
-  accounts_memberships.user_id = auth.uid ()
-  and accounts.is_personal_account = false;
+  membership.user_id = (select auth.uid ())
+  and account.is_personal_account = false
+  and account.id in (
+    select
+      account_id
+    from
+      public.accounts_memberships
+    where
+      user_id = (select auth.uid ())
+  );
 
 grant
 select
@@ -2420,8 +2440,8 @@ select
 --
 -- Function "public.team_account_workspace"
 -- Load all the data for a team account workspace
-create
-or replace function public.team_account_workspace (account_slug text) returns table (
+create or replace function public.team_account_workspace(account_slug text)
+returns table (
   id uuid,
   name varchar(255),
   picture_url varchar(1000),
@@ -2431,9 +2451,7 @@ or replace function public.team_account_workspace (account_slug text) returns ta
   primary_owner_user_id uuid,
   subscription_status public.subscription_status,
   permissions public.app_permissions[]
-)
-set
-  search_path = '' as $$
+) as $$
 begin
     return QUERY
     select
@@ -2448,23 +2466,19 @@ begin
         array_agg(role_permissions.permission)
     from
         public.accounts
-	join public.accounts_memberships on accounts.id =
-	    accounts_memberships.account_id
+        join public.accounts_memberships on accounts.id = accounts_memberships.account_id
         left join public.subscriptions on accounts.id = subscriptions.account_id
-	left join public.role_permissions on
-	    accounts_memberships.account_role = role_permissions.role
-        left join public.roles on accounts_memberships.account_role = roles.name
+        join public.roles on accounts_memberships.account_role = roles.name
+        left join public.role_permissions on accounts_memberships.account_role = role_permissions.role
     where
         accounts.slug = account_slug
-        and public.accounts_memberships.user_id = auth.uid()
+        and public.accounts_memberships.user_id = (select auth.uid())
     group by
         accounts.id,
         accounts_memberships.account_role,
         subscriptions.status,
         roles.hierarchy_level;
-
 end;
-
 $$ language plpgsql;
 
 grant
