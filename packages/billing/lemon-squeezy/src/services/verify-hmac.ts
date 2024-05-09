@@ -21,12 +21,7 @@ export async function createHmac({ key, data }: { key: string; data: string }) {
     ['sign', 'verify'],
   );
 
-  const signature = await window.crypto.subtle.sign(
-    'HMAC',
-    hmacKey,
-    encodedData,
-  );
-
+  const signature = await crypto.subtle.sign('HMAC', hmacKey, encodedData);
   const hex = bufferToHex(signature);
 
   return { hex };

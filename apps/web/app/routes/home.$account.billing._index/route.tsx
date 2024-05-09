@@ -121,7 +121,14 @@ export default function TeamAccountBillingPage() {
         <BillingPortalCard />
       </form>
     );
-  }, [accountId, accountSlug, canManageBilling, customerId, fetcher]);
+  }, [
+    accountId,
+    accountSlug,
+    canManageBilling,
+    customerId,
+    fetcher,
+    csrfToken,
+  ]);
 
   return (
     <>

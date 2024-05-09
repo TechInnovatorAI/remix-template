@@ -1,9 +1,9 @@
 name: Workflow
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 jobs:
   typescript:
     name: ʦ TypeScript
@@ -54,7 +54,7 @@ jobs:
       SUPABASE_DB_WEBHOOK_SECRET: ${{ secrets.SUPABASE_DB_WEBHOOK_SECRET }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
-      PLAYWRIGHT_SERVER_COMMAND: pnpm --filter web dev
+      VITE_CI: true
 
     steps:
       - uses: actions/checkout@v4
@@ -114,6 +114,12 @@ jobs:
       - name: Stripe CLI
         run: |
           docker run --add-host=host.docker.internal:host-gateway --rm -it --name=stripe -d stripe/stripe-cli:latest listen --forward-to http://host.docker.internal:5173/api/billing/webhook --skip-verify --api-key "$STRIPE_SECRET_KEY" --log-level debug &
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Start Server
+        run: pnpm run start &
 
       - name: Run Playwright tests
         run: pnpm run test
