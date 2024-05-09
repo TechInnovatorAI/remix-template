@@ -1328,9 +1328,6 @@ importers:
       react-hook-form:
         specifier: ^7.51.3
         version: 7.51.4(react@18.3.1)
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
 
   tooling/eslint:
     dependencies:
@@ -1383,9 +1380,6 @@ importers:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.2.1
         version: 4.2.1(prettier@3.2.5)
-      '@tanstack/react-table':
-        specifier: ^8.16.0
-        version: 8.16.0(react-dom@18.3.1)(react@18.3.1)
       next:
         specifier: 14.2.3
         version: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1)(react@18.3.1)
@@ -1395,12 +1389,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.5.14
         version: 0.5.14(@ianvs/prettier-plugin-sort-imports@4.2.1)(prettier@3.2.5)
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@kit/tsconfig':
         specifier: workspace:^
@@ -1411,9 +1399,6 @@ importers:
 
   tooling/tailwind:
     dependencies:
-      '@tanstack/react-table':
-        specifier: ^8.16.0
-        version: 8.16.0(react-dom@18.3.1)(react@18.3.1)
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -1423,18 +1408,12 @@ importers:
       postcss:
         specifier: 8.4.38
         version: 8.4.38
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
       tailwindcss:
         specifier: 3.4.3
         version: 3.4.3
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.3)
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@kit/eslint-config':
         specifier: workspace:^
