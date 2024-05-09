@@ -116,10 +116,10 @@ jobs:
           docker run --add-host=host.docker.internal:host-gateway --rm -it --name=stripe -d stripe/stripe-cli:latest listen --forward-to http://host.docker.internal:5173/api/billing/webhook --skip-verify --api-key "$STRIPE_SECRET_KEY" --log-level debug &
 
       - name: Build
-        run: pnpm run build
+        run: pnpm --filter web build
 
       - name: Start Server
-        run: pnpm run start &
+        run: pnpm --filter web start &
 
       - name: Run Playwright tests
         run: pnpm run test
