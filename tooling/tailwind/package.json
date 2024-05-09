@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "main": "index.ts",
   "license": "MIT",
-  "files": ["index.ts", "postcss.js"],
+  "files": [
+    "index.ts",
+    "postcss.js"
+  ],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
@@ -27,7 +30,9 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": ["@kit/eslint-config/base"]
+    "extends": [
+      "@kit/eslint-config/base"
+    ]
   },
   "prettier": "@kit/prettier-config"
 }
