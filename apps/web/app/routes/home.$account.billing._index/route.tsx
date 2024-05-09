@@ -9,6 +9,7 @@ import {
   CurrentLifetimeOrderCard,
   CurrentSubscriptionCard,
 } from '@kit/billing-gateway/components';
+import { useCsrfToken } from '@kit/csrf/client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { If } from '@kit/ui/if';
@@ -73,6 +74,7 @@ export default function TeamAccountBillingPage() {
     workspace.account.permissions.includes('billing.manage');
 
   const fetcher = useFetcher();
+  const csrfToken = useCsrfToken();
 
   const Checkout = useMemo(() => {
     if (!canManageBilling) {
@@ -104,12 +106,14 @@ export default function TeamAccountBillingPage() {
               payload: {
                 accountId,
                 slug: accountSlug,
+                csrfToken,
               },
             },
             {
               action: '/api/billing/customer-portal',
               method: 'POST',
               encType: 'application/json',
+              navigate: true,
             },
           );
         }}
