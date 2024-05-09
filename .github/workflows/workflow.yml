@@ -119,7 +119,7 @@ jobs:
         run: pnpm --filter web build
 
       - name: Start Server
-        run: pnpm --filter web start &
+        run: PORT=5173 pnpm --filter web start &
 
       - name: Run Playwright tests
         run: pnpm run test
