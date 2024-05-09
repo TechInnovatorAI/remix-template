@@ -7,6 +7,7 @@ import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { useUser } from '@kit/supabase/hooks/use-user';
 import { Button } from '@kit/ui/button';
+import { If } from '@kit/ui/if';
 import { ModeToggle } from '@kit/ui/mode-toggle';
 import { Trans } from '@kit/ui/trans';
 
@@ -59,7 +60,9 @@ function AuthButtons() {
   return (
     <div className={'flex space-x-2'}>
       <div className={'hidden space-x-0.5 md:flex'}>
-        <ModeToggle className={textClassName} />
+        <If condition={features.enableThemeToggle}>
+          <ModeToggle className={textClassName} />
+        </If>
 
         <Button asChild variant={'ghost'} className={textClassName}>
           <Link to={pathsConfig.auth.signIn}>

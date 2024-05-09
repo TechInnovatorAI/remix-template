@@ -22,7 +22,7 @@
     "@kit/tailwind-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:*",
-    "zod": "^3.23.5"
+    "zod": "^3.23.8"
   },
   "eslintConfig": {
     "root": true,

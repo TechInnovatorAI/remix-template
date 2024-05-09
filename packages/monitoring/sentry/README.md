@@ -7,29 +7,21 @@ VITE_MONITORING_PROVIDER=sentry
 VITE_SENTRY_DSN=your_dsn
 ```
 
-Create the following file at the root of your project:
+Update your root app at `apps/web/app/root.tsx` to include the following:
 
-```tsx title="sentry.client.config.ts"
-export * from '@kit/sentry/config/client';
+1. Install the Sentry SDK for Remix in your application project:
+
+```bash
+cd apps/web
+pnpm i @sentry/remix
 ```
 
-Create the following file at the root of your project:
+2. Update your root app to include the Sentry SDK:
 
-```tsx title="sentry.server.config.ts"
-export * from '@kit/sentry/config/server';
-```
+```tsx
+// import the Sentry SDK
+import { withSentry } from '@sentry/remix';
 
-Create the following file at the root of your project:
-
-```tsx title="sentry.edge.config.ts"
-export * from '@kit/sentry/config/edge';
-```
-
-Finally, update the Next.js configuration in your `next.config.js` file:
-
-```tsx title="next.config.mjs"
-import { withSentryConfig } from "@sentry/nextjs";
-
-// wrap your Next.js configuration with the Sentry configuration
-withSentryConfig(nextConfig);
+// export your root app wrapped with Sentry
+export default withSentry(App);
 ```
