@@ -15,7 +15,7 @@
     "./provider": "./src/components/provider.tsx",
     "./config/client": "./src/config/sentry.client.config.ts",
     "./config/server": "./src/config/sentry.server.config.ts",
-    "./config/edge": "./src/config/sentry.server.edge.ts"
+    "./config/edge": "./src/config/sentry.edge.config.ts"
   },
   "dependencies": {
     "@opentelemetry/resources": "1.24.1",

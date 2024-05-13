@@ -425,20 +425,18 @@ function DefaultCheckoutButton(
     highlighted?: boolean;
   }>,
 ) {
-  const redirectToCheckoutParam = props.redirectToCheckout
-    ? '?redirectToCheckout=true'
-    : '';
-
   const { t } = useTranslation('billing');
 
-  const planId = props.plan.id;
   const signUpPath = props.paths.signUp;
-  const subscriptionPath = props.paths.subscription;
+
+  const searchParams = new URLSearchParams({
+    next: props.paths.subscription,
+    plan: props.plan.id,
+    redirectToCheckout: props.redirectToCheckout ? 'true' : 'false',
+  });
 
   const linkHref =
-    props.plan.href ??
-    `${signUpPath}?plan=${planId}&next=${subscriptionPath}?plan=${planId}${redirectToCheckoutParam}` ??
-    '';
+    props.plan.href ?? `${signUpPath}?${searchParams.toString()}` ?? '';
 
   const label = props.plan.buttonLabel ?? 'common:getStartedWithPlan';
 
