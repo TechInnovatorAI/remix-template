@@ -2,13 +2,36 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 import { Database } from '@kit/supabase/database';
 
+export function createTeamAccountsApi(client: SupabaseClient<Database>) {
+  return new TeamAccountsApi(client);
+}
+
 /**
  * Class representing an API for interacting with team accounts.
  * @constructor
  * @param {SupabaseClient<Database>} client - The Supabase client instance.
  */
-export class TeamAccountsApi {
+class TeamAccountsApi {
   constructor(private readonly client: SupabaseClient<Database>) {}
+
+  /**
+   * @name getTeamAccount
+   * @description Get the account data for the given slug.
+   * @param slug
+   */
+  async getTeamAccount(slug: string) {
+    const { data, error } = await this.client
+      .from('accounts')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 
   /**
    * @name getTeamAccountById
@@ -225,8 +248,4 @@ export class TeamAccountsApi {
 
     return invitation;
   }
-}
-
-export function createTeamAccountsApi(client: SupabaseClient<Database>) {
-  return new TeamAccountsApi(client);
 }

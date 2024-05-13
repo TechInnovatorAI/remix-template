@@ -1,6 +1,6 @@
 'use client';
 
-import { NavLink } from '@remix-run/react';
+import { NavLink, useLocation } from '@remix-run/react';
 
 import { Button } from '../shadcn/button';
 import {
@@ -24,13 +24,17 @@ export function BorderedNavigationMenu(props: React.PropsWithChildren) {
 export function BorderedNavigationMenuItem(props: {
   path: string;
   label: string;
-  end?: boolean;
+  end?: boolean | ((path: string) => boolean);
   active?: boolean;
 }) {
+  const currentPath = useLocation().pathname;
+  const end =
+    typeof props.end === 'function' ? props.end(currentPath) : props.end;
+
   return (
     <NavigationMenuItem>
       <Button asChild variant={'ghost'} className={'relative'}>
-        <NavLink to={props.path} end={props.end}>
+        <NavLink to={props.path} end={end}>
           {({ isActive }) => (
             <>
               <Trans i18nKey={props.label} defaults={props.label} />

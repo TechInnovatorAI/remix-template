@@ -20,7 +20,7 @@ function DocsNavLink({
   level: number;
   activePath: string;
 }) {
-  const isCurrent = isRouteActive(url, activePath, 0);
+  const isCurrent = isRouteActive(url, activePath, true);
   const isFirstLevel = level === 0;
 
   return (

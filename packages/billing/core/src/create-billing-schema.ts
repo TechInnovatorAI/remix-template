@@ -89,6 +89,7 @@ export const PlanSchema = z
     interval: BillingIntervalSchema.optional(),
     custom: z.boolean().default(false).optional(),
     label: z.string().min(1).optional(),
+    buttonLabel: z.string().min(1).optional(),
     href: z.string().min(1).optional(),
     lineItems: z.array(LineItemSchema).refine(
       (schema) => {

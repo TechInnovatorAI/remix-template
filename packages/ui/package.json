@@ -118,7 +118,8 @@
     "./language-selector": "./src/makerkit/language-selector.tsx",
     "./stepper": "./src/makerkit/stepper.tsx",
     "./cookie-banner": "./src/makerkit/cookie-banner.tsx",
-    "./client-only": "./src/makerkit/client-only.tsx"
+    "./client-only": "./src/makerkit/client-only.tsx",
+    "./card-button": "./src/makerkit/card-button.tsx"
   },
   "typesVersions": {
     "*": {

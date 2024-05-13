@@ -21,7 +21,7 @@ export function HomeMenuNavigation(props: { workspace: UserWorkspace }) {
       path: string;
       label: string;
       Icon?: React.ReactNode;
-      end?: boolean | undefined;
+      end?: boolean | ((path: string) => boolean);
     }>
   >((acc, item) => {
     if ('children' in item) {

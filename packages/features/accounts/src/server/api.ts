@@ -2,6 +2,10 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 import { Database } from '@kit/supabase/database';
 
+export function createAccountsApi(client: SupabaseClient<Database>) {
+  return new AccountsApi(client);
+}
+
 /**
  * Class representing an API for interacting with user accounts.
  * @constructor
@@ -9,6 +13,25 @@ import { Database } from '@kit/supabase/database';
  */
 class AccountsApi {
   constructor(private readonly client: SupabaseClient<Database>) {}
+
+  /**
+   * @name getAccount
+   * @description Get the account data for the given ID.
+   * @param id
+   */
+  async getAccount(id: string) {
+    const { data, error } = await this.client
+      .from('accounts')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 
   /**
    * @name getAccountWorkspace
@@ -105,8 +128,4 @@ class AccountsApi {
 
     return response.data?.customer_id;
   }
-}
-
-export function createAccountsApi(client: SupabaseClient<Database>) {
-  return new AccountsApi(client);
 }

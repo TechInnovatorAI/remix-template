@@ -3,12 +3,45 @@ const ROOT_PATH = '/';
 /**
  * @name isRouteActive
  * @description A function to check if a route is active. This is used to
+ * @param end
+ * @param path
+ * @param currentPath
+ */
+export function isRouteActive(
+  path: string,
+  currentPath: string,
+  end?: boolean | ((path: string) => boolean) | undefined,
+) {
+  // if the path is the same as the current path, we return true
+  if (path === currentPath) {
+    return true;
+  }
+
+  // if the end prop is a function, we call it with the current path
+  if (typeof end === 'function') {
+    return !end(currentPath);
+  }
+
+  // otherwise - we use the evaluateIsRouteActive function
+  const defaultEnd = end ?? true;
+  const oneLevelDeep = 1;
+  const threeLevelsDeep = 3;
+
+  // how far down should segments be matched?
+  const depth = defaultEnd ? oneLevelDeep : threeLevelsDeep;
+
+  return checkIfRouteIsActive(path, currentPath, depth);
+}
+
+/**
+ * @name checkIfRouteIsActive
+ * @description A function to check if a route is active. This is used to
  * highlight the active link in the navigation.
  * @param targetLink - The link to check against
  * @param currentRoute - the current route
  * @param depth - how far down should segments be matched?
  */
-export function isRouteActive(
+export function checkIfRouteIsActive(
   targetLink: string,
   currentRoute: string,
   depth = 1,

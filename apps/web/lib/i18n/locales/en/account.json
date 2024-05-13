@@ -108,5 +108,8 @@
   "needsReauthentication": "Reauthentication Required",
   "needsReauthenticationDescription": "You need to reauthenticate to change your password. Please sign out and sign in again to change your password.",
   "language": "Language",
-  "languageDescription": "Choose your preferred language"
+  "languageDescription": "Choose your preferred language",
+  "noTeamsYet": "You don't have any teams yet.",
+  "createTeam": "Create a team to get started.",
+  "createTeamButtonLabel": "Create a Team"
 }

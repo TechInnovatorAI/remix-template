@@ -23,7 +23,7 @@ export function TeamAccountNavigationMenu(props: {
       path: string;
       label: string;
       Icon?: React.ReactNode;
-      end?: boolean | undefined;
+      end?: boolean | ((path: string) => boolean)
     }>
   >((acc, item) => {
     if ('children' in item) {
