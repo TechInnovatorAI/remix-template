@@ -353,7 +353,7 @@ The billing package is abstracted from the billing gateway package, which is use
 To set up the billing package, you need to set the following environment variables:
 
 ```bash
-NEXT_PUBLIC_BILLING_PROVIDER=stripe # or lemon-squeezy
+VITE_BILLING_PROVIDER=stripe # or lemon-squeezy
 ```
 
 Makerkit supports both one-off payments and subscriptions. You have the choice to use one or both. What Makerkit cannot assume with certainty is the billing mode you want to use. By default, we assume you want to use subscriptions, as this is the most common billing mode for SaaS applications.
@@ -383,7 +383,7 @@ For Stripe, you'll need to set the following environment variables:
 ```bash
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+VITE_STRIPE_PUBLISHABLE_KEY=
 ```
 
 To run the Stripe CLI - which allows you to listen to Stripe events straight to your own localhost - you can use the following command:
@@ -427,7 +427,7 @@ The schema is based on three main entities:
 
 #### Setting the Billing Provider
 
-The billing provider is already set as `process.env.NEXT_PUBLIC_BILLING_PROVIDER` and defaults to `stripe`.
+The billing provider is already set as `process.env.VITE_BILLING_PROVIDER` and defaults to `stripe`.
 
 For clarity - this is set in the `apps/web/config/billing.config.ts` file:
 
@@ -863,8 +863,8 @@ Monitoring is crucial for any application. Makerkit uses Sentry or Baselime for 
 To use Sentry, you need to set the following environment variables:
 
 ```bash
-NEXT_PUBLIC_SENTRY_DSN=
-NEXT_PUBLIC_MONITORING_PROVIDER=sentry
+VITE_SENTRY_DSN=
+VITE_MONITORING_PROVIDER=sentry
 ```
 
 ### Baselime
@@ -872,8 +872,8 @@ NEXT_PUBLIC_MONITORING_PROVIDER=sentry
 To use Baselime, you need to set the following environment variables:
 
 ```bash
-NEXT_PUBLIC_BASELIME_KEY=your_key
-NEXT_PUBLIC_MONITORING_PROVIDER=baselime
+VITE_BASELIME_KEY=your_key
+VITE_MONITORING_PROVIDER=baselime
 ```
 
 ### Next.js Instrumentation

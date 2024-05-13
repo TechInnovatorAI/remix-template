@@ -40,7 +40,7 @@ const storage = z.union([local, cloud, github]).parse({
 });
 
 const keyStaticConfig = createKeyStaticConfig(
-  process.env.NEXT_PUBLIC_KEYSTATIC_CONTENT_PATH ?? '',
+  process.env.VITE_KEYSTATIC_CONTENT_PATH ?? '',
 );
 
 export default keyStaticConfig;
