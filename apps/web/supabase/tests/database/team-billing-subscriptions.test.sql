@@ -33,13 +33,23 @@ SELECT public.upsert_subscription(makerkit.get_account_id_by_slug('makerkit'), '
         "quantity": 2,
         "interval": "month",
         "interval_count": 1
+    },
+    {
+        "id": "sub_789",
+        "product_id": "prod_test_3",
+        "variant_id": "var_test_3",
+        "type": "flat",
+        "price_amount": 2000,
+        "quantity": 2,
+        "interval": "month",
+        "interval_count": 1
     }
 ]');
 
 -- Verify that the subscription items were created correctly
 SELECT row_eq(
     $$ select count(*) from subscription_items where subscription_id = 'sub_test' $$,
-    row(2::bigint),
+    row(3::bigint),
     'The subscription items should be created'
 );
 
@@ -80,6 +90,12 @@ SELECT public.upsert_subscription(makerkit.get_account_id_by_slug('makerkit'), '
     }
 ]');
 
+SELECT row_eq(
+    $$ select count(*) from subscription_items where subscription_id = 'sub_test' $$,
+    row(2::bigint),
+    'The subscription items should be updated'
+);
+
 -- Verify that the subscription items were updated correctly
 SELECT row_eq(
     $$ select price_amount from subscription_items where variant_id = 'var_test' $$,
@@ -107,6 +123,16 @@ SELECT is(
   'The subscription status should be past_due'
 );
 
+select tests.authenticate_as('member');
+
+SELECT row_eq(
+    $$ select count(*) from subscription_items where subscription_id = 'sub_test' $$,
+    row(2::bigint),
+    'The member can also read the subscription items'
+);
+
+set role service_role;
+
 -- Call the upsert_subscription function again to update the subscription
 SELECT public.upsert_subscription(tests.get_supabase_uid('primary_owner'), 'cus_test', 'sub_test', true, 'active', 'stripe', false, 'usd', now(), now() + interval '1 month', '[]');
 
@@ -125,9 +151,9 @@ select isnt_empty(
     'The account can read their own subscription'
 );
 
-select isnt_empty(
+select is_empty(
   $$ select * from subscription_items where subscription_id = 'sub_test' $$,
-    'The account can read their own subscription items'
+    'The subscription items are now empty'
 );
 
 select is(

@@ -1595,7 +1595,8 @@ on conflict (
         trial_ends_at = excluded.trial_ends_at
     returning
         * into new_subscription;
-    -- Upsert subscription items
+
+    -- Upsert subscription items and delete ones that are not in the line_items array
     with item_data as (
         select
             (line_item ->> 'id')::varchar as line_item_id,
@@ -1607,7 +1608,19 @@ on conflict (
             (line_item ->> 'interval')::varchar as intv,
             (line_item ->> 'interval_count')::integer as intv_count
         from
-            jsonb_array_elements(line_items) as line_item)
+            jsonb_array_elements(line_items) as line_item
+    ),
+    line_item_ids as (
+        select line_item_id from item_data
+    ),
+    deleted_items as (
+        delete from
+            public.subscription_items
+        where
+            public.subscription_items.subscription_id = new_subscription.id
+            and public.subscription_items.id not in (select line_item_id from line_item_ids)
+        returning *
+    )
     insert into public.subscription_items(
         id,
         subscription_id,
@@ -1964,6 +1977,28 @@ on conflict (
     returning
         * into new_order;
 
+    -- Upsert order items and delete ones that are not in the line_items array
+    with item_data as (
+        select
+            (line_item ->> 'id')::varchar as line_item_id,
+            (line_item ->> 'product_id')::varchar as prod_id,
+            (line_item ->> 'variant_id')::varchar as var_id,
+            (line_item ->> 'price_amount')::numeric as price_amt,
+            (line_item ->> 'quantity')::integer as qty
+        from
+            jsonb_array_elements(line_items) as line_item
+    ),
+    line_item_ids as (
+        select line_item_id from item_data
+    ),
+    deleted_items as (
+        delete from
+            public.order_items
+        where
+            public.order_items.order_id = new_order.id
+            and public.order_items.id not in (select line_item_id from line_item_ids)
+        returning *
+    )
     insert into public.order_items(
         id,
         order_id,
@@ -1972,18 +2007,18 @@ on conflict (
         price_amount,
         quantity)
     select
-        (line_item ->> 'id')::varchar,
+        line_item_id,
         target_order_id,
-(line_item ->> 'product_id')::varchar,
-(line_item ->> 'variant_id')::varchar,
-(line_item ->> 'price_amount')::numeric,
-(line_item ->> 'quantity')::integer
+        prod_id,
+        var_id,
+        price_amt,
+        qty
     from
-        jsonb_array_elements(line_items) as line_item
-on conflict (id)
-    do update set
-        price_amount = excluded.price_amount,
-        quantity = excluded.quantity;
+        item_data
+    on conflict (id)
+        do update set
+            price_amount = excluded.price_amount,
+            quantity = excluded.quantity;
 
     return new_order;
 

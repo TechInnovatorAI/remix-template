@@ -12,7 +12,12 @@ INSERT INTO public.billing_customers(account_id, provider, customer_id)
 VALUES (makerkit.get_account_id_by_slug('makerkit'), 'stripe', 'cus_test');
 
 -- Call the upsert_order function
-SELECT public.upsert_order(makerkit.get_account_id_by_slug('makerkit'), 'cus_test', 'order_test', 'pending', 'stripe', 100, 'usd', '[{"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 1}]');
+SELECT public.upsert_order(makerkit.get_account_id_by_slug('makerkit'), 'cus_test', 'order_test', 'pending', 'stripe', 100, 'usd', '[
+    {"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 1},
+    {"id":"order_item_2", "product_id": "prod_test", "variant_id": "var_test_2", "price_amount": 100, "quantity": 1},
+    {"id":"order_item_3", "product_id": "prod_test", "variant_id": "var_test_3", "price_amount": 100, "quantity": 1},
+    {"id":"order_item_4", "product_id": "prod_test", "variant_id": "var_test_4", "price_amount": 100, "quantity": 1}
+]');
 
 -- Verify that the order was created correctly
 SELECT is(
@@ -24,12 +29,22 @@ SELECT is(
 -- Verify that the subscription items were created correctly
 SELECT row_eq(
     $$ select count(*) from order_items where order_id = 'order_test' $$,
-    row(1::bigint),
+    row(4::bigint),
     'The order items should be created'
 );
 
 -- Call the upsert_order function again to update the order
-SELECT public.upsert_order(makerkit.get_account_id_by_slug('makerkit'), 'cus_test', 'order_test', 'succeeded', 'stripe', 100, 'usd', '[{"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 10}]');
+SELECT public.upsert_order(makerkit.get_account_id_by_slug('makerkit'), 'cus_test', 'order_test', 'succeeded', 'stripe', 100, 'usd', '[
+    {"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 10},
+    {"id":"order_item_2", "product_id": "prod_test", "variant_id": "var_test_2", "price_amount": 200, "quantity": 1}
+]');
+
+-- Verify that the subscription items were created correctly
+SELECT row_eq(
+    $$ select count(*) from order_items where order_id = 'order_test' $$,
+    row(2::bigint),
+    'The order items should be updated'
+);
 
 -- Verify that the order was updated correctly
 SELECT is(
@@ -41,6 +56,12 @@ SELECT is(
 SELECT row_eq(
     $$ select quantity from order_items where variant_id = 'var_test' $$,
     row(10::int),
+    'The subscription items should be updated'
+);
+
+SELECT row_eq(
+    $$ select price_amount from order_items where variant_id = 'var_test_2' $$,
+    row(200::numeric),
     'The subscription items should be updated'
 );
 

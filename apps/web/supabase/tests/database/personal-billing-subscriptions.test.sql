@@ -33,13 +33,23 @@ SELECT public.upsert_subscription(tests.get_supabase_uid('primary_owner'), 'cus_
         "quantity": 2,
         "interval": "month",
         "interval_count": 1
+    },
+    {
+        "id": "sub_789",
+        "product_id": "prod_test_3",
+        "variant_id": "var_test_3",
+        "type": "flat",
+        "price_amount": 2000,
+        "quantity": 2,
+        "interval": "month",
+        "interval_count": 1
     }
 ]');
 
 -- Verify that the subscription items were created correctly
 SELECT row_eq(
     $$ select count(*) from subscription_items where subscription_id = 'sub_test' $$,
-    row(2::bigint),
+    row(3::bigint),
     'The subscription items should be created'
 );
 
@@ -95,24 +105,34 @@ SELECT row_eq(
 );
 
 -- Verify that the subscription was updated correctly
-SELECT is(
-  (SELECT active FROM public.subscriptions WHERE id = 'sub_test'),
+select is(
+  (select active FROM public.subscriptions WHERE id = 'sub_test'),
   false,
   'The subscription should be inactive'
 );
 
-SELECT is(
-  (SELECT status FROM public.subscriptions WHERE id = 'sub_test'),
+select is(
+  (select status FROM public.subscriptions WHERE id = 'sub_test'),
   'past_due',
   'The subscription status should be past_due'
 );
 
+select isnt_empty(
+  $$ select * from public.subscription_items where subscription_id = 'sub_test' $$,
+    'The account can read their own subscription items'
+);
+
+select is_empty(
+  $$ select * from public.subscription_items where subscription_id = 'sub_test' and variant_id = 'var_test_3' $$,
+  'The subscription items should be deleted when the subscription is updated and the item is missing'
+);
+
 -- Call the upsert_subscription function again to update the subscription
-SELECT public.upsert_subscription(tests.get_supabase_uid('primary_owner'), 'cus_test', 'sub_test', true, 'active', 'stripe', false, 'usd', now(), now() + interval '1 month', '[]');
+select public.upsert_subscription(tests.get_supabase_uid('primary_owner'), 'cus_test', 'sub_test', true, 'active', 'stripe', false, 'usd', now(), now() + interval '1 month', '[]');
 
 -- Verify that the subscription was updated correctly
-SELECT is(
-  (SELECT active FROM public.subscriptions WHERE id = 'sub_test'),
+select is(
+  (select active FROM public.subscriptions WHERE id = 'sub_test'),
   true,
   'The subscription should be active'
 );
@@ -120,14 +140,14 @@ SELECT is(
 select tests.authenticate_as('primary_owner');
 
 -- account can read their own subscription
-SELECT isnt_empty(
+select isnt_empty(
   $$ select 1 from subscriptions where id = 'sub_test' $$,
     'The account can read their own subscription'
 );
 
-SELECT isnt_empty(
+select is_empty(
   $$ select * from subscription_items where subscription_id = 'sub_test' $$,
-    'The account can read their own subscription items'
+    'No subscription items should be returned when the subscription is empty'
 );
 
 -- users cannot manually update subscriptions
