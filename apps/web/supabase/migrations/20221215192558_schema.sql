@@ -2486,7 +2486,9 @@ returns table (
   primary_owner_user_id uuid,
   subscription_status public.subscription_status,
   permissions public.app_permissions[]
-) as $$
+)
+set search_path to ''
+as $$
 begin
     return QUERY
     select
