@@ -1645,9 +1645,12 @@ on conflict (
         item_data
     on conflict (id)
         do update set
+            product_id = excluded.product_id,
+            variant_id = excluded.variant_id,
             price_amount = excluded.price_amount,
             quantity = excluded.quantity,
             interval = excluded.interval,
+            type = excluded.type,
             interval_count = excluded.interval_count;
 
     return new_subscription;
@@ -2018,6 +2021,8 @@ on conflict (
     on conflict (id)
         do update set
             price_amount = excluded.price_amount,
+            product_id = excluded.product_id,
+            variant_id = excluded.variant_id,
             quantity = excluded.quantity;
 
     return new_order;

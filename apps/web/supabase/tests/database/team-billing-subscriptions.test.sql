@@ -80,7 +80,7 @@ SELECT public.upsert_subscription(makerkit.get_account_id_by_slug('makerkit'), '
     },
     {
         "id": "sub_456",
-        "product_id": "prod_test_2",
+        "product_id": "prod_test_3",
         "variant_id": "var_test_2",
         "type": "flat",
         "price_amount": 2000,
@@ -100,14 +100,21 @@ SELECT row_eq(
 SELECT row_eq(
     $$ select price_amount from subscription_items where variant_id = 'var_test' $$,
     row('2000'::numeric),
-    'The subscription items should be updated'
+    'The subscription items price_amount should be updated'
 );
 
 -- Verify that the subscription items were updated correctly
 SELECT row_eq(
     $$ select interval from subscription_items where variant_id = 'var_test_2' $$,
     row('year'::varchar),
-    'The subscription items should be updated'
+    'The subscription items interval should be updated'
+);
+
+-- Verify that the subscription items were updated correctly
+SELECT row_eq(
+    $$ select product_id from subscription_items where id = 'sub_456' $$,
+    row('prod_test_3'::varchar),
+    'The subscription items product_id should be updated'
 );
 
 -- Verify that the subscription was updated correctly

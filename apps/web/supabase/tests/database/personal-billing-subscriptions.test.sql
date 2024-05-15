@@ -80,7 +80,7 @@ SELECT public.upsert_subscription(tests.get_supabase_uid('primary_owner'), 'cus_
     },
     {
         "id": "sub_456",
-        "product_id": "prod_test_2",
+        "product_id": "prod_test_3",
         "variant_id": "var_test_2",
         "type": "flat",
         "price_amount": 2000,
@@ -94,6 +94,13 @@ SELECT public.upsert_subscription(tests.get_supabase_uid('primary_owner'), 'cus_
 SELECT row_eq(
     $$ select price_amount from subscription_items where variant_id = 'var_test' $$,
     row('2000'::numeric),
+    'The subscription items should be updated'
+);
+
+-- Verify that the subscription items were updated correctly
+SELECT row_eq(
+    $$ select product_id from subscription_items where id = 'sub_456' $$,
+    row('prod_test_3'::varchar),
     'The subscription items should be updated'
 );
 

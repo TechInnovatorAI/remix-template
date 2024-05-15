@@ -35,26 +35,6 @@ export default createBillingSchema({
               cost: 9.99,
               type: 'flat' as const,
             },
-            {
-              id: 'price_1P8N0zI1i3VnbZTqtUPc1Zvr',
-              name: 'Addon 3',
-              cost: 0,
-              type: 'per_seat' as const,
-              tiers: [
-                {
-                  upTo: 1,
-                  cost: 0,
-                },
-                {
-                  upTo: 5,
-                  cost: 4,
-                },
-                {
-                  upTo: 'unlimited',
-                  cost: 3,
-                },
-              ],
-            },
           ],
         },
         {
@@ -89,7 +69,7 @@ export default createBillingSchema({
           interval: 'month',
           lineItems: [
             {
-              id: 'price_pro',
+              id: 'price_1PGOAVI1i3VnbZTqc69xaypm',
               name: 'Base',
               cost: 19.99,
               type: 'flat',

@@ -146,10 +146,10 @@ export class LemonSqueezyBillingStrategyService
           ...ctx,
           error: (error as Error)?.message,
         },
-        'Failed to cancel subscription',
+        'Failed to cancel subscription. It may have already been cancelled.',
       );
 
-      throw new Error('Failed to cancel subscription');
+      return { success: false };
     }
   }
 

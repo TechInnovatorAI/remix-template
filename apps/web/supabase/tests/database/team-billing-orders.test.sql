@@ -35,8 +35,8 @@ SELECT row_eq(
 
 -- Call the upsert_order function again to update the order
 SELECT public.upsert_order(makerkit.get_account_id_by_slug('makerkit'), 'cus_test', 'order_test', 'succeeded', 'stripe', 100, 'usd', '[
-    {"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 10},
-    {"id":"order_item_2", "product_id": "prod_test", "variant_id": "var_test_2", "price_amount": 200, "quantity": 1}
+    {"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 1},
+    {"id":"order_item_2", "product_id": "prod_test_2", "variant_id": "var_test_4", "price_amount": 200, "quantity": 10}
 ]');
 
 -- Verify that the subscription items were created correctly
@@ -54,15 +54,27 @@ SELECT is(
 );
 
 SELECT row_eq(
-    $$ select quantity from order_items where variant_id = 'var_test' $$,
+    $$ select quantity from order_items where variant_id = 'var_test_4' $$,
     row(10::int),
-    'The subscription items should be updated'
+    'The subscription items quantity should be updated'
 );
 
 SELECT row_eq(
-    $$ select price_amount from order_items where variant_id = 'var_test_2' $$,
+    $$ select variant_id from order_items where id = 'order_item_2' $$,
+    row('var_test_4'::text),
+    'The subscription items variant_id should be updated'
+);
+
+SELECT row_eq(
+    $$ select product_id from order_items where id = 'order_item_2' $$,
+    row('prod_test_2'::text),
+    'The subscription items prod_test_2 should be updated'
+);
+
+SELECT row_eq(
+    $$ select price_amount from order_items where variant_id = 'var_test_4' $$,
     row(200::numeric),
-    'The subscription items should be updated'
+    'The subscription items price_amount should be updated'
 );
 
 select tests.authenticate_as('member');

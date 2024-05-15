@@ -12,7 +12,10 @@ INSERT INTO public.billing_customers(account_id, provider, customer_id)
 VALUES (tests.get_supabase_uid('primary_owner'), 'stripe', 'cus_test');
 
 -- Call the upsert_order function
-SELECT public.upsert_order(tests.get_supabase_uid('primary_owner'), 'cus_test', 'order_test', 'pending', 'stripe', 100, 'usd', '[{"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 1}, {"id":"order_item_2", "product_id": "prod_test", "variant_id": "var_test_2", "price_amount": 100, "quantity": 1}]');
+SELECT public.upsert_order(tests.get_supabase_uid('primary_owner'), 'cus_test', 'order_test', 'pending', 'stripe', 100, 'usd', '[
+    {"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 1},
+    {"id":"order_item_2", "product_id": "prod_test", "variant_id": "var_test_2", "price_amount": 100, "quantity": 10}
+]');
 
 -- Verify that the order was created correctly
 SELECT is(
@@ -29,7 +32,9 @@ SELECT row_eq(
 );
 
 -- Call the upsert_order function again to update the order
-select public.upsert_order(tests.get_supabase_uid('primary_owner'), 'cus_test', 'order_test', 'succeeded', 'stripe', 100, 'usd', '[{"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 10}]');
+select public.upsert_order(tests.get_supabase_uid('primary_owner'), 'cus_test', 'order_test', 'succeeded', 'stripe', 100, 'usd', '[
+    {"id":"order_item_1", "product_id": "prod_test_2", "variant_id": "var_test", "price_amount": 100, "quantity": 10}
+]');
 
 -- Verify that the order was updated correctly
 select is(
@@ -41,11 +46,17 @@ select is(
 select row_eq(
     $$ select quantity from order_items where variant_id = 'var_test' $$,
     row(10::int),
-    'The subscription items should be updated'
+    'The order items should be updated'
 );
 
 select is_empty(
   $$ select * from order_items where id = 'order_item_2' $$,
+  'The order item should be deleted when the order is updated'
+);
+
+select row_eq(
+  $$ select product_id from order_items where id = 'order_item_1' $$,
+   row('prod_test_2'::text),
   'The order item should be deleted when the order is updated'
 );
 
