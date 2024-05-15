@@ -18,8 +18,6 @@ export function RootHead() {
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      <link rel="shortcut icon" href="/images/favicon/favicon.ico" />
-
       <link
         rel="apple-touch-icon"
         sizes="144x144"

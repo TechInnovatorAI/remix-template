@@ -3,6 +3,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
 import { redirectDocument } from '@remix-run/react';
+import process from 'node:process';
 import { z } from 'zod';
 
 import { Database } from '@kit/supabase/database';

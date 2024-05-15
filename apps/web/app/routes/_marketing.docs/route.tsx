@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs } from '@remix-run/node';
 import { Outlet, useLoaderData } from '@remix-run/react';
+import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { Cms } from '@kit/cms';
 

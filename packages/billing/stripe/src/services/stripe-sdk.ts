@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import { StripeServerEnvSchema } from '../schema/stripe-server-env.schema';
 
 const STRIPE_API_VERSION = '2024-04-10';

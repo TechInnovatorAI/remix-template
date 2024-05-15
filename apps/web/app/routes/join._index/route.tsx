@@ -1,9 +1,8 @@
+import { Link, MetaFunction, redirect, useLoaderData } from '@remix-run/react';
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
-  MetaFunction,
-} from '@remix-run/node';
-import { Link, redirect, useLoaderData } from '@remix-run/react';
+} from '@remix-run/server-runtime';
 import { ArrowLeft } from 'lucide-react';
 
 import { AuthLayoutShell } from '@kit/auth/shared';

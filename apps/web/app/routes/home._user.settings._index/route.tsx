@@ -1,8 +1,8 @@
+import { MetaFunction } from '@remix-run/react';
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
-  MetaFunction,
-} from '@remix-run/node';
+} from '@remix-run/server-runtime';
 
 import { deletePersonalAccountAction } from '@kit/accounts/actions';
 import { PersonalAccountSettingsContainer } from '@kit/accounts/personal-account-settings';

@@ -7,6 +7,7 @@ import {
   fields,
 } from '@keystatic/core';
 import { Entry } from '@keystatic/core/reader';
+import process from 'node:process';
 import { z } from 'zod';
 
 type ZodOutputFor<T> = z.ZodType<T, z.ZodTypeDef, unknown>;

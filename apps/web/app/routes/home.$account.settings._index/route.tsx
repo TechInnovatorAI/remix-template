@@ -1,10 +1,9 @@
+import { MetaFunction, useRouteLoaderData } from '@remix-run/react';
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
-  MetaFunction,
   SerializeFrom,
-} from '@remix-run/node';
-import { useRouteLoaderData } from '@remix-run/react';
+} from '@remix-run/server-runtime';
 import { z } from 'zod';
 
 import { verifyCsrfToken } from '@kit/csrf/server';

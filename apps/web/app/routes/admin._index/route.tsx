@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs } from '@remix-run/node';
 import { json, useLoaderData } from '@remix-run/react';
+import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { getSuperAdminUser } from '@kit/admin';
 import { loadAdminDashboard } from '@kit/admin/api';

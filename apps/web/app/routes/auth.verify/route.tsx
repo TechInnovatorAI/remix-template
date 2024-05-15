@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { redirect, useLoaderData } from '@remix-run/react';
+import { MetaFunction, redirect, useLoaderData } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { MultiFactorChallengeContainer } from '@kit/auth/mfa';
 import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';

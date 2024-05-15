@@ -1,3 +1,4 @@
+import * as process from 'node:process';
 import { z } from 'zod';
 
 import { getMailer } from '@kit/mailers';

@@ -1,29 +1,40 @@
 import { useEffect } from 'react';
 
 import { useLocation, useMatches } from '@remix-run/react';
-import * as Sentry from '@sentry/remix';
+import type { Event, User } from '@sentry/remix';
 
 import { MonitoringService } from '@kit/monitoring-core';
 
-const DSN = process.env.VITE_SENTRY_DSN;
+const DSN = import.meta.env.VITE_SENTRY_DSN;
 
 /**
  * @class
  * @implements {MonitoringService}
- * ServerSentryMonitoringService is responsible for capturing exceptions and identifying users using the Sentry monitoring service.
+ * ServerSentryMonitoringService is responsible for capturing exceptions and
+ * identifying users using the Sentry monitoring service.
  */
 export class SentryServerMonitoringService implements MonitoringService {
-  constructor() {
-    Sentry.init({
+  private initialized = false;
+
+  async initialize() {
+    if (this.initialized) {
+      return;
+    }
+
+    const { init, browserTracingIntegration, replayIntegration } = await import(
+      '@sentry/remix'
+    ).catch();
+
+    init({
       dsn: DSN,
       integrations: [
-        Sentry.browserTracingIntegration({
+        browserTracingIntegration({
           useEffect,
           useLocation,
           useMatches,
         }),
         // Replay is only available in the client
-        Sentry.replayIntegration(),
+        replayIntegration(),
       ],
 
       // Set tracesSampleRate to 1.0 to capture 100%
@@ -36,20 +47,34 @@ export class SentryServerMonitoringService implements MonitoringService {
       replaysSessionSampleRate: 0.1,
       replaysOnErrorSampleRate: 1.0,
     });
+
+    this.initialized = true;
   }
 
-  captureException(error: Error | null) {
-    return Sentry.captureException(error);
+  async captureException(error: Error | null) {
+    await this.initialize();
+
+    const { captureException } = await import('@sentry/remix').catch();
+
+    return captureException(error);
   }
 
-  captureEvent<Extra extends Sentry.Event>(event: string, extra?: Extra) {
-    return Sentry.captureEvent({
+  async captureEvent<Extra extends Event>(event: string, extra?: Extra) {
+    await this.initialize();
+
+    const { captureEvent } = await import('@sentry/remix').catch();
+
+    return captureEvent({
       message: event,
       ...(extra ?? {}),
     });
   }
 
-  identifyUser(user: Sentry.User) {
-    Sentry.setUser(user);
+  async identifyUser(user: User) {
+    await this.initialize();
+
+    const { setUser } = await import('@sentry/remix').catch();
+
+    setUser(user);
   }
 }

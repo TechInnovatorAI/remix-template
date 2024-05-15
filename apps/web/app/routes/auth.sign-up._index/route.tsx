@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { Link, redirect, useLoaderData } from '@remix-run/react';
+import { Link, MetaFunction, redirect, useLoaderData } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { SignUpMethodsContainer } from '@kit/auth/sign-up';
 import { requireUser } from '@kit/supabase/require-user';

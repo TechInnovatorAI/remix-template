@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import { Logger as LoggerInstance } from './logger';
 
 const LOGGER = process.env.LOGGER ?? 'pino';
@@ -10,13 +12,19 @@ const LOGGER = process.env.LOGGER ?? 'pino';
 async function getLogger(): Promise<LoggerInstance> {
   switch (LOGGER) {
     case 'pino': {
-      const { Logger: PinoLogger } = await import('./impl/pino');
+      const { getPinoLogger } = await import('./impl/pino');
 
-      return PinoLogger;
+      return getPinoLogger();
+    }
+
+    case 'console': {
+      const { Logger: ConsoleLogger } = await import('./impl/console');
+
+      return ConsoleLogger;
     }
 
     default:
-      throw new Error(`Unknown logger: ${process.env.LOGGER}`);
+      throw new Error(`Unknown logger: ${LOGGER}`);
   }
 }
 

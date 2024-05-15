@@ -12,7 +12,7 @@ type Config = z.infer<typeof MailerSchema>;
  */
 export class Nodemailer implements Mailer {
   async sendEmail(config: Config) {
-    const { createTransport } = await import('nodemailer');
+    const { createTransport } = await import('nodemailer').catch();
     const transporter = createTransport(getSMTPConfiguration());
 
     return transporter.sendMail(config);

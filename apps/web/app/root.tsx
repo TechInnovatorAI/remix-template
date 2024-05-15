@@ -1,4 +1,3 @@
-import { LoaderFunctionArgs } from '@remix-run/node';
 import {
   Links,
   Meta,
@@ -8,6 +7,7 @@ import {
   json,
   useLoaderData,
 } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { CsrfTokenMeta } from '@kit/csrf/client';
 import { createCsrfProtect } from '@kit/csrf/server';

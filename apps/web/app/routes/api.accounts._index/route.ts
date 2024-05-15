@@ -1,5 +1,5 @@
-import { ActionFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/react';
+import { ActionFunctionArgs } from '@remix-run/server-runtime';
 import { z } from 'zod';
 
 import { CsrfTokenSchema } from '@kit/csrf/schema';

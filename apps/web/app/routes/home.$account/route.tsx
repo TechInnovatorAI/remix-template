@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs } from '@remix-run/node';
 import { Outlet, json, useLoaderData } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { If } from '@kit/ui/if';

@@ -6,7 +6,7 @@ const apiKey = z
   .string({
     required_error: 'VITE_BASELIME_KEY is required',
   })
-  .parse(process.env.VITE_BASELIME_KEY);
+  .parse(import.meta.env.VITE_BASELIME_KEY);
 
 export class BaselimeServerMonitoringService implements MonitoringService {
   userId: string | null = null;

@@ -2,8 +2,8 @@ import { lazy } from 'react';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { json, redirect, useLoaderData } from '@remix-run/react';
+import { MetaFunction, json, redirect, useLoaderData } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { getBillingGatewayProvider } from '@kit/billing-gateway';
 import { BillingSessionStatus } from '@kit/billing-gateway/components';

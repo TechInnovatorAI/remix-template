@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { MetaFunction, useLoaderData } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 import { PlusCircle } from 'lucide-react';
 
 import { Button } from '@kit/ui/button';

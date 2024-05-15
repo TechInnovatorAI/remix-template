@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { z } from 'zod';
 
 const STORAGE_KIND = process.env.KEYSTATIC_STORAGE_KIND ?? 'local';
@@ -9,7 +10,7 @@ export async function createKeystaticReader() {
   switch (STORAGE_KIND) {
     case 'local': {
       const { default: config } = await import('./keystatic.config');
-      const { createReader } = await import('@keystatic/core/reader');
+      const { createReader } = await import('@keystatic/core/reader').catch();
 
       return createReader(process.cwd(), config);
     }
@@ -32,7 +33,7 @@ export async function createKeystaticReader() {
 
       const { createGitHubReader } = await import(
         '@keystatic/core/reader/github'
-      );
+      ).catch();
 
       return createGitHubReader(config, githubConfig);
     }

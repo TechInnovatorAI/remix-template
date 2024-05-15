@@ -1,4 +1,4 @@
-import { ActionFunctionArgs } from '@remix-run/node';
+import { ActionFunctionArgs } from '@remix-run/server-runtime';
 
 import { getBillingEventHandlerService } from '@kit/billing-gateway';
 import { getLogger } from '@kit/shared/logger';

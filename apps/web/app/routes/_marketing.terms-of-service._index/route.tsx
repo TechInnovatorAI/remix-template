@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { MetaFunction, useLoaderData } from '@remix-run/react';
+import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { SitePageHeader } from '~/routes/_marketing/_components/site-page-header';

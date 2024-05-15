@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs } from '@remix-run/node';
 import { Link, json, redirect, useLoaderData } from '@remix-run/react';
+import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { Button } from '@kit/ui/button';

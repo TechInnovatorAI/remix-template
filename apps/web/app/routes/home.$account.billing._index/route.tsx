@@ -1,8 +1,13 @@
 import { useMemo } from 'react';
 
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { json, useFetcher, useLoaderData } from '@remix-run/react';
+import {
+  MetaFunction,
+  json,
+  useFetcher,
+  useLoaderData,
+} from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import {
   BillingPortalCard,

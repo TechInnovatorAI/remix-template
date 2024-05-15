@@ -3,6 +3,7 @@ import {
   createCheckout,
   getCustomer,
 } from '@lemonsqueezy/lemonsqueezy.js';
+import process from 'node:process';
 import { z } from 'zod';
 
 import { CreateBillingCheckoutSchema } from '@kit/billing/schema';
@@ -24,9 +25,9 @@ export async function createLemonSqueezyCheckout(
     throw new Error('No line items found in subscription');
   }
 
-  const env = getLemonSqueezyEnv();
+  const vars = getLemonSqueezyEnv();
 
-  const storeId = Number(env.storeId);
+  const storeId = Number(vars.storeId);
   const variantId = Number(lineItem.id);
 
   const customer = params.customerId

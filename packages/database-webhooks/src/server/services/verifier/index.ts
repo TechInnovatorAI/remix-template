@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 const WEBHOOK_SENDER_PROVIDER =
   process.env.WEBHOOK_SENDER_PROVIDER ?? 'postgres';
 

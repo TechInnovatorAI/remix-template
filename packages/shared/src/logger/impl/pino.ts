@@ -1,18 +1,20 @@
-import { pino } from 'pino';
+import process from 'node:process';
 
 /**
- * @name Logger
+ * @name getPinoLogger
  * @description A logger implementation using Pino
  */
-const Logger = pino({
-  browser: {
-    asObject: true,
-  },
-  level: 'debug',
-  base: {
-    env: process.env.NODE_ENV,
-  },
-  errorKey: 'error',
-});
+export async function getPinoLogger() {
+  const { pino } = await import('pino').catch();
 
-export { Logger };
+  return pino({
+    browser: {
+      asObject: true,
+    },
+    level: 'debug',
+    base: {
+      env: process.env.NODE_ENV,
+    },
+    errorKey: 'error',
+  });
+}

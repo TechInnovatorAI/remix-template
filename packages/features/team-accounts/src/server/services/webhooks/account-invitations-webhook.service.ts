@@ -1,5 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+import process from 'node:process';
 import { z } from 'zod';
 
 import { getLogger } from '@kit/shared/logger';
@@ -8,11 +9,12 @@ import { Database } from '@kit/supabase/database';
 type Invitation = Database['public']['Tables']['invitations']['Row'];
 
 const invitePath = '/join';
+
 const siteURL = import.meta.env.VITE_SITE_URL;
 const productName = import.meta.env.VITE_PRODUCT_NAME ?? '';
 const emailSender = process.env.EMAIL_SENDER;
 
-const env = z
+const vars = z
   .object({
     invitePath: z.string().min(1),
     siteURL: z.string().min(1),
@@ -107,13 +109,13 @@ class AccountInvitationsWebhookService {
         link: this.getInvitationLink(invitation.invite_token),
         invitedUserEmail: invitation.email,
         inviter: inviter.data.name ?? inviter.data.email ?? '',
-        productName: env.productName,
+        productName: vars.productName,
         teamName: team.data.name,
       });
 
       await mailer
         .sendEmail({
-          from: env.emailSender,
+          from: vars.emailSender,
           to: invitation.email,
           subject,
           html,
@@ -142,6 +144,8 @@ class AccountInvitationsWebhookService {
   }
 
   private getInvitationLink(token: string) {
-    return new URL(env.invitePath, env.siteURL).href + `?invite_token=${token}`;
+    return (
+      new URL(vars.invitePath, vars.siteURL).href + `?invite_token=${token}`
+    );
   }
 }

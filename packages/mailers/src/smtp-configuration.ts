@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import { SmtpConfigSchema } from './schema/smtp-config.schema';
 
 export function getSMTPConfiguration() {

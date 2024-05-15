@@ -1,3 +1,4 @@
+import process from 'node:process';
 import type {
   WP_REST_API_Category,
   WP_REST_API_Post,
@@ -8,9 +9,11 @@ import { Cms, CmsClient } from '@kit/cms';
 
 import GetTagsOptions = Cms.GetTagsOptions;
 
-export function createWordpressClient(
-  apiUrl = process.env.WORDPRESS_API_URL as string,
-) {
+export function createWordpressClient(apiUrl = process.env.WORDPRESS_API_URL) {
+  if (!apiUrl) {
+    throw new Error('Wordpress API URL is required');
+  }
+
   return new WordpressClient(apiUrl);
 }
 

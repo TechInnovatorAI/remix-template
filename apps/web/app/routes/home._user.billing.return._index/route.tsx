@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from '@remix-run/node';
+import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import * as ReturnPage from '../home.$account.billing.return._index/route';
 

@@ -1,5 +1,8 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { json, useLoaderData } from '@remix-run/react';
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+} from '@remix-run/server-runtime';
 import { z } from 'zod';
 
 import { getSuperAdminUser } from '@kit/admin';

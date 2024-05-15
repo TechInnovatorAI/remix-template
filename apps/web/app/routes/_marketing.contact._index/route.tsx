@@ -1,9 +1,8 @@
+import { MetaFunction, useLoaderData } from '@remix-run/react';
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
-  MetaFunction,
-} from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+} from '@remix-run/server-runtime';
 
 import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';

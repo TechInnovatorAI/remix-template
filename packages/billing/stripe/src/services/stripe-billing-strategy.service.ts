@@ -115,7 +115,7 @@ export class StripeBillingStrategyService
       logger.info(ctx, 'Subscription successfully cancelled!');
 
       return {
-        success: true
+        success: true,
       };
     } catch (error) {
       logger.info(
@@ -123,11 +123,11 @@ export class StripeBillingStrategyService
           ...ctx,
           error,
         },
-        `Failed to cancel subscription. It may have already been cancelled on the user's end`
+        `Failed to cancel subscription. It may have already been cancelled on the user's end`,
       );
 
       return {
-        success: false
+        success: false,
       };
     }
   }

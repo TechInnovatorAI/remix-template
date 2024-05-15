@@ -1,7 +1,7 @@
 import { type EmailOtpType } from '@supabase/supabase-js';
 
-import { LoaderFunctionArgs } from '@remix-run/node';
 import { redirect } from '@remix-run/react';
+import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 

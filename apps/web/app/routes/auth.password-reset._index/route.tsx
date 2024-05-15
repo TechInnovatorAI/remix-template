@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { Link, redirect } from '@remix-run/react';
+import { Link, MetaFunction, redirect } from '@remix-run/react';
+import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { PasswordResetRequestContainer } from '@kit/auth/password-reset';
 import { requireUser } from '@kit/supabase/require-user';

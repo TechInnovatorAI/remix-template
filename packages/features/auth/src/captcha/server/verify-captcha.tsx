@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 const verifyEndpoint =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
