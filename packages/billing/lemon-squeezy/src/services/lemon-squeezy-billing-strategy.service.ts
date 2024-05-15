@@ -139,17 +139,21 @@ export class LemonSqueezyBillingStrategyService
 
       logger.info(ctx, 'Subscription cancelled successfully');
 
-      return { success: true };
+      return {
+        success: true,
+      };
     } catch (error) {
-      logger.error(
+      logger.info(
         {
           ...ctx,
           error: (error as Error)?.message,
         },
-        'Failed to cancel subscription. It may have already been cancelled.',
+        `Failed to cancel subscription. It may have already been cancelled on the user's end.`,
       );
 
-      return { success: false };
+      return {
+        success: false,
+      };
     }
   }
 
