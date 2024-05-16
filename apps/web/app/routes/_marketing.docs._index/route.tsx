@@ -1,4 +1,9 @@
-import { MetaFunction, useLoaderData } from '@remix-run/react';
+import {
+  MetaFunction,
+  useLoaderData,
+  useRouteLoaderData,
+} from '@remix-run/react';
+
 import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { Cms } from '@kit/cms';
@@ -6,20 +11,18 @@ import { PageBody } from '@kit/ui/page';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { DocsCards } from '~/routes/_marketing.docs/_components/docs-cards';
-import { getDocs } from '~/routes/_marketing.docs/_lib/get-docs';
 import { SitePageHeader } from '~/routes/_marketing/_components/site-page-header';
 
+import { loader as docsLoader } from '../_marketing.docs/route';
+
 export const loader = async (args: LoaderFunctionArgs) => {
-  const { t, resolvedLanguage: language } = await createI18nServerInstance(
+  const { t } = await createI18nServerInstance(
     args.request,
   );
-
-  const items = await getDocs(language);
 
   return {
     title: t('marketing:documentation'),
     description: t('marketing:documentationSubtitle'),
-    items,
   };
 };
 
@@ -33,7 +36,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function DocsPage() {
-  const { items, title, description } = useLoaderData<typeof loader>();
+  const { title, description } = useLoaderData<typeof loader>();
+
+  const data = useRouteLoaderData<typeof docsLoader>(
+    'routes/_marketing.docs',
+  );
+
+  // only top level cards
+  const cards = (data?.pages ?? []).filter(item => !item.parentId);
 
   return (
     <PageBody>
@@ -42,7 +52,7 @@ export default function DocsPage() {
 
         <div className={'flex flex-col items-center'}>
           <div className={'container mx-auto max-w-5xl'}>
-            <DocsCards cards={items as Cms.ContentItem[]} />
+            <DocsCards cards={cards as Cms.ContentItem[]} />
           </div>
         </div>
       </div>

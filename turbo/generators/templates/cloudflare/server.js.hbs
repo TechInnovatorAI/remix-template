@@ -10,6 +10,14 @@ const MANIFEST = JSON.parse(__STATIC_CONTENT_MANIFEST);
 export default {
 async fetch(request, env, ctx) {
 // node.js compatible environment variables
+for (const key in env) {
+    nodeEnv[key] ??= (() => {
+        if (typeof env[key] === 'string') {
+            return env[key];
+        }
+    })();
+}
+
 Object.assign(nodeEnv, {...env });
 
 try {

@@ -11,10 +11,11 @@ import { DocsNavigation } from './_components/docs-navigation';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { resolvedLanguage } = await createI18nServerInstance(request);
-  const pages = await getDocs(resolvedLanguage);
+  const docs = await getDocs(resolvedLanguage);
+  const pages = buildDocumentationTree(docs);
 
   return {
-    pages,
+    pages
   };
 };
 
@@ -23,9 +24,7 @@ export default function DocsLayout() {
 
   return (
     <div className={'flex'}>
-      <DocsNavigation
-        pages={buildDocumentationTree(pages as Cms.ContentItem[])}
-      />
+      <DocsNavigation pages={pages as Cms.ContentItem[]} />
 
       <Outlet />
     </div>

@@ -8,5 +8,5 @@ export const getDocs = async (language: string | undefined) => {
     language,
   });
 
-  return pages.filter((item) => !item.parentId);
+  return pages;
 };
