@@ -74,10 +74,9 @@ function PageWithHeader(props: PageProps) {
       >
         <div
           className={cn(
-            'dark:border-primary-900 flex h-14 items-center justify-between px-4 shadow-sm dark:shadow-primary/10 lg:justify-start',
+            'dark:border-primary-900 flex h-14 items-center justify-between bg-muted/30 px-4 shadow-sm dark:shadow-primary/10 lg:justify-start',
             {
-              'sticky top-0 z-10 bg-background/80 backdrop-blur-md':
-                props.sticky ?? true,
+              'sticky top-0 z-10 backdrop-blur-md': props.sticky ?? true,
             },
           )}
         >

@@ -28,26 +28,32 @@ export function BorderedNavigationMenuItem(props: {
   active?: boolean;
 }) {
   const currentPath = useLocation().pathname;
+
   const end =
     typeof props.end === 'function' ? props.end(currentPath) : props.end;
 
   return (
     <NavigationMenuItem>
-      <Button asChild variant={'ghost'} className={'relative'}>
+      <Button asChild variant={'ghost'} className={'relative active:shadow-sm'}>
         <NavLink to={props.path} end={end}>
           {({ isActive }) => (
-            <>
+            <span
+              className={cn({
+                'text-primary': isActive,
+                'text-primary/80 hover:text-primary': !isActive,
+              })}
+            >
               <Trans i18nKey={props.label} defaults={props.label} />
 
               <span
                 className={cn(
-                  'absolute -bottom-2.5 left-0 hidden h-1 w-full bg-primary animate-in fade-in zoom-in-90',
+                  'absolute -bottom-2.5 left-0 hidden h-0.5 w-full bg-primary animate-in fade-in zoom-in-90',
                   {
                     block: isActive,
                   },
                 )}
               />
-            </>
+            </span>
           )}
         </NavLink>
       </Button>

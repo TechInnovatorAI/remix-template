@@ -238,21 +238,24 @@ export function AccountSelector({
           <Separator />
 
           <If condition={features.enableTeamCreation}>
-            <Button
-              data-test={'create-team-account-trigger'}
-              variant="ghost"
-              className="w-full justify-start rounded-none"
-              onClick={() => {
-                setIsCreatingAccount(true);
-                setOpen(false);
-              }}
-            >
-              <Plus className="mr-3 h-4 w-4" />
+            <div className={'p-1'}>
+              <Button
+                data-test={'create-team-account-trigger'}
+                variant="ghost"
+                size={'sm'}
+                className="w-full justify-start text-sm font-normal"
+                onClick={() => {
+                  setIsCreatingAccount(true);
+                  setOpen(false);
+                }}
+              >
+                <Plus className="mr-3 h-4 w-4" />
 
-              <span>
-                <Trans i18nKey={'teams:createTeam'} />
-              </span>
-            </Button>
+                <span>
+                  <Trans i18nKey={'teams:createTeam'} />
+                </span>
+              </Button>
+            </div>
           </If>
         </PopoverContent>
       </Popover>

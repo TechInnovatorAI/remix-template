@@ -175,7 +175,6 @@ function ConfirmUnenrollFactorModal(
           </AlertDialogCancel>
 
           <AlertDialogAction
-            className={'w-full'}
             type={'button'}
             disabled={unEnroll.isPending}
             onClick={() => onUnenrollRequested(props.factorId)}

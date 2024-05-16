@@ -151,10 +151,10 @@ export function PlanPicker(
                                 htmlFor={interval}
                                 key={interval}
                                 className={cn(
-                                  'hover:bg-secondary flex items-center space-x-2 rounded-md border border-transparent px-4 py-2',
+                                  'flex items-center space-x-2 rounded-md border border-transparent px-4 py-2 transition-colors',
                                   {
-                                    ['border-primary bg-secondary']: selected,
-                                    ['hover:bg-secondary']: !selected,
+                                    ['border-primary']: selected,
+                                    ['hover:border-primary']: !selected,
                                   },
                                 )}
                               >

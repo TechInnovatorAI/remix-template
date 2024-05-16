@@ -3,7 +3,6 @@ import {
   useLoaderData,
   useRouteLoaderData,
 } from '@remix-run/react';
-
 import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { Cms } from '@kit/cms';
@@ -16,9 +15,7 @@ import { SitePageHeader } from '~/routes/_marketing/_components/site-page-header
 import { loader as docsLoader } from '../_marketing.docs/route';
 
 export const loader = async (args: LoaderFunctionArgs) => {
-  const { t } = await createI18nServerInstance(
-    args.request,
-  );
+  const { t } = await createI18nServerInstance(args.request);
 
   return {
     title: t('marketing:documentation'),
@@ -38,12 +35,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function DocsPage() {
   const { title, description } = useLoaderData<typeof loader>();
 
-  const data = useRouteLoaderData<typeof docsLoader>(
-    'routes/_marketing.docs',
-  );
+  const data = useRouteLoaderData<typeof docsLoader>('routes/_marketing.docs');
 
   // only top level cards
-  const cards = (data?.pages ?? []).filter(item => !item.parentId);
+  const cards = (data?.pages ?? []).filter((item) => !item.parentId);
 
   return (
     <PageBody>

@@ -15,7 +15,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const pages = buildDocumentationTree(docs);
 
   return {
-    pages
+    pages,
   };
 };
 

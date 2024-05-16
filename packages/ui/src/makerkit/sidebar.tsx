@@ -191,7 +191,9 @@ export function SidebarItem({
 
 function getClassNameBuilder() {
   return cva(
-    ['flex box-content h-screen flex-col border-r border-border relative'],
+    [
+      'flex box-content h-screen flex-col relative bg-muted/20 shadow-sm dark:shadow-primary/20',
+    ],
     {
       variants: {
         collapsed: {
