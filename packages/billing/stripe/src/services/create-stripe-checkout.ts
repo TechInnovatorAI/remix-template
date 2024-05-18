@@ -55,9 +55,10 @@ export async function createStripeCheckout(
         customer_email: params.customerEmail,
       };
 
-  const customerCreation = isSubscription
-    ? ({} as Record<string, string>)
-    : { customer_creation: 'always' };
+  const customerCreation =
+    isSubscription || customer
+      ? ({} as Record<string, string>)
+      : { customer_creation: 'always' };
 
   const lineItems = params.plan.lineItems.map((item) => {
     if (item.type === 'metered') {

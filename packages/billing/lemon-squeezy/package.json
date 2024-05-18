@@ -14,7 +14,7 @@
     "./components": "./src/components/index.ts"
   },
   "dependencies": {
-    "@lemonsqueezy/lemonsqueezy.js": "2.2.0"
+    "@lemonsqueezy/lemonsqueezy.js": "3.0.0"
   },
   "devDependencies": {
     "@kit/billing": "workspace:^",
@@ -26,7 +26,7 @@
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:^",
     "@remix-run/react": "2.9.2",
-    "@types/react": "^18.3.1",
+    "@types/react": "^18.3.2",
     "react": "18.3.1",
     "zod": "^3.23.8"
   },

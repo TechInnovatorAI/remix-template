@@ -49,6 +49,8 @@
   "planPickerAlertErrorDescription": "There was an error requesting checkout. Please try again later.",
   "subscriptionCancelled": "Subscription Cancelled",
   "cancelSubscriptionDate": "Your subscription will be cancelled at the end of the period",
+  "noPlanChosen": "Please choose a plan",
+  "noIntervalPlanChosen": "Please choose a billing interval",
   "status": {
     "free": {
       "badge": "Free Plan",

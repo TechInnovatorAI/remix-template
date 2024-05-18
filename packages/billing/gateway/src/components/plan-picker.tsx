@@ -54,6 +54,7 @@ export function PlanPicker(
   }>,
 ) {
   const csrfToken = useCsrfToken();
+  const { t } = useTranslation(`billing`);
 
   const intervals = useMemo(
     () => getPlanIntervals(props.config),
@@ -68,7 +69,7 @@ export function PlanPicker(
         .object({
           planId: z.string(),
           productId: z.string(),
-          interval: z.string(),
+          interval: z.string().optional(),
           csrfToken: z.string(),
         })
         .refine(
@@ -84,7 +85,22 @@ export function PlanPicker(
               return false;
             }
           },
-          { message: `Please pick a plan to continue`, path: ['planId'] },
+          { message: t('noPlanChosen'), path: ['planId'] },
+        )
+        .refine(
+          (data) => {
+            try {
+              const { plan } = getProductPlanPair(props.config, data.planId);
+
+              return !(plan.paymentType === 'recurring' && !data.interval);
+            } catch {
+              return false;
+            }
+          },
+          {
+            message: t('noIntervalPlanChosen'),
+            path: ['interval'],
+          },
         ),
     ),
     defaultValues: {
@@ -109,8 +125,6 @@ export function PlanPicker(
     }
   }, [props.config, planId]);
 
-  const { t } = useTranslation(`billing`);
-
   // display the period picker if the selected plan is recurring or if no plan is selected
   const isRecurringPlan =
     selectedPlan?.paymentType === 'recurring' || !selectedPlan;
@@ -126,82 +140,88 @@ export function PlanPicker(
           className={'flex w-full max-w-xl flex-col space-y-4'}
           onSubmit={form.handleSubmit(props.onSubmit)}
         >
-          <div
-            className={cn('transition-all', {
-              ['pointer-events-none opacity-50']: !isRecurringPlan,
-            })}
-          >
-            <FormField
-              name={'interval'}
-              render={({ field }) => {
-                return (
-                  <FormItem className={'rounded-md border p-4'}>
-                    <FormLabel htmlFor={'plan-picker-id'}>
-                      <Trans i18nKey={'common:billingInterval.label'} />
-                    </FormLabel>
+          <If condition={intervals.length}>
+            <div
+              className={cn('transition-all', {
+                ['pointer-events-none opacity-50']: !isRecurringPlan,
+              })}
+            >
+              <FormField
+                name={'interval'}
+                render={({ field }) => {
+                  return (
+                    <FormItem className={'rounded-md border p-4'}>
+                      <FormLabel htmlFor={'plan-picker-id'}>
+                        <Trans i18nKey={'common:billingInterval.label'} />
+                      </FormLabel>
 
-                    <FormControl id={'plan-picker-id'}>
-                      <RadioGroup name={field.name} value={field.value}>
-                        <div className={'flex space-x-2.5'}>
-                          {intervals.map((interval) => {
-                            const selected = field.value === interval;
+                      <FormControl id={'plan-picker-id'}>
+                        <RadioGroup name={field.name} value={field.value}>
+                          <div className={'flex space-x-2.5'}>
+                            {intervals.map((interval) => {
+                              const selected = field.value === interval;
 
-                            return (
-                              <label
-                                htmlFor={interval}
-                                key={interval}
-                                className={cn(
-                                  'flex items-center space-x-2 rounded-md border border-transparent px-4 py-2 transition-colors',
-                                  {
-                                    ['border-primary']: selected,
-                                    ['hover:border-primary']: !selected,
-                                  },
-                                )}
-                              >
-                                <RadioGroupItem
-                                  id={interval}
-                                  value={interval}
-                                  onClick={() => {
-                                    form.setValue('interval', interval, {
-                                      shouldValidate: true,
-                                    });
-
-                                    if (selectedProduct) {
-                                      const plan = selectedProduct.plans.find(
-                                        (item) => item.interval === interval,
-                                      );
-
-                                      form.setValue('planId', plan?.id ?? '', {
-                                        shouldValidate: true,
-                                        shouldDirty: true,
-                                        shouldTouch: true,
-                                      });
-                                    }
-                                  }}
-                                />
-
-                                <span
-                                  className={cn('text-sm', {
-                                    ['cursor-pointer']: !selected,
-                                  })}
+                              return (
+                                <label
+                                  htmlFor={interval}
+                                  key={interval}
+                                  className={cn(
+                                    'flex items-center space-x-2 rounded-md border border-transparent px-4 py-2 transition-colors',
+                                    {
+                                      ['border-primary']: selected,
+                                      ['hover:border-primary']: !selected,
+                                    },
+                                  )}
                                 >
-                                  <Trans
-                                    i18nKey={`billing:billingInterval.${interval}`}
-                                  />
-                                </span>
-                              </label>
-                            );
-                          })}
-                        </div>
-                      </RadioGroup>
-                    </FormControl>
+                                  <RadioGroupItem
+                                    id={interval}
+                                    value={interval}
+                                    onClick={() => {
+                                      form.setValue('interval', interval, {
+                                        shouldValidate: true,
+                                      });
 
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
-          </div>
+                                      if (selectedProduct) {
+                                        const plan = selectedProduct.plans.find(
+                                          (item) => item.interval === interval,
+                                        );
+
+                                        form.setValue(
+                                          'planId',
+                                          plan?.id ?? '',
+                                          {
+                                            shouldValidate: true,
+                                            shouldDirty: true,
+                                            shouldTouch: true,
+                                          },
+                                        );
+                                      }
+                                    }}
+                                  />
+
+                                  <span
+                                    className={cn('text-sm', {
+                                      ['cursor-pointer']: !selected,
+                                    })}
+                                  >
+                                    <Trans
+                                      i18nKey={`billing:billingInterval.${interval}`}
+                                    />
+                                  </span>
+                                </label>
+                              );
+                            })}
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+            </div>
+          </If>
 
           <FormField
             name={'planId'}
