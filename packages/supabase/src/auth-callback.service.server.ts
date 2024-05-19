@@ -43,6 +43,12 @@ class AuthCallbackService {
 
     const errorPath = params.errorPath ?? '/auth/callback/error';
 
+    // remove the query params from the url
+    searchParams.delete('token_hash');
+    searchParams.delete('type');
+    searchParams.delete('next');
+    searchParams.delete('callback');
+
     url.pathname = next;
 
     // if we have an invite token, we append it to the redirect url
