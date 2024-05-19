@@ -16,6 +16,7 @@
     "./check-requires-mfa": "./src/check-requires-mfa.ts",
     "./require-user": "./src/require-user.ts",
     "./hooks/*": "./src/hooks/*.ts",
+    "./auth": "./src/auth.ts",
     "./database": "./src/database.types.ts"
   },
   "devDependencies": {
