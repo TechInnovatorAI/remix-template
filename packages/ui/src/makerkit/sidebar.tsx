@@ -24,6 +24,7 @@ export type SidebarConfig = z.infer<typeof NavigationConfigSchema>;
 
 export function Sidebar(props: {
   collapsed?: boolean;
+  className?: string;
   children:
     | React.ReactNode
     | ((props: {
@@ -33,7 +34,7 @@ export function Sidebar(props: {
 }) {
   const [collapsed, setCollapsed] = useState(props.collapsed ?? false);
 
-  const className = getClassNameBuilder()({
+  const className = getClassNameBuilder(props.className ?? '')({
     collapsed,
   });
 
@@ -189,9 +190,14 @@ export function SidebarItem({
   );
 }
 
-function getClassNameBuilder() {
+function getClassNameBuilder(className: string) {
   return cva(
-    ['flex box-content h-screen flex-col relative shadow-sm border-r'],
+    [
+      cn(
+        'flex box-content h-screen flex-col relative shadow-sm border-r',
+        className,
+      ),
+    ],
     {
       variants: {
         collapsed: {
