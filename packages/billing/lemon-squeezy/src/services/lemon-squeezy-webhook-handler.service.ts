@@ -345,7 +345,7 @@ export class LemonSqueezyWebhookHandlerService
         product_id: item.product,
         variant_id: item.variant,
         price_amount: item.priceAmount,
-        type: getLineItemTypeById(this.config, item.id),
+        type: getLineItemTypeById(this.config, item.variant),
       };
     });
 

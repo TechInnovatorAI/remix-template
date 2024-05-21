@@ -6,7 +6,6 @@ function bufferToHex(buffer: ArrayBuffer) {
 
 export async function createHmac({ key, data }: { key: string; data: string }) {
   const encoder = new TextEncoder();
-  const crypto = new Crypto();
   const encodedKey = encoder.encode(key);
   const encodedData = encoder.encode(data);
 

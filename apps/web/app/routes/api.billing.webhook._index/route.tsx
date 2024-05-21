@@ -36,7 +36,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     return new Response('OK', { status: 200 });
   } catch (error) {
-    logger.error(ctx, `Failed to process billing webhook`, error);
+    logger.error({ ...ctx, error }, `Failed to process billing webhook`);
 
     return new Response('Failed to process billing webhook', {
       status: 500,
