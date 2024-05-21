@@ -25,7 +25,7 @@ import { LineItemDetails } from './line-item-details';
 
 interface Paths {
   signUp: string;
-  subscription: string;
+  return: string;
 }
 
 export function PricingTable({
@@ -430,7 +430,7 @@ function DefaultCheckoutButton(
   const signUpPath = props.paths.signUp;
 
   const searchParams = new URLSearchParams({
-    next: props.paths.subscription,
+    next: props.paths.return,
     plan: props.plan.id,
     redirectToCheckout: props.redirectToCheckout ? 'true' : 'false',
   });

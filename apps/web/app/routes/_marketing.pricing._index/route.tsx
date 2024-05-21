@@ -27,7 +27,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 const paths = {
   signUp: pathsConfig.auth.signUp,
-  subscription: pathsConfig.app.personalAccountBilling,
+  return: pathsConfig.app.home,
 };
 
 export default function PricingPage() {

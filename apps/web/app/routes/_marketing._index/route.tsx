@@ -273,7 +273,7 @@ export default function Index() {
               config={billingConfig}
               paths={{
                 signUp: pathsConfig.auth.signUp,
-                subscription: pathsConfig.app.personalAccountBilling,
+                return: pathsConfig.app.home,
               }}
             />
           </div>
