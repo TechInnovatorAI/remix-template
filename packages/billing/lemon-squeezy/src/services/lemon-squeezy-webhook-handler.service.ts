@@ -331,7 +331,13 @@ export class LemonSqueezyWebhookHandlerService
     trialStartsAt: number | null;
     trialEndsAt: number | null;
   }): UpsertSubscriptionParams {
-    const active = params.status === 'active' || params.status === 'trialing';
+    const canceledAtPeriodEnd =
+      params.status === 'cancelled' && params.cancelAtPeriodEnd;
+
+    const active =
+      params.status === 'active' ||
+      params.status === 'trialing' ||
+      canceledAtPeriodEnd;
 
     const lineItems = params.lineItems.map((item) => {
       const quantity = item.quantity ?? 1;
