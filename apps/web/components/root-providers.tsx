@@ -7,6 +7,7 @@ import { CaptchaProvider, CaptchaTokenSetter } from '@kit/auth/captcha/client';
 import { I18nProvider } from '@kit/i18n/provider';
 import { MonitoringProvider } from '@kit/monitoring/components';
 import { useAuthChangeListener } from '@kit/supabase/hooks/use-auth-change-listener';
+import { GlobalLoader } from '@kit/ui/global-loader';
 
 import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
@@ -30,6 +31,8 @@ export function RootProviders(
   return (
     <Suspense>
       <I18nProvider settings={settings} resolver={i18nResolver}>
+        <GlobalLoader displaySpinner={false} />
+
         <QueryClientProvider client={queryClient}>
           <MonitoringProvider>
             <CaptchaProvider>

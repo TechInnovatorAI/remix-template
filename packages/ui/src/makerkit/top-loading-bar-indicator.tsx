@@ -2,28 +2,33 @@
 
 import { createRef, useEffect, useRef } from 'react';
 
+import { useNavigation } from '@remix-run/react';
 import type { LoadingBarRef } from 'react-top-loading-bar';
 import LoadingBar from 'react-top-loading-bar';
 
 export function TopLoadingBarIndicator() {
   const ref = createRef<LoadingBarRef>();
   const runningRef = useRef(false);
+  const navigation = useNavigation();
+  const state = navigation.state;
 
   useEffect(() => {
-    if (!ref.current || runningRef.current) {
-      return;
+    const isIdle = state === 'idle';
+    const isRouteLoading = state === 'loading';
+
+    if (isRouteLoading) {
+      ref.current?.continuousStart();
     }
 
-    const loadingBarRef = ref.current;
-
-    loadingBarRef.continuousStart(0, 250);
-    runningRef.current = true;
-
-    return () => {
-      loadingBarRef.complete();
+    if (isIdle) {
+      ref.current?.complete();
       runningRef.current = false;
-    };
-  }, [ref]);
+    }
+  }, [ref, state]);
+
+  if (typeof document === 'undefined') {
+    return null;
+  }
 
   return (
     <LoadingBar
