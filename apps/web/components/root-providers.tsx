@@ -13,6 +13,7 @@ import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
 import { i18nResolver } from '~/lib/i18n/i18n.resolver';
 import { getI18nSettings } from '~/lib/i18n/i18n.settings';
+import {ClientOnly} from "@kit/ui/client-only";
 
 const queryClient = new QueryClient();
 const captchaSiteKey = authConfig.captchaTokenSiteKey;
@@ -31,7 +32,9 @@ export function RootProviders(
   return (
     <Suspense>
       <I18nProvider settings={settings} resolver={i18nResolver}>
-        <GlobalLoader displaySpinner={false} />
+        <ClientOnly>
+          <GlobalLoader displaySpinner={false} />
+        </ClientOnly>
 
         <QueryClientProvider client={queryClient}>
           <MonitoringProvider>
