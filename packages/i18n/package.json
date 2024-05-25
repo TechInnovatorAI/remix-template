@@ -22,7 +22,7 @@
     "@kit/tailwind-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@tanstack/react-query": "5.37.1",
-    "react-i18next": "^14.1.1"
+    "react-i18next": "^14.1.2"
   },
   "dependencies": {
     "i18next": "^23.11.4",

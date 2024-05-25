@@ -39,8 +39,8 @@ export function BorderedNavigationMenuItem(props: {
           {({ isActive }) => (
             <span
               className={cn({
-                'text-primary': isActive,
-                'text-primary/80 hover:text-primary': !isActive,
+                'text-secondary-foreground': isActive,
+                'text-secondary-foreground/80 hover:text-secondary-foreground': !isActive,
               })}
             >
               <Trans i18nKey={props.label} defaults={props.label} />
