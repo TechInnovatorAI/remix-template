@@ -30,10 +30,12 @@ export function Stepper(props: {
   const Steps = useCallback(() => {
     return props.steps.map((labelOrKey, index) => {
       const selected = props.currentStep === index;
+      const complete = props.currentStep > index;
 
       const className = classNameBuilder({
         selected,
         variant,
+        complete,
       });
 
       const isNumberVariant = variant === 'numbers';
@@ -54,7 +56,9 @@ export function Stepper(props: {
           </div>
 
           <If condition={isNumberVariant}>
-            <StepDivider selected={selected}>{label}</StepDivider>
+            <StepDivider selected={selected} complete={complete}>
+              {label}
+            </StepDivider>
           </If>
         </Fragment>
       );
@@ -68,7 +72,7 @@ export function Stepper(props: {
 
   const containerClassName = cn({
     ['flex justify-between']: variant === 'numbers',
-    ['flex space-x-1']: variant === 'default',
+    ['flex space-x-0.5']: variant === 'default',
   });
 
   return (
@@ -82,12 +86,15 @@ function getClassNameBuilder() {
   return cva(``, {
     variants: {
       variant: {
-        default: `flex flex-col h-[2.5px] w-full transition-colors duration-500`,
+        default: `flex flex-col h-[2.5px] w-full transition-all duration-500`,
         numbers:
-          'w-9 h-9 font-bold rounded-full flex items-center justify-center' +
-          ' text-sm border',
+          'w-9 h-9 font-bold rounded-full flex items-center justify-center text-sm border',
       },
       selected: {
+        true: '',
+        false: '',
+      },
+      complete: {
         true: '',
         false: '',
       },
@@ -101,17 +108,30 @@ function getClassNameBuilder() {
       {
         variant: 'default',
         selected: true,
-        className: 'bg-primary',
+        className: 'bg-primary font-medium',
       },
       {
         variant: 'default',
         selected: false,
+        complete: false,
         className: 'bg-muted',
+      },
+      {
+        variant: 'default',
+        selected: false,
+        complete: true,
+        className: 'bg-primary',
+      },
+      {
+        variant: 'numbers',
+        selected: false,
+        complete: true,
+        className: 'border-primary text-primary',
       },
       {
         variant: 'numbers',
         selected: true,
-        className: 'text-primary border-primary',
+        className: 'border-primary bg-primary text-primary-foreground',
       },
       {
         variant: 'numbers',
@@ -128,13 +148,16 @@ function getClassNameBuilder() {
 
 function StepDivider({
   selected,
+  complete,
   children,
 }: React.PropsWithChildren<{
   selected: boolean;
+  complete: boolean;
 }>) {
-  const spanClassName = cn('font-medium text-sm', {
+  const spanClassName = cn('font-medium text-sm min-w-max', {
     ['text-muted-foreground']: !selected,
-    ['text-primary']: selected,
+    ['text-secondary-foreground']: selected || complete,
+    ['font-medium']: selected,
   });
 
   const className = cn(
@@ -149,7 +172,7 @@ function StepDivider({
       <div
         className={
           'divider h-[1px] w-full bg-gray-200 transition-colors' +
-          ' dark:bg-dark-600 group-last:hidden'
+          ' group-last:hidden dark:bg-border'
         }
       />
     </div>

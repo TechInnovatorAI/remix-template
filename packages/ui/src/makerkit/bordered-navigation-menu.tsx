@@ -11,9 +11,13 @@ import {
 import { cn } from '../utils';
 import { Trans } from './trans';
 
-export function BorderedNavigationMenu(props: React.PropsWithChildren) {
+export function BorderedNavigationMenu(
+  props: React.PropsWithChildren<{
+    className?: string;
+  }>,
+) {
   return (
-    <NavigationMenu className={'h-full'}>
+    <NavigationMenu className={props.className}>
       <NavigationMenuList className={'relative h-full space-x-2'}>
         {props.children}
       </NavigationMenuList>
@@ -23,9 +27,11 @@ export function BorderedNavigationMenu(props: React.PropsWithChildren) {
 
 export function BorderedNavigationMenuItem(props: {
   path: string;
-  label: string;
+  label: React.ReactNode | string;
   end?: boolean | ((path: string) => boolean);
   active?: boolean;
+  className?: string;
+  buttonClassName?: string;
 }) {
   const currentPath = useLocation().pathname;
 
@@ -33,17 +39,26 @@ export function BorderedNavigationMenuItem(props: {
     typeof props.end === 'function' ? props.end(currentPath) : props.end;
 
   return (
-    <NavigationMenuItem>
-      <Button asChild variant={'ghost'} className={'relative active:shadow-sm'}>
+    <NavigationMenuItem className={props.className}>
+      <Button
+        asChild
+        variant={'ghost'}
+        className={cn('relative active:shadow-sm', props.buttonClassName)}
+      >
         <NavLink to={props.path} end={end}>
           {({ isActive }) => (
             <span
               className={cn({
                 'text-secondary-foreground': isActive,
-                'text-secondary-foreground/80 hover:text-secondary-foreground': !isActive,
+                'text-secondary-foreground/80 hover:text-secondary-foreground':
+                  !isActive,
               })}
             >
-              <Trans i18nKey={props.label} defaults={props.label} />
+              {typeof props.label === 'string' ? (
+                <Trans i18nKey={props.label} defaults={props.label} />
+              ) : (
+                props.label
+              )}
 
               <span
                 className={cn(
