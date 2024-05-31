@@ -13,7 +13,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@keystatic/core": "0.5.17",
+    "@keystatic/core": "0.5.18",
     "@markdoc/markdoc": "^0.4.0"
   },
   "devDependencies": {
@@ -22,7 +22,7 @@
     "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:^",
-    "@types/node": "^20.12.12",
+    "@types/node": "^20.12.13",
     "@types/react": "^18.3.3",
     "react": "18.3.1",
     "zod": "^3.23.8"

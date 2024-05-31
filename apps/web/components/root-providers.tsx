@@ -14,6 +14,7 @@ import pathsConfig from '~/config/paths.config';
 import { i18nResolver } from '~/lib/i18n/i18n.resolver';
 import { getI18nSettings } from '~/lib/i18n/i18n.settings';
 import {ClientOnly} from "@kit/ui/client-only";
+import {Toaster} from "@kit/ui/sonner";
 
 const queryClient = new QueryClient();
 const captchaSiteKey = authConfig.captchaTokenSiteKey;
@@ -32,6 +33,8 @@ export function RootProviders(
   return (
     <Suspense>
       <I18nProvider settings={settings} resolver={i18nResolver}>
+        <Toaster richColors={false} />
+
         <ClientOnly>
           <GlobalLoader displaySpinner={false} />
         </ClientOnly>
