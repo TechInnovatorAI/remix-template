@@ -65,7 +65,7 @@ export function PricingTable({
       <div
         className={
           'flex flex-col items-start space-y-6 lg:space-y-0' +
-          ' justify-center lg:flex-row lg:space-x-4'
+          'justify-center lg:flex-row lg:space-x-4'
         }
       >
         {config.products.map((product) => {
@@ -160,8 +160,7 @@ function PricingItem(
       data-cy={'subscription-plan'}
       className={cn(
         props.className,
-        `s-full relative flex flex-1 grow flex-col items-stretch justify-between
-            self-stretch rounded-lg border p-8 lg:w-4/12 xl:max-w-[20rem]`,
+        `s-full relative flex flex-1 grow flex-col items-stretch justify-between self-stretch rounded-lg border p-8 lg:w-4/12 xl:max-w-[20rem]`,
         {
           ['border-primary']: highlighted,
           ['dark:shadow-primary/40 border-transparent shadow dark:shadow-sm']:

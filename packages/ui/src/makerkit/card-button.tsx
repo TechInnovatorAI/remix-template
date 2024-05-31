@@ -11,7 +11,7 @@ export const CardButton = React.forwardRef<
     asChild?: boolean;
     className?: string;
     children: React.ReactNode;
-  }
+  } & React.ButtonHTMLAttributes<HTMLButtonElement>
 >(function CardButton({ className, asChild, ...props }, ref) {
   const Comp = asChild ? Slot : 'button';
 
@@ -19,7 +19,7 @@ export const CardButton = React.forwardRef<
     <Comp
       ref={ref}
       className={cn(
-        'group relative flex h-36 flex-col rounded-lg bg-secondary/80 transition-all hover:bg-secondary/90 hover:shadow-sm active:bg-secondary active:shadow-lg',
+        'group relative flex h-36 flex-col rounded-lg border transition-all hover:bg-secondary/20 hover:shadow active:bg-secondary active:bg-secondary/50 active:shadow-lg dark:shadow-primary/20',
         className,
       )}
       {...props}

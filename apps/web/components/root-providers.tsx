@@ -7,14 +7,14 @@ import { CaptchaProvider, CaptchaTokenSetter } from '@kit/auth/captcha/client';
 import { I18nProvider } from '@kit/i18n/provider';
 import { MonitoringProvider } from '@kit/monitoring/components';
 import { useAuthChangeListener } from '@kit/supabase/hooks/use-auth-change-listener';
+import { ClientOnly } from '@kit/ui/client-only';
 import { GlobalLoader } from '@kit/ui/global-loader';
+import { Toaster } from '@kit/ui/sonner';
 
 import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
 import { i18nResolver } from '~/lib/i18n/i18n.resolver';
 import { getI18nSettings } from '~/lib/i18n/i18n.settings';
-import {ClientOnly} from "@kit/ui/client-only";
-import {Toaster} from "@kit/ui/sonner";
 
 const queryClient = new QueryClient();
 const captchaSiteKey = authConfig.captchaTokenSiteKey;

@@ -23,8 +23,8 @@ export default function Index() {
         <div
           className={
             'flex flex-col items-center md:flex-row' +
-            ' animate-in fade-in mx-auto flex-1 justify-center ' +
-            ' zoom-in-95 slide-in-from-top-24 duration-500'
+            'animate-in fade-in mx-auto flex-1 justify-center' +
+            'zoom-in-95 slide-in-from-top-24 duration-500'
           }
         >
           <div
@@ -81,8 +81,8 @@ export default function Index() {
 
         <div
           className={
-            'animate-in fade-in mx-auto flex max-w-6xl justify-center py-12 ' +
-            ' slide-in-from-top-16 fill-mode-both delay-300 duration-1000'
+            'animate-in fade-in mx-auto flex max-w-6xl justify-center py-12' +
+            'slide-in-from-top-16 fill-mode-both delay-300 duration-1000'
           }
         >
           <img
@@ -313,7 +313,7 @@ function FeatureShowcaseContainer(props: React.PropsWithChildren) {
     <div
       className={
         'flex flex-col items-center justify-between space-y-8 lg:flex-row lg:space-y-0' +
-        ' lg:space-x-24'
+        'lg:space-x-24'
       }
     >
       {props.children}
@@ -357,7 +357,7 @@ function MainCallToActionButton() {
             <ChevronRight
               className={
                 'animate-in fade-in slide-in-from-left-8 h-4' +
-                ' delay-800 zoom-in fill-mode-both duration-1000'
+                'delay-800 zoom-in fill-mode-both duration-1000'
               }
             />
           </span>
