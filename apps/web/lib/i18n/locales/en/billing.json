@@ -39,6 +39,7 @@
   "includedUpTo": "Up to {{upTo}} {{unit}} included in the plan",
   "fromPreviousTierUpTo": "for each {{unit}} for the next {{ upTo }} {{ unit }}",
   "andAbove": "above {{ previousTier }} {{ unit }}",
+  "forEveryUnit": "for every {{ unit }}",
   "setupFee": "plus a {{ setupFee }} setup fee",
   "perUnitIncluded": "({{included}} included)",
   "featuresLabel": "Features",

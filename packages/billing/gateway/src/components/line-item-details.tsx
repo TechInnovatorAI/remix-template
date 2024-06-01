@@ -5,9 +5,9 @@ import { LineItemSchema } from '@kit/billing';
 import { formatCurrency } from '@kit/shared/utils';
 import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
+import { cn } from '@kit/ui/utils';
 
-const className =
-  'flex text-secondary-foreground items-center justify-between text-sm';
+const className = 'flex text-secondary-foreground items-center text-sm';
 
 export function LineItemDetails(
   props: React.PropsWithChildren<{
@@ -62,7 +62,7 @@ export function LineItemDetails(
 
         const FlatFee = () => (
           <div className={'flex flex-col'}>
-            <div className={className}>
+            <div className={cn(className, 'space-x-1')}>
               <span className={'flex items-center space-x-1'}>
                 <span className={'flex items-center space-x-1.5'}>
                   <PlusSquare className={'w-3'} />
@@ -72,21 +72,23 @@ export function LineItemDetails(
                   </span>
                 </span>
 
-                <span>-</span>
-
                 <span>
                   <If
                     condition={props.selectedInterval}
                     fallback={<Trans i18nKey={'billing:lifetime'} />}
                   >
+                    (
                     <Trans
                       i18nKey={`billing:billingInterval.${props.selectedInterval}`}
                     />
+                    )
                   </If>
                 </span>
               </span>
 
-              <span className={'font-semibold'}>
+              <span>-</span>
+
+              <span className={'text-xs font-semibold'}>
                 {formatCurrency(props?.currency.toLowerCase(), item.cost)}
               </span>
             </div>
@@ -185,6 +187,10 @@ export function LineItemDetails(
             return <PerSeat key={item.id} />;
 
           case 'metered': {
+            if (item.cost > 0) {
+              return <FlatFee key={item.id} />;
+            }
+
             return <Metered key={item.id} />;
           }
         }
@@ -203,8 +209,9 @@ function Tiers({
   const unit = item.unit;
 
   const tiers = item.tiers?.map((tier, index) => {
+    const tiersLength = item.tiers?.length ?? 0;
     const previousTier = item.tiers?.[index - 1];
-    const isNoLimit = tier.upTo === 'unlimited';
+    const isLastTier = tier.upTo === 'unlimited';
 
     const previousTierFrom =
       previousTier?.upTo === 'unlimited'
@@ -223,20 +230,36 @@ function Tiers({
       >
         <span>-</span>
 
-        <If condition={isNoLimit}>
+        <If condition={isLastTier}>
           <span className={'font-bold'}>
             {formatCurrency(currency.toLowerCase(), tier.cost)}
           </span>
 
-          <span>
-            <Trans
-              i18nKey={'billing:andAbove'}
-              values={{ unit, previousTier: (previousTierFrom as number) - 1 }}
-            />
-          </span>
+          <If condition={tiersLength > 1}>
+            <span>
+              <Trans
+                i18nKey={'billing:andAbove'}
+                values={{
+                  unit,
+                  previousTier: (previousTierFrom as number) - 1,
+                }}
+              />
+            </span>
+          </If>
+
+          <If condition={tiersLength === 1}>
+            <span>
+              <Trans
+                i18nKey={'billing:forEveryUnit'}
+                values={{
+                  unit,
+                }}
+              />
+            </span>
+          </If>
         </If>
 
-        <If condition={!isNoLimit}>
+        <If condition={!isLastTier}>
           <If condition={isIncluded}>
             <span>
               <Trans i18nKey={'billing:includedUpTo'} values={{ unit, upTo }} />
@@ -260,5 +283,5 @@ function Tiers({
     );
   });
 
-  return <div className={'my-2.5 flex flex-col space-y-1.5'}>{tiers}</div>;
+  return <div className={'my-1 flex flex-col space-y-1.5'}>{tiers}</div>;
 }

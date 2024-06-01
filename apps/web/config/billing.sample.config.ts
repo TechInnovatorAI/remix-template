@@ -33,7 +33,14 @@ export default createBillingSchema({
               id: 'price_1NNwYHI1i3VnbZTqI2UzaHIe',
               name: 'Addon 2',
               cost: 9.99,
-              type: 'flat' as const,
+              type: 'metered' as const,
+              unit: 'GB',
+              tiers: [
+                {
+                  cost: 0.5,
+                  upTo: 'unlimited',
+                },
+              ],
             },
           ],
         },

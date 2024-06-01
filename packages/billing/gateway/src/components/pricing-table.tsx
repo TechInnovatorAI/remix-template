@@ -151,9 +151,7 @@ function PricingItem(
 
   // we want to exclude the primary plan from the list of line items
   // since we are displaying the primary line item separately as the main price
-  const lineItemsToDisplay = props.plan.lineItems.filter((item) => {
-    return item.id !== lineItem?.id;
-  });
+  const lineItemsToDisplay = props.plan.lineItems;
 
   return (
     <div
@@ -216,10 +214,10 @@ function PricingItem(
           <If condition={props.plan.name}>
             <span
               className={cn(
-                `animate-in slide-in-from-left-4 fade-in flex items-center space-x-0.5 text-sm capitalize`,
+                `animate-in slide-in-from-left-4 fade-in text-muted-foreground flex items-center space-x-0.5 text-sm capitalize`,
               )}
             >
-              <span className={'text-muted-foreground'}>
+              <span>
                 <If
                   condition={props.plan.interval}
                   fallback={<Trans i18nKey={'billing:lifetime'} />}
