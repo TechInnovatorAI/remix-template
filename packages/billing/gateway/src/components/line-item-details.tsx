@@ -187,10 +187,6 @@ export function LineItemDetails(
             return <PerSeat key={item.id} />;
 
           case 'metered': {
-            if (item.cost > 0) {
-              return <FlatFee key={item.id} />;
-            }
-
             return <Metered key={item.id} />;
           }
         }

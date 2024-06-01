@@ -86,21 +86,6 @@ export function PlanPicker(
             }
           },
           { message: t('noPlanChosen'), path: ['planId'] },
-        )
-        .refine(
-          (data) => {
-            try {
-              const { plan } = getProductPlanPair(props.config, data.planId);
-
-              return !(plan.paymentType === 'recurring' && !data.interval);
-            } catch {
-              return false;
-            }
-          },
-          {
-            message: t('noIntervalPlanChosen'),
-            path: ['interval'],
-          },
         ),
     ),
     defaultValues: {

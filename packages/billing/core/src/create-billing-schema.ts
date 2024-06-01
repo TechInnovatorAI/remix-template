@@ -72,6 +72,19 @@ export const LineItemSchema = z
       message: 'Metered line items must have a unit and tiers',
       path: ['type', 'unit', 'tiers'],
     },
+  )
+  .refine(
+    (data) => {
+      if (data.type === LineItemType.Metered) {
+        return data.cost === 0;
+      }
+
+      return true;
+    },
+    {
+      message: 'Metered line items must have a cost of 0. Please add a different line item type for a flat fee (Stripe)',
+      path: ['type', 'cost'],
+    },
   );
 
 export const PlanSchema = z
