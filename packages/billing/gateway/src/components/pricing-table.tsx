@@ -149,9 +149,11 @@ function PricingItem(
 
   const lineItem = props.primaryLineItem;
 
-  // we want to exclude the primary plan from the list of line items
-  // since we are displaying the primary line item separately as the main price
-  const lineItemsToDisplay = props.plan.lineItems;
+  // we exclude flat line items from the details since
+  // it doesn't need further explanation
+  const lineItemsToDisplay = props.plan.lineItems.filter((item) => {
+    return item.type !== 'flat';
+  });
 
   return (
     <div
