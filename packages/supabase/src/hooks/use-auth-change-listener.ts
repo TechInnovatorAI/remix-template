@@ -54,7 +54,7 @@ export function useAuthChangeListener({
 
       // revalidate user session when user signs in or out
       if (event === 'SIGNED_OUT') {
-        queryClient.invalidateQueries();
+        await queryClient.invalidateQueries();
 
         return refresh();
       }
