@@ -9,8 +9,9 @@ import { SiteHeader } from './_components/site-header';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const client = getSupabaseServerClient(request);
-  const session = await client.auth.getSession();
-  const user = session?.data.session?.user;
+  const {
+    data: { user },
+  } = await client.auth.getUser();
 
   return json({
     user,

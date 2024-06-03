@@ -155,7 +155,7 @@ function StepDivider({
   complete: boolean;
 }>) {
   const spanClassName = cn('font-medium text-sm min-w-max', {
-    ['text-muted-foreground']: !selected,
+    ['text-muted-foreground hidden sm:flex']: !selected,
     ['text-secondary-foreground']: selected || complete,
     ['font-medium']: selected,
   });
@@ -172,7 +172,7 @@ function StepDivider({
       <div
         className={
           'divider h-[1px] w-full bg-gray-200 transition-colors' +
-          ' group-last:hidden dark:bg-border'
+          ' hidden group-last:hidden dark:bg-border sm:flex'
         }
       />
     </div>

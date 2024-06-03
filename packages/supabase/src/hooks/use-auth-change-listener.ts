@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from '@remix-run/react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useSupabase } from './use-supabase';
-import { useRevalidateUserSession, useUserSession } from './use-user-session';
+import { useRevalidateUserSession } from './use-user-session';
 
 /**
  * @name PRIVATE_PATH_PREFIXES
@@ -31,9 +31,7 @@ export function useAuthChangeListener({
   const pathName = useLocation().pathname;
 
   const revalidateUserSession = useRevalidateUserSession();
-  const session = useUserSession();
   const queryClient = useQueryClient();
-  const accessToken = session.data?.access_token;
 
   useEffect(() => {
     // keep this running for the whole session unless the component was unmounted
@@ -58,15 +56,6 @@ export function useAuthChangeListener({
 
         return refresh();
       }
-
-      // revalidate user session when access token is out of sync
-      if (accessToken) {
-        const isOutOfSync = user?.access_token !== accessToken;
-
-        if (isOutOfSync) {
-          void refresh();
-        }
-      }
     });
 
     // destroy listener on un-mounts
@@ -74,7 +63,6 @@ export function useAuthChangeListener({
   }, [
     queryClient,
     client.auth,
-    accessToken,
     revalidateUserSession,
     pathName,
     appHomePath,
