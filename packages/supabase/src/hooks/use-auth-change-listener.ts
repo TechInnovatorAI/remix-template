@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 
 import { useLocation, useNavigate } from '@remix-run/react';
-
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useSupabase } from './use-supabase';

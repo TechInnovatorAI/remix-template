@@ -82,7 +82,8 @@ export const LineItemSchema = z
       return true;
     },
     {
-      message: 'Metered line items must have a cost of 0. Please add a different line item type for a flat fee (Stripe)',
+      message:
+        'Metered line items must have a cost of 0. Please add a different line item type for a flat fee (Stripe)',
       path: ['type', 'cost'],
     },
   );

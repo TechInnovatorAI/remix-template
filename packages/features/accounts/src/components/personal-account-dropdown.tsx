@@ -57,7 +57,10 @@ export function PersonalAccountDropdown({
     enableThemeToggle: boolean;
   };
 }) {
-  const { data: personalAccountData } = usePersonalAccountData(user.id, account);
+  const { data: personalAccountData } = usePersonalAccountData(
+    user.id,
+    account,
+  );
 
   const signedInAsLabel = useMemo(() => {
     const email = user?.email ?? undefined;

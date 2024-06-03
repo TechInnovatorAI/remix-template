@@ -87,7 +87,7 @@ export function useRevalidatePersonalAccountDataQuery() {
   return useCallback(
     (userId: string) =>
       queryClient.invalidateQueries({
-        queryKey: createQueryKey(userId)
+        queryKey: createQueryKey(userId),
       }),
     [queryClient],
   );

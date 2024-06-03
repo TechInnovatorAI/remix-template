@@ -33,7 +33,7 @@ export default createBillingSchema({
               id: 'price_1NNwYHI1i3VnbZTqI2UzaHIe',
               name: 'Addon 2',
               cost: 9.99,
-              type: 'flat' as const
+              type: 'flat' as const,
             },
           ],
         },
