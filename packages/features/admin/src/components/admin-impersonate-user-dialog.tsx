@@ -168,6 +168,7 @@ function useSetSession(tokens: { accessToken: string; refreshToken: string }) {
 
   return useQuery({
     queryKey: ['impersonate-user', tokens.accessToken, tokens.refreshToken],
+    gcTime: 0,
     queryFn: async () => {
       await supabase.auth.setSession({
         refresh_token: tokens.refreshToken,

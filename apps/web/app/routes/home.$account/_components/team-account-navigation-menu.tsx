@@ -51,6 +51,7 @@ export function TeamAccountNavigationMenu(props: {
 
       <div className={'flex justify-end space-x-2.5'}>
         <TeamAccountAccountsSelector
+          userId={user.id}
           selectedAccount={account.slug}
           accounts={accounts.map((account) => ({
             label: account.name,

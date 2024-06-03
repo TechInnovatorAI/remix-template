@@ -1,6 +1,5 @@
 import { Suspense, useMemo } from 'react';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 
 import { CaptchaProvider, CaptchaTokenSetter } from '@kit/auth/captcha/client';
@@ -16,7 +15,8 @@ import pathsConfig from '~/config/paths.config';
 import { i18nResolver } from '~/lib/i18n/i18n.resolver';
 import { getI18nSettings } from '~/lib/i18n/i18n.settings';
 
-const queryClient = new QueryClient();
+import { ReactQueryProvider } from './react-query-provider';
+
 const captchaSiteKey = authConfig.captchaTokenSiteKey;
 
 export function RootProviders(
@@ -39,7 +39,7 @@ export function RootProviders(
           <GlobalLoader displaySpinner={false} />
         </ClientOnly>
 
-        <QueryClientProvider client={queryClient}>
+        <ReactQueryProvider>
           <MonitoringProvider>
             <CaptchaProvider>
               <CaptchaTokenSetter siteKey={captchaSiteKey} />
@@ -57,7 +57,7 @@ export function RootProviders(
               </AuthProvider>
             </CaptchaProvider>
           </MonitoringProvider>
-        </QueryClientProvider>
+        </ReactQueryProvider>
       </I18nProvider>
     </Suspense>
   );

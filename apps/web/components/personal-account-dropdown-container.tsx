@@ -19,7 +19,7 @@ const features = {
 
 export function ProfileAccountDropdownContainer(props: {
   collapsed: boolean;
-  user: User | null;
+  user: User;
 
   account?: {
     id: string | null;

@@ -10,6 +10,8 @@ const features = {
 };
 
 export function HomeAccountSelector(props: {
+  userId: string;
+
   accounts: Array<{
     label: string | null;
     value: string | null;
@@ -22,6 +24,7 @@ export function HomeAccountSelector(props: {
 
   return (
     <AccountSelector
+      userId={props.userId}
       collapsed={props.collapsed}
       accounts={props.accounts}
       features={features}

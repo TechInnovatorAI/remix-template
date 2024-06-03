@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 
 import { useLocation, useNavigate } from '@remix-run/react';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useSupabase } from './use-supabase';
 import { useRevalidateUserSession, useUserSession } from './use-user-session';
 
@@ -31,11 +33,12 @@ export function useAuthChangeListener({
 
   const revalidateUserSession = useRevalidateUserSession();
   const session = useUserSession();
+  const queryClient = useQueryClient();
   const accessToken = session.data?.access_token;
 
   useEffect(() => {
     // keep this running for the whole session unless the component was unmounted
-    const listener = client.auth.onAuthStateChange((event, user) => {
+    const listener = client.auth.onAuthStateChange(async (event, user) => {
       // log user out if user is falsy
       // and if the current path is a private route
       const shouldRedirectUser =
@@ -50,10 +53,14 @@ export function useAuthChangeListener({
 
       const refresh = () => navigate('.', { replace: true });
 
+      // revalidate user session when user signs in or out
       if (event === 'SIGNED_OUT') {
+        queryClient.invalidateQueries();
+
         return refresh();
       }
 
+      // revalidate user session when access token is out of sync
       if (accessToken) {
         const isOutOfSync = user?.access_token !== accessToken;
 
@@ -66,6 +73,7 @@ export function useAuthChangeListener({
     // destroy listener on un-mounts
     return () => listener.data.subscription.unsubscribe();
   }, [
+    queryClient,
     client.auth,
     accessToken,
     revalidateUserSession,

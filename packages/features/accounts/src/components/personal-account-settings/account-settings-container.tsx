@@ -24,6 +24,8 @@ import { UpdateAccountImageContainer } from './update-account-image-container';
 
 export function PersonalAccountSettingsContainer(
   props: React.PropsWithChildren<{
+    userId: string;
+
     features: {
       enableAccountDeletion: boolean;
     };
@@ -34,7 +36,7 @@ export function PersonalAccountSettingsContainer(
   }>,
 ) {
   const supportsLanguageSelection = useSupportMultiLanguage();
-  const user = usePersonalAccountData();
+  const user = usePersonalAccountData(props.userId);
 
   if (!user.data || user.isPending) {
     return <LoadingOverlay fullPage />;

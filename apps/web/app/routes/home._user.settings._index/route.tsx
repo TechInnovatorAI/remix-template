@@ -1,4 +1,4 @@
-import { MetaFunction } from '@remix-run/react';
+import { MetaFunction, useLoaderData } from '@remix-run/react';
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
@@ -37,17 +37,20 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export const loader = async (args: LoaderFunctionArgs) => {
   // require user
-  await requireUserLoader(args.request);
+  const user = await requireUserLoader(args.request);
 
   const i18n = await createI18nServerInstance(args.request);
   const title = i18n.t('account:settingsTab');
 
   return {
     title,
+    userId: user.id,
   };
 };
 
 export default function PersonalAccountSettingsPage() {
+  const { userId } = useLoaderData<typeof loader>();
+
   return (
     <>
       <HomeLayoutPageHeader
@@ -57,7 +60,11 @@ export default function PersonalAccountSettingsPage() {
 
       <PageBody>
         <div className={'flex w-full flex-1 flex-col lg:max-w-2xl'}>
-          <PersonalAccountSettingsContainer features={features} paths={paths} />
+          <PersonalAccountSettingsContainer
+            userId={userId}
+            features={features}
+            paths={paths}
+          />
         </div>
       </PageBody>
     </>
@@ -71,7 +78,8 @@ export const action = async (args: ActionFunctionArgs) => {
   switch (json.intent) {
     case 'delete-account':
       return deletePersonalAccountAction({ client });
-  }
 
-  return new Response('Invalid action', { status: 400 });
+    default:
+      return new Response('Invalid action', { status: 400 });
+  }
 };

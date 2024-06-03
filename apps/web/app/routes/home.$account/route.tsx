@@ -68,6 +68,7 @@ export default function TeamWorkspaceLayout() {
 
         <div className={'flex space-x-4'}>
           <TeamAccountLayoutMobileNavigation
+            userId={workspace.user.id}
             accounts={accounts}
             account={workspace.account.slug}
           />

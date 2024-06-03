@@ -66,6 +66,7 @@ function SidebarContainer(props: {
           className={'flex max-w-full items-center justify-between space-x-4'}
         >
           <TeamAccountAccountsSelector
+            userId={props.user.id}
             selectedAccount={account}
             accounts={accounts}
           />

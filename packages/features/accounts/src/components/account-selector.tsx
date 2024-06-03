@@ -26,6 +26,8 @@ import { CreateTeamAccountDialog } from '../../../team-accounts/src/components/c
 import { usePersonalAccountData } from '../hooks/use-personal-account-data';
 
 interface AccountSelectorProps {
+  userId: string;
+
   accounts: Array<{
     label: string | null;
     value: string | null;
@@ -46,6 +48,7 @@ interface AccountSelectorProps {
 const PERSONAL_ACCOUNT_SLUG = 'personal';
 
 export function AccountSelector({
+  userId,
   accounts,
   selectedAccount,
   onAccountChange,
@@ -63,7 +66,7 @@ export function AccountSelector({
   );
 
   const { t } = useTranslation('teams');
-  const personalData = usePersonalAccountData();
+  const personalData = usePersonalAccountData(userId);
 
   useEffect(() => {
     setValue(selectedAccount ?? PERSONAL_ACCOUNT_SLUG);

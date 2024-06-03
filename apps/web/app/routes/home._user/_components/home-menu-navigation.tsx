@@ -48,7 +48,11 @@ export function HomeMenuNavigation(props: { workspace: UserWorkspace }) {
       </div>
 
       <div className={'flex justify-end space-x-2.5'}>
-        <HomeAccountSelector accounts={accounts} collapsed={false} />
+        <HomeAccountSelector
+          userId={user.id}
+          accounts={accounts}
+          collapsed={false}
+        />
 
         <UserNotifications userId={user.id} />
 

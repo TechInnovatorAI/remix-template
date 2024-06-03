@@ -1,11 +1,34 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
-import { useUser } from '@kit/supabase/hooks/use-user';
+
+interface PartialAccount {
+  id: string | null;
+  name: string | null;
+  picture_url: string | null;
+}
+
+const createQueryKey = (userId: string) => ['account:data', userId];
+
+export function usePreloadPersonalAccountDataQuery(
+  userId: string,
+  account: PartialAccount | undefined,
+) {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (!account) {
+      return;
+    }
+
+    queryClient.setQueryData(createQueryKey(userId), account);
+  }, [account, queryClient, userId]);
+}
 
 export function usePersonalAccountData(
+  userId: string,
   partialAccount?:
     | {
         id: string | null;
@@ -15,10 +38,7 @@ export function usePersonalAccountData(
     | undefined,
 ) {
   const client = useSupabase();
-  const user = useUser();
-  const userId = user.data?.id;
-
-  const queryKey = ['account:data', userId];
+  const queryKey = createQueryKey(userId);
 
   const queryFn = async () => {
     if (!userId) {
@@ -67,7 +87,7 @@ export function useRevalidatePersonalAccountDataQuery() {
   return useCallback(
     (userId: string) =>
       queryClient.invalidateQueries({
-        queryKey: ['account:data', userId],
+        queryKey: createQueryKey(userId)
       }),
     [queryClient],
   );

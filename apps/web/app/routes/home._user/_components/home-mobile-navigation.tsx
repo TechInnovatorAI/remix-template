@@ -66,6 +66,7 @@ export function HomeMobileNavigation(props: { workspace: UserWorkspace }) {
             </DropdownMenuLabel>
 
             <HomeAccountSelector
+              userId={props.workspace.user.id}
               accounts={props.workspace.accounts}
               collapsed={false}
             />

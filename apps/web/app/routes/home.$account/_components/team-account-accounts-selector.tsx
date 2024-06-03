@@ -11,6 +11,8 @@ const features = {
 
 export function TeamAccountAccountsSelector(params: {
   selectedAccount: string;
+  userId: string;
+
   accounts: Array<{
     label: string | null;
     value: string | null;
@@ -21,6 +23,7 @@ export function TeamAccountAccountsSelector(params: {
 
   return (
     <AccountSelector
+      userId={params.userId}
       selectedAccount={params.selectedAccount}
       accounts={params.accounts}
       collapsed={false}

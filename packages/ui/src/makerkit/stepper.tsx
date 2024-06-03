@@ -92,7 +92,7 @@ function getClassNameBuilder() {
       },
       selected: {
         true: '',
-        false: '',
+        false: 'hidden sm:flex',
       },
       complete: {
         true: '',

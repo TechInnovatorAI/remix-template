@@ -38,7 +38,7 @@ export function PersonalAccountDropdown({
   account,
 }: {
   className?: string;
-  user: User | null;
+  user: User;
 
   account?: {
     id: string | null;
@@ -57,14 +57,14 @@ export function PersonalAccountDropdown({
     enableThemeToggle: boolean;
   };
 }) {
-  const { data: personalAccountData } = usePersonalAccountData(account);
+  const { data: personalAccountData } = usePersonalAccountData(user.id, account);
 
   const signedInAsLabel = useMemo(() => {
     const email = user?.email ?? undefined;
     const phone = user?.phone ?? undefined;
 
     return email ?? phone;
-  }, [user?.email, user?.phone]);
+  }, [user]);
 
   const displayName =
     personalAccountData?.name ?? account?.name ?? user?.email ?? '';
