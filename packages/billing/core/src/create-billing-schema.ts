@@ -9,11 +9,9 @@ export enum LineItemType {
 const BillingIntervalSchema = z.enum(['month', 'year']);
 const LineItemTypeSchema = z.enum(['flat', 'per_seat', 'metered']);
 
-export const BillingProviderSchema = z.enum([
-  'stripe',
-  'paddle',
-  'lemon-squeezy',
-]);
+export const BillingProviderSchema = z
+  .enum(['stripe', 'paddle', 'lemon-squeezy'])
+  .default('stripe');
 
 export const PaymentTypeSchema = z.enum(['one-time', 'recurring']);
 

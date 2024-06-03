@@ -33,10 +33,10 @@ const AppConfigSchema = z
         required_error: `Please provide the variable VITE_DEFAULT_LOCALE`,
       })
       .default('en'),
-    theme: z.enum(['light', 'dark', 'system']),
+    theme: z.enum(['light', 'dark', 'system']).default('light'),
     production: z.boolean(),
-    themeColor: z.string(),
-    themeColorDark: z.string(),
+    themeColor: z.string().default('#ffffff'),
+    themeColorDark: z.string().default('#0a0a0a'),
   })
   .refine(
     (schema) => {
