@@ -33,8 +33,10 @@ import { Spinner } from '@kit/ui/spinner';
 import { Trans } from '@kit/ui/trans';
 
 export function MultiFactorChallengeContainer({
+  userId,
   paths,
 }: React.PropsWithChildren<{
+  userId: string;
   paths: {
     redirectPath: string;
   };
@@ -64,6 +66,7 @@ export function MultiFactorChallengeContainer({
   if (!factorId) {
     return (
       <FactorsListContainer
+        userId={userId}
         onSelect={(factorId) => {
           verificationCodeForm.setValue('factorId', factorId);
         }}
@@ -192,14 +195,16 @@ function useVerifyMFAChallenge() {
 }
 
 function FactorsListContainer({
+  userId,
   onSuccess,
   onSelect,
 }: React.PropsWithChildren<{
+  userId: string;
   onSuccess: () => void;
   onSelect: (factor: string) => void;
 }>) {
   const signOut = useSignOut();
-  const { data: factors, isLoading, error } = useFetchAuthFactors();
+  const { data: factors, isLoading, error } = useFetchAuthFactors({ userId });
 
   const isSuccess = factors && !isLoading && !error;
 

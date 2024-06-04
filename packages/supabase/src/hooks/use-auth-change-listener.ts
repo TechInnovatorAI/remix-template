@@ -2,11 +2,9 @@
 
 import { useEffect } from 'react';
 
-import { useLocation, useNavigate } from '@remix-run/react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useLocation } from '@remix-run/react';
 
 import { useSupabase } from './use-supabase';
-import { useRevalidateUserSession } from './use-user-session';
 
 /**
  * @name PRIVATE_PATH_PREFIXES
@@ -27,15 +25,11 @@ export function useAuthChangeListener({
   privatePathPrefixes?: string[];
 }) {
   const client = useSupabase();
-  const navigate = useNavigate();
   const pathName = useLocation().pathname;
-
-  const revalidateUserSession = useRevalidateUserSession();
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     // keep this running for the whole session unless the component was unmounted
-    const listener = client.auth.onAuthStateChange(async (event, user) => {
+    const listener = client.auth.onAuthStateChange((event, user) => {
       // log user out if user is falsy
       // and if the current path is a private route
       const shouldRedirectUser =
@@ -48,27 +42,15 @@ export function useAuthChangeListener({
         return;
       }
 
-      const refresh = () => navigate('.', { replace: true });
-
       // revalidate user session when user signs in or out
       if (event === 'SIGNED_OUT') {
-        await queryClient.invalidateQueries();
-
-        return refresh();
+        window.location.reload();
       }
     });
 
     // destroy listener on un-mounts
     return () => listener.data.subscription.unsubscribe();
-  }, [
-    queryClient,
-    client.auth,
-    revalidateUserSession,
-    pathName,
-    appHomePath,
-    privatePathPrefixes,
-    navigate,
-  ]);
+  }, [client.auth, pathName, appHomePath, privatePathPrefixes]);
 }
 
 /**

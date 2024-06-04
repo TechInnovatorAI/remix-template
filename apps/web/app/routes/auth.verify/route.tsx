@@ -7,9 +7,12 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
+import { requireUserLoader } from '~/lib/require-user-loader';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const client = getSupabaseServerClient(request);
+  const user = await requireUserLoader(request);
+
   const needsMfa = await checkRequiresMultiFactorAuthentication(client);
 
   if (!needsMfa) {
@@ -23,6 +26,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return {
     title: i18n.t('auth:signIn'),
     redirectPath,
+    userId: user.id,
   };
 };
 
@@ -35,10 +39,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function VerifyPage() {
-  const { redirectPath } = useLoaderData<typeof loader>();
+  const { redirectPath, userId } = useLoaderData<typeof loader>();
 
   return (
     <MultiFactorChallengeContainer
+      userId={userId}
       paths={{
         redirectPath,
       }}

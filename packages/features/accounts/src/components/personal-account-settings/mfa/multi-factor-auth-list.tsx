@@ -48,8 +48,8 @@ import { MultiFactorAuthSetupDialog } from './multi-factor-auth-setup-dialog';
 
 const MAX_FACTOR_COUNT = 10;
 
-export function MultiFactorAuthFactorsList() {
-  const { data: factors, isLoading, isError } = useFetchAuthFactors();
+export function MultiFactorAuthFactorsList(props: { userId: string }) {
+  const { data: factors, isLoading, isError } = useFetchAuthFactors(props);
   const [unEnrolling, setUnenrolling] = useState<string>();
 
   if (isLoading) {
@@ -100,7 +100,7 @@ export function MultiFactorAuthFactorsList() {
         </Alert>
 
         <div>
-          <MultiFactorAuthSetupDialog />
+          <MultiFactorAuthSetupDialog userId={props.userId} />
         </div>
       </div>
     );
@@ -114,13 +114,14 @@ export function MultiFactorAuthFactorsList() {
 
       <If condition={canAddNewFactors}>
         <div>
-          <MultiFactorAuthSetupDialog />
+          <MultiFactorAuthSetupDialog userId={props.userId} />
         </div>
       </If>
 
       <If condition={unEnrolling}>
         {(factorId) => (
           <ConfirmUnenrollFactorModal
+            userId={props.userId}
             factorId={factorId}
             setIsModalOpen={() => setUnenrolling(undefined)}
           />
@@ -133,11 +134,12 @@ export function MultiFactorAuthFactorsList() {
 function ConfirmUnenrollFactorModal(
   props: React.PropsWithChildren<{
     factorId: string;
+    userId: string;
     setIsModalOpen: (isOpen: boolean) => void;
   }>,
 ) {
   const { t } = useTranslation();
-  const unEnroll = useUnenrollFactor();
+  const unEnroll = useUnenrollFactor({ userId: props.userId });
 
   const onUnenrollRequested = useCallback(
     (factorId: string) => {
@@ -261,10 +263,10 @@ function FactorsTable({
   );
 }
 
-function useUnenrollFactor() {
+function useUnenrollFactor(props: { userId: string }) {
   const queryClient = useQueryClient();
   const client = useSupabase();
-  const mutationKey = useFactorsMutationKey();
+  const mutationKey = useFactorsMutationKey(props.userId);
 
   const mutationFn = async (factorId: string) => {
     const { data, error } = await client.auth.mfa.unenroll({

@@ -143,7 +143,7 @@ export function PersonalAccountSettingsContainer(
         </CardHeader>
 
         <CardContent>
-          <MultiFactorAuthFactorsList />
+          <MultiFactorAuthFactorsList userId={user.data.id} />
         </CardContent>
       </Card>
 

@@ -3,9 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useSupabase } from './use-supabase';
 import { useFactorsMutationKey } from './use-user-factors-mutation-key';
 
-function useFetchAuthFactors() {
+function useFetchAuthFactors({ userId }: { userId: string }) {
   const client = useSupabase();
-  const queryKey = useFactorsMutationKey();
+  const queryKey = useFactorsMutationKey(userId);
 
   const queryFn = async () => {
     const { data, error } = await client.auth.mfa.listFactors();
