@@ -42,6 +42,9 @@ export function LanguageSelector({
         onChange(locale);
       }
 
+      const encoded = btoa(JSON.stringify(locale));
+      document.cookie = `lang=${encoded}; path=/; max-age=31536000`;
+
       await i18n.changeLanguage(locale);
 
       // refresh cached translations
