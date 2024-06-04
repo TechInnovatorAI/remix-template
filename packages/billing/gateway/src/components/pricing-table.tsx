@@ -53,7 +53,7 @@ export function PricingTable({
   return (
     <div className={'flex flex-col space-y-8 xl:space-y-12'}>
       <div className={'flex justify-center'}>
-        {intervals.length ? (
+        {intervals.length > 1 ? (
           <PlanIntervalSwitcher
             intervals={intervals}
             interval={interval}
@@ -65,7 +65,7 @@ export function PricingTable({
       <div
         className={
           'flex flex-col items-start space-y-6 lg:space-y-0' +
-          'justify-center lg:flex-row lg:space-x-4'
+          ' justify-center lg:flex-row lg:space-x-4'
         }
       >
         {config.products.map((product) => {

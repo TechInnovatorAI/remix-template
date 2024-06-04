@@ -313,7 +313,7 @@ function FeatureShowcaseContainer(props: React.PropsWithChildren) {
     <div
       className={
         'flex flex-col items-center justify-between space-y-8 lg:flex-row lg:space-y-0' +
-        'lg:space-x-24'
+        ' lg:space-x-24'
       }
     >
       {props.children}
@@ -329,9 +329,13 @@ function FeatureContainer(
 ) {
   return (
     <div
-      className={cn('flex w-full flex-col space-y-6 lg:w-6/12', {
-        'order-2 mt-8 lg:order-none lg:mt-0': props.reverse,
-      })}
+      className={cn(
+        props.className,
+        'flex w-full flex-col space-y-6 lg:w-6/12',
+        {
+          'order-2 mt-8 lg:order-none lg:mt-0': props.reverse,
+        },
+      )}
     >
       {props.children}
     </div>
