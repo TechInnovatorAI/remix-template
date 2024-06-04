@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { Link } from '@remix-run/react';
-import { ArrowRight, CheckCircle, Circle } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
@@ -346,7 +346,7 @@ function Price({ children }: React.PropsWithChildren) {
 function ListItem({ children }: React.PropsWithChildren) {
   return (
     <li className={'flex items-center space-x-2.5'}>
-      <Circle className={'fill-primary h-2 w-2'} />
+      <CheckCircle className={'text-primary h-4'} />
 
       <span
         className={cn('text-sm', {

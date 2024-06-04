@@ -7,8 +7,10 @@ export function LoadingOverlay({
   children,
   className,
   fullPage = true,
+  spinnerClassName,
 }: PropsWithChildren<{
   className?: string;
+  spinnerClassName?: string;
   fullPage?: boolean;
   displayLogo?: boolean;
 }>) {
@@ -23,7 +25,7 @@ export function LoadingOverlay({
         },
       )}
     >
-      <Spinner className={'text-primary'} />
+      <Spinner className={spinnerClassName} />
 
       <div>{children}</div>
     </div>
