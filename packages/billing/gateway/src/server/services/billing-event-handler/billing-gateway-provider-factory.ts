@@ -3,7 +3,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { BillingConfig } from '@kit/billing';
 import { Database } from '@kit/supabase/database';
 
-import { BillingEventHandlerService } from './billing-event-handler.service';
+import { createBillingEventHandlerService } from './billing-event-handler.service';
 import { BillingEventHandlerFactoryService } from './billing-gateway-factory.service';
 
 /**
@@ -21,5 +21,5 @@ export async function getBillingEventHandlerService(
     config,
   );
 
-  return new BillingEventHandlerService(clientProvider, strategy);
+  return createBillingEventHandlerService(clientProvider, strategy);
 }

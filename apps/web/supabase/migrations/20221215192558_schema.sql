@@ -1889,7 +1889,7 @@ select
   on table public.order_items to authenticated,
   service_role;
 
-grant insert on table public.order_items to service_role;
+grant insert, update, delete on table public.order_items to service_role;
 
 -- Indexes on the order_items table
 create index ix_order_items_order_id on public.order_items (order_id);

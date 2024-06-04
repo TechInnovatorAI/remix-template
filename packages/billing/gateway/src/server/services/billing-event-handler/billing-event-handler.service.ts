@@ -28,7 +28,24 @@ interface CustomHandlersParams {
   onEvent?: (event: string, data: unknown) => Promise<unknown>;
 }
 
-export class BillingEventHandlerService {
+/**
+ * @name createBillingEventHandlerService
+ * @description Create a new instance of the `BillingEventHandlerService` class
+ * @param clientProvider
+ * @param strategy
+ */
+export function createBillingEventHandlerService(
+  clientProvider: () => SupabaseClient<Database>,
+  strategy: BillingWebhookHandlerService,
+) {
+  return new BillingEventHandlerService(clientProvider, strategy);
+}
+
+/**
+ * @name BillingEventHandlerService
+ * @description This class is used to handle the webhook events from the billing provider
+ */
+class BillingEventHandlerService {
   private readonly namespace = 'billing';
 
   constructor(
@@ -36,6 +53,12 @@ export class BillingEventHandlerService {
     private readonly strategy: BillingWebhookHandlerService,
   ) {}
 
+  /**
+   * @name handleWebhookEvent
+   * @description Handle the webhook event from the billing provider
+   * @param request
+   * @param params
+   */
   async handleWebhookEvent(
     request: Request,
     params: Partial<CustomHandlersParams> = {},
