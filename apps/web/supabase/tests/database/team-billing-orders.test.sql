@@ -11,6 +11,8 @@ select makerkit.set_identifier('custom', 'custom@makerkit.dev');
 INSERT INTO public.billing_customers(account_id, provider, customer_id)
 VALUES (makerkit.get_account_id_by_slug('makerkit'), 'stripe', 'cus_test');
 
+set local role service_role;
+
 -- Call the upsert_order function
 SELECT public.upsert_order(makerkit.get_account_id_by_slug('makerkit'), 'cus_test', 'order_test', 'pending', 'stripe', 100, 'usd', '[
     {"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 1},
@@ -110,4 +112,3 @@ SELECT is_empty(
 -- Finish the tests and clean up
 SELECT * FROM finish();
 ROLLBACK;
-

@@ -2733,7 +2733,7 @@ create policy account_image on storage.objects for all using (
 with
   check (
     bucket_id = 'account_image'
-    and kit.get_storage_filename_as_uuid (name) = (
+    and (kit.get_storage_filename_as_uuid (name) = (
       select
         auth.uid ()
     )
@@ -2741,5 +2741,5 @@ with
       auth.uid (),
       kit.get_storage_filename_as_uuid (name),
       'settings.manage'
-    )
+    ))
   );
