@@ -18,10 +18,10 @@
     "./config/edge": "./src/config/sentry.edge.config.ts"
   },
   "dependencies": {
-    "@opentelemetry/exporter-jaeger": "1.24.1",
-    "@opentelemetry/resources": "1.24.1",
-    "@opentelemetry/sdk-node": "0.51.1",
-    "@opentelemetry/semantic-conventions": "^1.24.1",
+    "@opentelemetry/exporter-jaeger": "1.25.0",
+    "@opentelemetry/resources": "1.25.0",
+    "@opentelemetry/sdk-node": "0.52.0",
+    "@opentelemetry/semantic-conventions": "^1.25.0",
     "@sentry/opentelemetry-node": "^7.114.0",
     "@sentry/remix": "8.7.0"
   },

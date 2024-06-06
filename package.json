@@ -26,7 +26,9 @@
     "supabase:web:stop": "pnpm --filter web supabase:stop",
     "supabase:web:typegen": "pnpm --filter web supabase:typegen",
     "supabase:web:reset": "pnpm --filter web supabase:reset",
-    "stripe:listen": "pnpm --filter '@kit/stripe' start"
+    "stripe:listen": "pnpm --filter '@kit/stripe' start",
+    "env:generate": "turbo gen env",
+    "env:validate": "turbo gen validate-env"
   },
   "prettier": "@kit/prettier-config",
   "workspaces": [
@@ -36,12 +38,12 @@
   ],
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
-    "@turbo/gen": "^1.13.3",
+    "@turbo/gen": "^2.0.1",
     "@types/node": "^20.14.0",
     "cross-env": "^7.0.3",
-    "pnpm": "^9.1.4",
-    "prettier": "^3.3.0",
-    "turbo": "^1.13.3",
+    "pnpm": "^9.2.0",
+    "prettier": "^3.3.1",
+    "turbo": "^2.0.1",
     "typescript": "^5.4.5",
     "yarn": "^1.22.22"
   },
@@ -50,5 +52,6 @@
       "react": "18.3.1",
       "react-dom": "18.3.1"
     }
-  }
+  },
+  "packageManager": "pnpm@9.1.4"
 }
