@@ -101,10 +101,6 @@ export class StripeWebhookHandlerService
         return this.handleAsyncPaymentFailed(event, params.onPaymentFailed);
       }
 
-      case 'invoice.paid': {
-        return this.handleInvoicePaid(event, params.onInvoicePaid);
-      }
-
       case 'checkout.session.async_payment_succeeded': {
         return this.handleAsyncPaymentSucceeded(
           event,
@@ -319,34 +315,6 @@ export class StripeWebhookHandlerService
       trial_starts_at: getISOString(params.trialStartsAt),
       trial_ends_at: getISOString(params.trialEndsAt),
     };
-  }
-
-  private async handleInvoicePaid(
-    event: Stripe.InvoicePaidEvent,
-    onInvoicePaid: (params: UpsertSubscriptionParams) => Promise<unknown>,
-  ) {
-    const stripe = await this.loadStripe();
-
-    const subscriptionId = event.data.object.subscription as string;
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-
-    const accountId = subscription.metadata.accountId as string;
-
-    const payload = this.buildSubscriptionPayload({
-      customerId: subscription.customer as string,
-      id: subscriptionId,
-      accountId,
-      lineItems: subscription.items.data,
-      status: subscription.status,
-      currency: subscription.currency,
-      periodStartsAt: subscription.current_period_start,
-      periodEndsAt: subscription.current_period_end,
-      cancelAtPeriodEnd: subscription.cancel_at_period_end,
-      trialStartsAt: subscription.trial_start,
-      trialEndsAt: subscription.trial_end,
-    });
-
-    return onInvoicePaid(payload);
   }
 
   private async loadStripe() {
