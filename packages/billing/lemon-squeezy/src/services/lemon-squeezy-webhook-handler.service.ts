@@ -132,13 +132,6 @@ export class LemonSqueezyWebhookHandlerService
         );
       }
 
-      case 'subscription_payment_success': {
-        return this.handleInvoicePaid(
-          event as SubscriptionWebhook,
-          params.onInvoicePaid,
-        );
-      }
-
       default: {
         const logger = await getLogger();
 
@@ -210,6 +203,8 @@ export class LemonSqueezyWebhookHandlerService
       data: UpsertSubscriptionParams,
     ) => Promise<unknown>,
   ) {
+    const logger = await getLogger();
+
     await initializeLemonSqueezyClient();
 
     const subscription = event.data.attributes;
@@ -226,11 +221,14 @@ export class LemonSqueezyWebhookHandlerService
     const trialEndsAt = subscription.trial_ends_at;
     const intervalCount = subscription.billing_anchor;
 
-    const { data: order, error } = await getOrder(orderId);
+    logger.info(
+      {
+        orderId,
+      },
+      `Fetching order...`,
+    );
 
-    if (error ?? !order) {
-      const logger = await getLogger();
-
+    const { data: order, error } = await getOrder(orderId).catch((error) => {
       logger.error(
         {
           orderId,
@@ -241,8 +239,19 @@ export class LemonSqueezyWebhookHandlerService
         'Failed to fetch order',
       );
 
+      return { data: null, error };
+    });
+
+    if (error ?? !order) {
       throw new Error('Failed to fetch order');
     }
+
+    logger.info(
+      {
+        orderId,
+      },
+      `Successfully fetched order`,
+    );
 
     const lineItems = [
       {
@@ -284,18 +293,6 @@ export class LemonSqueezyWebhookHandlerService
     return this.handleSubscriptionCreatedEvent(
       event,
       onSubscriptionUpdatedCallback,
-    );
-  }
-
-  private handleInvoicePaid(
-    subscription: SubscriptionWebhook,
-    onInvoicePaidCallback: (
-      subscription: UpsertSubscriptionParams,
-    ) => Promise<unknown>,
-  ) {
-    return this.handleSubscriptionCreatedEvent(
-      subscription,
-      onInvoicePaidCallback,
     );
   }
 

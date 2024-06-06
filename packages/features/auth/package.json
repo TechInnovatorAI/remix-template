@@ -18,7 +18,7 @@
     "./captcha/server": "./src/captcha/server/index.ts"
   },
   "devDependencies": {
-    "@hookform/resolvers": "^3.4.0",
+    "@hookform/resolvers": "^3.6.0",
     "@kit/eslint-config": "workspace:*",
     "@kit/prettier-config": "workspace:*",
     "@kit/shared": "workspace:^",
