@@ -14,6 +14,7 @@ import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const i18n = await createI18nServerInstance(request);
+
   const inviteToken =
     new URL(request.url).searchParams.get('invite_token') ?? '';
 
@@ -45,6 +46,9 @@ const paths = {
 export default function SignUpPage() {
   const { inviteToken } = useLoaderData<typeof loader>();
 
+  const signInPath =
+      pathsConfig.auth.signIn + (inviteToken ? `?invite_token=${inviteToken}` : '');
+
   return (
     <>
       <Heading level={4}>
@@ -59,7 +63,7 @@ export default function SignUpPage() {
 
       <div className={'justify-centers flex'}>
         <Button asChild variant={'link'} size={'sm'}>
-          <Link to={pathsConfig.auth.signIn}>
+          <Link to={signInPath}>
             <Trans i18nKey={'auth:alreadyHaveAnAccount'} />
           </Link>
         </Button>

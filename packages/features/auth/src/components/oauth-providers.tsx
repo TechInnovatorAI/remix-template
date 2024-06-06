@@ -14,6 +14,7 @@ import { AuthProviderButton } from './auth-provider-button';
 
 export const OauthProviders: React.FC<{
   inviteToken?: string;
+  shouldCreateUser: boolean;
   enabledProviders: Provider[];
 
   paths: {
@@ -79,6 +80,7 @@ export const OauthProviders: React.FC<{
                     provider,
                     options: {
                       redirectTo,
+                      shouldCreateUser: props.shouldCreateUser,
                     },
                   };
 

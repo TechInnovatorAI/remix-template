@@ -1,4 +1,4 @@
-import { Link, MetaFunction, redirect } from '@remix-run/react';
+import { Link, MetaFunction, redirect, useLoaderData } from '@remix-run/react';
 import { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { SignInMethodsContainer } from '@kit/auth/sign-in';
@@ -21,8 +21,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return redirect(pathsConfig.app.home);
   }
 
+  const searchParams = new URL(request.url).searchParams;
+  const inviteToken = searchParams.get('invite_token') ?? undefined;
+
   return {
     title: i18n.t('auth:signIn'),
+    inviteToken,
   };
 };
 
@@ -37,20 +41,31 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 const paths = {
   callback: pathsConfig.auth.callback,
   home: pathsConfig.app.home,
+  joinTeam: pathsConfig.app.joinTeam,
 };
 
 export default function SignInPage() {
+  const { inviteToken } = useLoaderData<typeof loader>();
+
+  const signUpPath =
+    pathsConfig.auth.signUp +
+    (inviteToken ? `?invite_token=${inviteToken}` : '');
+
   return (
     <>
       <Heading level={4}>
         <Trans i18nKey={'auth:signInHeading'} />
       </Heading>
 
-      <SignInMethodsContainer paths={paths} providers={authConfig.providers} />
+      <SignInMethodsContainer
+        inviteToken={inviteToken}
+        paths={paths}
+        providers={authConfig.providers}
+      />
 
       <div className={'flex justify-center'}>
         <Button asChild variant={'link'} size={'sm'}>
-          <Link to={pathsConfig.auth.signUp}>
+          <Link to={signUpPath}>
             <Trans i18nKey={'auth:doNotHaveAccountYet'} />
           </Link>
         </Button>

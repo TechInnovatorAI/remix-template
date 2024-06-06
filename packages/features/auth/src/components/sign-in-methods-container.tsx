@@ -13,9 +13,12 @@ import { OauthProviders } from './oauth-providers';
 import { PasswordSignInContainer } from './password-sign-in-container';
 
 export function SignInMethodsContainer(props: {
+  inviteToken?: string;
+
   paths: {
     callback: string;
     home: string;
+    joinTeam: string;
   };
 
   providers: {
@@ -33,7 +36,17 @@ export function SignInMethodsContainer(props: {
     : '';
 
   const onSignIn = () => {
-    navigate(nextPath, { replace: true });
+    if (props.inviteToken) {
+      const searchParams = new URLSearchParams({
+        invite_token: props.inviteToken,
+      });
+
+      const joinTeamPath = props.paths.joinTeam + '?' + searchParams.toString();
+
+      navigate(joinTeamPath, { replace: true });
+    } else {
+      navigate(nextPath, { replace: true });
+    }
   };
 
   return (
@@ -43,7 +56,11 @@ export function SignInMethodsContainer(props: {
       </If>
 
       <If condition={props.providers.magicLink}>
-        <MagicLinkAuthContainer redirectUrl={redirectUrl} />
+        <MagicLinkAuthContainer
+          shouldCreateUser={false}
+          inviteToken={props.inviteToken}
+          redirectUrl={redirectUrl}
+        />
       </If>
 
       <If condition={props.providers.oAuth.length}>
@@ -51,6 +68,8 @@ export function SignInMethodsContainer(props: {
 
         <OauthProviders
           enabledProviders={props.providers.oAuth}
+          inviteToken={props.inviteToken}
+          shouldCreateUser={false}
           paths={{
             callback: props.paths.callback,
             returnPath: props.paths.home,
