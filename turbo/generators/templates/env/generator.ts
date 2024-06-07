@@ -54,26 +54,21 @@ export function createEnvironmentVariablesGenerator(
         name: 'values.VITE_DEFAULT_THEME_MODE',
         message: 'What is the default theme mode of your website?',
         choices: ['light', 'dark', 'system'],
-        default: 'light',
       },
       {
         type: 'input',
         name: 'values.VITE_DEFAULT_LOCALE',
         message: 'What is the default locale of your website?',
-        default: 'en',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_AUTH_PASSWORD',
         message: 'Do you want to use email/password authentication?',
-        default: 'true',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_AUTH_MAGIC_LINK',
-        message:
-          'Do you want to use magic link authentication? (leave empty for false)',
-        default: 'false',
+        message: 'Do you want to use magic link authentication?',
       },
       {
         type: 'input',
@@ -81,58 +76,52 @@ export function createEnvironmentVariablesGenerator(
         message: 'What is the contact email you want to receive emails to?',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_ENABLE_THEME_TOGGLE',
         message: 'Do you want to enable the theme toggle?',
-        default: 'true',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_ENABLE_PERSONAL_ACCOUNT_DELETION',
         message: 'Do you want to enable personal account deletion?',
-        default: 'true',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_ENABLE_PERSONAL_ACCOUNT_BILLING',
         message: 'Do you want to enable personal account billing?',
-        default: 'true',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_ENABLE_TEAM_ACCOUNTS',
         message: 'Do you want to enable team accounts?',
-        default: 'true',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_ENABLE_TEAM_ACCOUNT_DELETION',
         message: 'Do you want to enable team account deletion?',
-        default: 'true',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_ENABLE_TEAM_ACCOUNTS_BILLING',
         message: 'Do you want to enable team account billing?',
-        default: 'true',
       },
       {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_ENABLE_TEAM_ACCOUNTS_CREATION',
         message: 'Do you want to enable team account creation?',
-        default: 'true',
       },
       {
-        type: 'input',
-        name: 'values.VITE_REALTIME_NOTIFICATIONS',
-        message: 'Do you want to enable realtime notifications?',
-        default: 'true',
-      },
-      {
-        type: 'input',
+        type: 'confirm',
         name: 'values.VITE_ENABLE_NOTIFICATIONS',
-        message: 'Do you want to enable email notifications?',
-        default: 'true',
+        message:
+          'Do you want to enable notifications? If not - we will hide the notifications bell from the UI.',
+      },
+      {
+        when: (answers) => answers.values.VITE_ENABLE_NOTIFICATIONS,
+        type: 'confirm',
+        name: 'values.VITE_REALTIME_NOTIFICATIONS',
+        message:
+          'Do you want to enable realtime notifications? If yes, we will enable the realtime notifications from Supabase. If not - updated will be fetched lazily.',
       },
       {
         type: 'input',
@@ -154,7 +143,6 @@ export function createEnvironmentVariablesGenerator(
         name: 'values.VITE_BILLING_PROVIDER',
         message: 'What is the billing provider you want to use?',
         choices: ['stripe', 'lemon-squeezy'],
-        default: 'stripe',
       },
       {
         when: (answers) => answers.values.VITE_BILLING_PROVIDER === 'stripe',
@@ -202,7 +190,7 @@ export function createEnvironmentVariablesGenerator(
       },
       {
         type: 'list',
-        name: 'values.CMS_CLIENT',
+        name: 'values.VITE_CMS_CLIENT',
         message: 'What is the CMS client you want to use?',
         choices: ['keystatic', 'wordpress'],
         default: 'keystatic',
@@ -252,10 +240,29 @@ export function createEnvironmentVariablesGenerator(
       },
       {
         when: (answers) => answers.values.MAILER_PROVIDER === 'nodemailer',
-        type: 'input',
+        type: 'confirm',
         name: 'values.EMAIL_TLS',
         message: 'Do you want to enable TLS for your emails?',
-        default: 'true',
+      },
+      {
+        type: 'confirm',
+        name: 'captcha',
+        message:
+          'Do you want to enable Cloudflare Captcha protection for the Auth endpoints?',
+      },
+      {
+        when: (answers) => answers.captcha,
+        type: 'input',
+        name: 'values.VITE_CAPTCHA_SITE_KEY',
+        message:
+          'What is the Cloudflare Captcha site key? NB: this is the PUBLIC key!',
+      },
+      {
+        when: (answers) => answers.captcha,
+        type: 'input',
+        name: 'values.CAPTCHA_SECRET_TOKEN',
+        message:
+          'What is the Cloudflare Captcha secret key? NB: this is the PRIVATE key!',
       },
     ],
   });
