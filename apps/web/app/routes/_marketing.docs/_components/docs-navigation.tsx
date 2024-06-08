@@ -108,7 +108,7 @@ export function DocsNavigation({ pages }: { pages: Cms.ContentItem[] }) {
         style={{
           height: `calc(100vh - 64px)`,
         }}
-        className="sticky top-2 hidden w-80 shrink-0 border-r p-4 lg:flex"
+        className="sticky top-2 hidden w-80 shrink-0 overflow-y-auto border-r p-4 lg:flex"
       >
         <Tree pages={pages} level={0} activePath={activePath} />
       </aside>

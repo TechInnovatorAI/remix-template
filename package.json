@@ -31,11 +31,6 @@
     "env:validate": "turbo gen validate-env"
   },
   "prettier": "@kit/prettier-config",
-  "workspaces": [
-    "apps/*",
-    "packages/**",
-    "tooling/*"
-  ],
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
     "@turbo/gen": "^2.0.3",
