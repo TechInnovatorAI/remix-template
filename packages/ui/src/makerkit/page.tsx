@@ -139,14 +139,21 @@ export function PageTitle(props: React.PropsWithChildren) {
 
 export function PageHeader({
   children,
+  className,
   title,
   description,
 }: React.PropsWithChildren<{
+  className?: string;
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
 }>) {
   return (
-    <div className={'flex h-20 items-center justify-between lg:px-4'}>
+    <div
+      className={cn(
+        'flex h-20 items-center justify-between lg:px-4',
+        className,
+      )}
+    >
       {title ? (
         <div className={'flex flex-col space-y-1.5'}>
           <PageTitle>{title}</PageTitle>
