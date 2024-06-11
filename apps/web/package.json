@@ -26,7 +26,7 @@
     "supabase:db:dump:local": "supabase db dump --local --data-only"
   },
   "dependencies": {
-    "@edge-csrf/core": "^2.0.0",
+    "@edge-csrf/core": "^2.2.0",
     "@hookform/resolvers": "^3.6.0",
     "@kit/accounts": "workspace:^",
     "@kit/admin": "workspace:^",
@@ -56,7 +56,7 @@
     "@tanstack/react-table": "^8.17.3",
     "date-fns": "^3.6.0",
     "isbot": "^5.1.9",
-    "lucide-react": "^0.390.0",
+    "lucide-react": "^0.394.0",
     "next-themes": "0.3.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -82,9 +82,9 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "supabase": "1.172.2",
+    "supabase": "1.176.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.12",
+    "vite": "^5.2.13",
     "vite-tsconfig-paths": "^4.2.1"
   },
   "engines": {

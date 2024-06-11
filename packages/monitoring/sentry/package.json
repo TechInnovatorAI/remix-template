@@ -23,7 +23,7 @@
     "@opentelemetry/sdk-node": "0.52.0",
     "@opentelemetry/semantic-conventions": "^1.25.0",
     "@sentry/opentelemetry-node": "^7.114.0",
-    "@sentry/remix": "8.7.0"
+    "@sentry/remix": "8.8.0"
   },
   "devDependencies": {
     "@kit/eslint-config": "workspace:*",

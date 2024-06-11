@@ -47,7 +47,8 @@ export default function SignUpPage() {
   const { inviteToken } = useLoaderData<typeof loader>();
 
   const signInPath =
-      pathsConfig.auth.signIn + (inviteToken ? `?invite_token=${inviteToken}` : '');
+    pathsConfig.auth.signIn +
+    (inviteToken ? `?invite_token=${inviteToken}` : '');
 
   return (
     <>

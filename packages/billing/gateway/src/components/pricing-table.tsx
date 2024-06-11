@@ -391,7 +391,9 @@ function PlanIntervalSwitcher(
           >
             <span className={'flex items-center space-x-1'}>
               <If condition={selected}>
-                <CheckCircle className={'animate-in fade-in zoom-in-90 h-4 w-4'} />
+                <CheckCircle
+                  className={'animate-in fade-in zoom-in-90 h-4 w-4'}
+                />
               </If>
 
               <span className={'capitalize'}>
