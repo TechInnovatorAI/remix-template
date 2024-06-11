@@ -97,8 +97,7 @@ export class LemonSqueezyWebhookHandlerService
       onSubscriptionDeleted: (subscriptionId: string) => Promise<unknown>;
       onPaymentSucceeded: (sessionId: string) => Promise<unknown>;
       onPaymentFailed: (sessionId: string) => Promise<unknown>;
-      onInvoicePaid: (data: UpsertSubscriptionParams) => Promise<unknown>;
-      onEvent?: (event: string) => Promise<unknown>;
+      onEvent?: (event: OrderWebhook | SubscriptionWebhook) => Promise<unknown>;
     },
   ) {
     const eventName = event.meta.event_name;
@@ -133,6 +132,10 @@ export class LemonSqueezyWebhookHandlerService
       }
 
       default: {
+        if (params.onEvent) {
+          return params.onEvent(event);
+        }
+
         const logger = await getLogger();
 
         logger.info(

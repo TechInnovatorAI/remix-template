@@ -24,8 +24,7 @@ interface CustomHandlersParams {
   ) => Promise<unknown>;
   onPaymentSucceeded: (sessionId: string) => Promise<unknown>;
   onPaymentFailed: (sessionId: string) => Promise<unknown>;
-  onInvoicePaid: (data: UpsertSubscriptionParams) => Promise<unknown>;
-  onEvent?: (event: string, data: unknown) => Promise<unknown>;
+  onEvent?: <Data>(data: Data) => Promise<unknown>;
 }
 
 /**
@@ -271,24 +270,6 @@ class BillingEventHandlerService {
         }
 
         logger.info(ctx, 'Successfully updated payment status');
-      },
-      onInvoicePaid: async (data) => {
-        const logger = await getLogger();
-
-        const ctx = {
-          namespace: this.namespace,
-          subscriptionId: data.target_subscription_id,
-        };
-
-        logger.info(ctx, 'Processing invoice paid event...');
-
-        // by default we don't need to do anything here
-        // but we allow consumers to provide custom handlers for the event
-        if (params.onInvoicePaid) {
-          await params.onInvoicePaid(data);
-        }
-
-        logger.info(ctx, 'Invoice paid event processed successfully');
       },
       onEvent: params.onEvent,
     });
