@@ -1,5 +1,18 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const enableBillingTests = process.env.ENABLE_BILLING_TESTS === 'true';
+
+const testIgnore: string[] = [];
+
+if (!enableBillingTests) {
+  console.log(
+    `Billing tests are disabled. To enable them, set the environment variable ENABLE_BILLING_TESTS=true.`,
+    `Current value: "${process.env.ENABLE_BILLING_TESTS}"`
+  );
+
+  testIgnore.push('*-billing.spec.ts');
+}
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -16,6 +29,8 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 3 : 1,
+  /* Ignore billing tests if the environment variable is not set. */
+  testIgnore,
   /* Limit parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */

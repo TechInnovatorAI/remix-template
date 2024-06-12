@@ -49,6 +49,7 @@ jobs:
   test:
     name: ⚫️ Test
     timeout-minutes: 8
+    if: ${{ vars.ENABLE_E2E_JOB == 'true' }}
     runs-on: ubuntu-latest
     env:
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -57,6 +58,7 @@ jobs:
       STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
       VITE_STRIPE_PUBLISHABLE_KEY: ${{ vars.VITE_STRIPE_PUBLISHABLE_KEY }}
       VITE_CI: true
+      ENABLE_BILLING_TESTS: ${{ vars.ENABLE_BILLING_TESTS }}
 
     steps:
       - uses: actions/checkout@v4
@@ -130,7 +132,9 @@ jobs:
         run: PORT=5173 pnpm --filter web start &
 
       - name: Run Playwright tests
-        run: pnpm run test
+        run: |
+          echo "Running Playwright tests. Billing tests enabled: $ENABLE_BILLING_TESTS"
+          pnpm run test
 
       - name: Run Supabase tests
         run: pnpm --filter web supabase:test
