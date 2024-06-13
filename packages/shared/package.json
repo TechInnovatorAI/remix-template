@@ -21,7 +21,7 @@
     "@kit/tsconfig": "workspace:*"
   },
   "dependencies": {
-    "pino": "^9.1.0"
+    "pino": "^9.2.0"
   },
   "eslintConfig": {
     "root": true,
