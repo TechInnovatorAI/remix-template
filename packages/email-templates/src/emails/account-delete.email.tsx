@@ -30,7 +30,9 @@ export async function renderAccountDeleteEmail(props: Props) {
     productName: props.productName,
   });
 
-  const subject = t(`${namespace}:subject`);
+  const subject = t(`${namespace}:subject`, {
+    productName: props.productName,
+  });
 
   const html = render(
     <Html>
