@@ -77,7 +77,7 @@ export function AdminBanUserDialog(
               fetcher.submit(
                 {
                   intent: 'ban-user',
-                  payload: data,
+                  payload: { ...data, csrfToken },
                 } satisfies z.infer<typeof BanUserSchema>,
                 {
                   method: 'POST',

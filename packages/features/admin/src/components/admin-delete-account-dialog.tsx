@@ -72,7 +72,7 @@ export function AdminDeleteAccountDialog(
               return fetcher.submit(
                 {
                   intent: 'delete-team-account',
-                  payload: data,
+                  payload: { ...data, csrfToken },
                 } satisfies z.infer<typeof DeleteAccountSchema>,
                 {
                   method: 'POST',

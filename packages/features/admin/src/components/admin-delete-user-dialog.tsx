@@ -72,7 +72,10 @@ export function AdminDeleteUserDialog(
               return fetcher.submit(
                 {
                   intent: 'delete-user',
-                  payload: data,
+                  payload: {
+                    ...data,
+                    csrfToken,
+                  },
                 },
                 {
                   method: 'POST',

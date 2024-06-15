@@ -103,7 +103,10 @@ export function AdminImpersonateUserDialog(
               fetcher.submit(
                 {
                   intent: 'impersonate-user',
-                  payload: data,
+                  payload: {
+                    ...data,
+                    csrfToken,
+                  },
                 } satisfies z.infer<typeof ImpersonateUserSchema>,
                 {
                   method: 'POST',

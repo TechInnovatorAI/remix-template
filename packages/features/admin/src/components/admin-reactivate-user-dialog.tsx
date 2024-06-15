@@ -74,7 +74,10 @@ export function AdminReactivateUserDialog(
               fetcher.submit(
                 {
                   intent: 'reactivate-user',
-                  payload: data,
+                  payload: {
+                    ...data,
+                    csrfToken,
+                  },
                 } satisfies z.infer<typeof ReactivateUserSchema>,
                 {
                   method: 'POST',
