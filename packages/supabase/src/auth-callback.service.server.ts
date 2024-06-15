@@ -36,8 +36,12 @@ class AuthCallbackService {
 
     const token_hash = searchParams.get('token_hash');
     const type = searchParams.get('type') as EmailOtpType | null;
-    const next = searchParams.get('next') ?? params.redirectPath;
     const callbackParam = searchParams.get('callback');
+
+    const next = callbackParam
+      ? new URL(callbackParam).pathname
+      : params.redirectPath;
+
     const callbackUrl = callbackParam ? new URL(callbackParam) : null;
     const inviteToken = callbackUrl?.searchParams.get('invite_token');
 
