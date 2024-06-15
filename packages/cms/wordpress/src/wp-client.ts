@@ -1,4 +1,3 @@
-import process from 'node:process';
 import type {
   WP_REST_API_Category,
   WP_REST_API_Post,
@@ -9,11 +8,9 @@ import { Cms, CmsClient } from '@kit/cms';
 
 import GetTagsOptions = Cms.GetTagsOptions;
 
-export function createWordpressClient(apiUrl = process.env.WORDPRESS_API_URL) {
-  if (!apiUrl) {
-    throw new Error('Wordpress API URL is required');
-  }
-
+export function createWordpressClient(
+  apiUrl = process.env.WORDPRESS_API_URL as string,
+) {
   return new WordpressClient(apiUrl);
 }
 
@@ -44,7 +41,11 @@ class WordpressClient implements CmsClient {
     }
 
     if (options.sortBy) {
-      queryParams.append('orderby', options.sortBy);
+      const sortBy = mapSortByParam(options.sortBy);
+
+      if (sortBy) {
+        queryParams.append('orderby', sortBy);
+      }
     }
 
     if (options.sortDirection) {
@@ -352,5 +353,20 @@ class WordpressClient implements CmsClient {
           }
         ).source_url
       : '';
+  }
+}
+
+function mapSortByParam(sortBy: string) {
+  switch (sortBy) {
+    case 'publishedAt':
+      return 'date';
+    case 'title':
+      return 'title';
+    case 'slug':
+      return 'slug';
+    case 'order':
+      return 'menu_order';
+    default:
+      return;
   }
 }
