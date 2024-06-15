@@ -14,7 +14,6 @@ export function RootHead() {
 
   return (
     <>
-      <title>{name}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 

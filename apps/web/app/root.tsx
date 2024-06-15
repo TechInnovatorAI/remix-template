@@ -25,6 +25,14 @@ export const ErrorBoundary = RootErrorBoundary;
 
 const csrfProtect = createCsrfProtect();
 
+export const meta = () => {
+  return [
+    {
+      title: appConfig.title,
+    },
+  ];
+};
+
 export async function loader({ request }: LoaderFunctionArgs) {
   const { language } = await createI18nServerInstance(request);
   const theme = await getTheme(request);
