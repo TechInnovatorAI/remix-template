@@ -1,11 +1,13 @@
 import { z } from 'zod';
 
+import { PasswordSchema } from './password.schema';
+
 export const PasswordResetSchema = z
   .object({
-    password: z.string().min(8).max(99),
-    repeatPassword: z.string().min(8).max(99),
+    password: PasswordSchema,
+    repeatPassword: PasswordSchema,
   })
   .refine((data) => data.password === data.repeatPassword, {
-    message: 'Passwords do not match',
+    message: 'auth:errors.passwordsDoNotMatch',
     path: ['repeatPassword'],
   });

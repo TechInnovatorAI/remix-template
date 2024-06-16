@@ -9,6 +9,7 @@ import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 
 import { cn } from '../utils';
 import { Label } from './label';
+import {Trans} from "../makerkit/trans";
 
 const Form = FormProvider;
 
@@ -156,7 +157,7 @@ const FormMessage = React.forwardRef<
       className={cn('text-[0.8rem] font-medium text-destructive', className)}
       {...props}
     >
-      {body}
+      {typeof body === 'string' ? <Trans i18nKey={body} defaults={body} /> : body}
     </p>
   );
 });
