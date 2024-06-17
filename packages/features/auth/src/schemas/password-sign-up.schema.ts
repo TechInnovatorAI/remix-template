@@ -1,19 +1,11 @@
 import { z } from 'zod';
 
-import { PasswordSchema } from './password.schema';
+import { RefinedPasswordSchema, refineRepeatPassword } from './password.schema';
 
 export const PasswordSignUpSchema = z
   .object({
     email: z.string().email(),
-    password: PasswordSchema,
-    repeatPassword: PasswordSchema,
+    password: RefinedPasswordSchema,
+    repeatPassword: RefinedPasswordSchema,
   })
-  .refine(
-    (schema) => {
-      return schema.password === schema.repeatPassword;
-    },
-    {
-      message: 'auth:errors.passwordsDoNotMatch',
-      path: ['repeatPassword'],
-    },
-  );
+  .superRefine(refineRepeatPassword);
