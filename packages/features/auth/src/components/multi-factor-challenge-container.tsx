@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
@@ -42,11 +42,12 @@ export function MultiFactorChallengeContainer({
   };
 }>) {
   const navigate = useNavigate();
-  const verifyMFAChallenge = useVerifyMFAChallenge();
 
-  const onSuccess = useCallback(() => {
-    navigate(paths.redirectPath, { replace: true });
-  }, [navigate, paths.redirectPath]);
+  const verifyMFAChallenge = useVerifyMFAChallenge({
+    onSuccess() {
+      navigate(paths.redirectPath, { replace: true });
+    },
+  });
 
   const verificationCodeForm = useForm({
     resolver: zodResolver(
@@ -70,7 +71,6 @@ export function MultiFactorChallengeContainer({
         onSelect={(factorId) => {
           verificationCodeForm.setValue('factorId', factorId);
         }}
-        onSuccess={onSuccess}
       />
     );
   }
@@ -84,8 +84,6 @@ export function MultiFactorChallengeContainer({
             factorId,
             verificationCode: data.verificationCode,
           });
-
-          onSuccess();
         })}
       >
         <div className={'flex flex-col space-y-4'}>
@@ -168,7 +166,7 @@ export function MultiFactorChallengeContainer({
   );
 }
 
-function useVerifyMFAChallenge() {
+function useVerifyMFAChallenge({ onSuccess }: { onSuccess: () => void }) {
   const client = useSupabase();
   const mutationKey = ['mfa-verify-challenge'];
 
@@ -190,29 +188,20 @@ function useVerifyMFAChallenge() {
     return response.data;
   };
 
-  return useMutation({ mutationKey, mutationFn });
+  return useMutation({ mutationKey, mutationFn, onSuccess });
 }
 
 function FactorsListContainer({
   userId,
-  onSuccess,
   onSelect,
 }: React.PropsWithChildren<{
   userId: string;
-  onSuccess: () => void;
   onSelect: (factor: string) => void;
 }>) {
   const signOut = useSignOut();
   const { data: factors, isLoading, error } = useFetchAuthFactors({ userId });
 
   const isSuccess = factors && !isLoading && !error;
-
-  useEffect(() => {
-    // If there are no factors, continue
-    if (isSuccess && !factors.totp.length) {
-      onSuccess();
-    }
-  }, [factors?.totp.length, isSuccess, onSuccess]);
 
   useEffect(() => {
     // If there is an error, sign out
