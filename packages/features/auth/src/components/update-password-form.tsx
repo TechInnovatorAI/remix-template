@@ -125,7 +125,7 @@ function SuccessState(props: { redirectTo: string }) {
         </AlertDescription>
       </Alert>
 
-      <Link to={'/'}>
+      <Link to={props.redirectTo}>
         <Button variant={'outline'} className={'w-full'}>
           <span>
             <Trans i18nKey={'common:backToHomePage'} />
