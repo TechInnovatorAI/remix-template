@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
-import { useMutation } from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -256,6 +256,9 @@ function FactorQrCode({
   const enrollFactorMutation = useEnrollFactor({ userId });
   const [error, setError] = useState(false);
 
+  const queryClient = useQueryClient();
+  const queryKey = useFactorsMutationKey(userId);
+
   const form = useForm({
     resolver: zodResolver(
       z.object({
@@ -294,9 +297,13 @@ function FactorQrCode({
       <FactorNameForm
         onCancel={onCancel}
         onSetFactorName={async (name) => {
-          const data = await enrollFactorMutation.mutateAsync(name);
+          const data = await enrollFactorMutation.mutateAsync(name).catch((error) => {
+            console.error(error);
 
-          if (!data) {
+            return;
+          });
+
+          if (data === undefined) {
             return setError(true);
           }
 

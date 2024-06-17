@@ -7,11 +7,17 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { requireUserLoader } from '~/lib/require-user-loader';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const client = getSupabaseServerClient(request);
-  const user = await requireUserLoader(request);
+
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+
+  if (!user) {
+    return redirect(pathsConfig.auth.signIn);
+  }
 
   const needsMfa = await checkRequiresMultiFactorAuthentication(client);
 

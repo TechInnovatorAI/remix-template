@@ -20,6 +20,7 @@ function useFetchAuthFactors({ userId }: { userId: string }) {
   return useQuery({
     queryKey,
     queryFn,
+    staleTime: 0,
   });
 }
 
