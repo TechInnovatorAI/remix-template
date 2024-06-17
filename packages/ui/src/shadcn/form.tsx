@@ -7,9 +7,9 @@ import { Slot } from '@radix-ui/react-slot';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 
+import { Trans } from '../makerkit/trans';
 import { cn } from '../utils';
 import { Label } from './label';
-import {Trans} from "../makerkit/trans";
 
 const Form = FormProvider;
 
@@ -157,7 +157,11 @@ const FormMessage = React.forwardRef<
       className={cn('text-[0.8rem] font-medium text-destructive', className)}
       {...props}
     >
-      {typeof body === 'string' ? <Trans i18nKey={body} defaults={body} /> : body}
+      {typeof body === 'string' ? (
+        <Trans i18nKey={body} defaults={body} />
+      ) : (
+        body
+      )}
     </p>
   );
 });
