@@ -4,6 +4,6 @@ This is a Starter Kit for building SaaS applications using Supabase, Remix, and 
 
 This version uses Turborepo to manage multiple packages in a single repository.
 
-**This project is currently under development. Please wait for the stable release before using it in production. Please pull updates daily.**
+**While this project is considered stable, it is under constant development. Please pull updates daily. If you see bugs, please open an issue or report in Discord.**
 
 [Please follow the documentation to get started](https://makerkit.dev/docs/remix-supabase-turbo/introduction).
