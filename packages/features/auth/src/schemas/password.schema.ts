@@ -7,9 +7,9 @@ import { z } from 'zod';
 const requirements = {
   minLength: 8,
   maxLength: 99,
-  specialChars: process.env.VITE_PASSWORD_REQUIRE_SPECIAL_CHARS === 'true',
-  numbers: process.env.VITE_PASSWORD_REQUIRE_NUMBERS === 'true',
-  uppercase: process.env.VITE_PASSWORD_REQUIRE_UPPERCASE === 'true',
+  specialChars: import.meta.env.VITE_PASSWORD_REQUIRE_SPECIAL_CHARS === 'true',
+  numbers: import.meta.env.VITE_PASSWORD_REQUIRE_NUMBERS === 'true',
+  uppercase: import.meta.env.VITE_PASSWORD_REQUIRE_UPPERCASE === 'true',
 };
 
 /**
