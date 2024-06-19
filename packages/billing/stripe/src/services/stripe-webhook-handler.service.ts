@@ -89,7 +89,10 @@ export class StripeWebhookHandlerService
       onSubscriptionDeleted: (subscriptionId: string) => Promise<unknown>;
       onPaymentSucceeded: (sessionId: string) => Promise<unknown>;
       onPaymentFailed: (sessionId: string) => Promise<unknown>;
-      onEvent?: (event: Stripe.Event) => Promise<unknown>;
+      onInvoicePaid: (
+        data: UpsertSubscriptionParams,
+      ) => Promise<unknown>;
+      onEvent?(event: Stripe.Event): Promise<unknown>;
     },
   ) {
     switch (event.type) {
@@ -123,6 +126,10 @@ export class StripeWebhookHandlerService
           event,
           params.onPaymentSucceeded,
         );
+      }
+
+      case 'invoice.paid': {
+        return this.handleInvoicePaid(event, params.onInvoicePaid);
       }
 
       default: {
@@ -284,6 +291,45 @@ export class StripeWebhookHandlerService
     // Here we don't need to do anything, so we just return the callback
 
     return onSubscriptionDeletedCallback(event.data.object.id);
+  }
+
+  private async handleInvoicePaid(
+    event: Stripe.InvoicePaidEvent,
+    onInvoicePaid: (
+      data: UpsertSubscriptionParams,
+    ) => Promise<unknown>,
+  ) {
+    const stripe = await this.loadStripe();
+
+    const invoice = event.data.object;
+    const subscriptionId = invoice.subscription as string;
+
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+      expand: ['line_items'],
+    });
+
+    const accountId = subscription.metadata.accountId as string;
+
+    const subscriptionPayloadBuilderService =
+      createStripeSubscriptionPayloadBuilderService();
+
+    const payload = subscriptionPayloadBuilderService
+      .withBillingConfig(this.config)
+      .build({
+        customerId: subscription.customer as string,
+        id: subscriptionId,
+        accountId,
+        lineItems: subscription.items.data,
+        status: subscription.status,
+        currency: subscription.currency,
+        periodStartsAt: subscription.current_period_start,
+        periodEndsAt: subscription.current_period_end,
+        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+        trialStartsAt: subscription.trial_start,
+        trialEndsAt: subscription.trial_end,
+      });
+
+    return onInvoicePaid(payload);
   }
 
   private async loadStripe() {

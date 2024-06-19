@@ -1,4 +1,8 @@
-import { getOrder, getVariant } from '@lemonsqueezy/lemonsqueezy.js';
+import {
+  getOrder,
+  getSubscription,
+  getVariant,
+} from '@lemonsqueezy/lemonsqueezy.js';
 
 import { BillingConfig, BillingWebhookHandlerService } from '@kit/billing';
 import { getLogger } from '@kit/shared/logger';
@@ -6,6 +10,7 @@ import { Database } from '@kit/supabase/database';
 
 import { getLemonSqueezyEnv } from '../schema/lemon-squeezy-server-env.schema';
 import { OrderWebhook } from '../types/order-webhook';
+import { SubscriptionInvoiceWebhook } from '../types/subscription-invoice-webhook';
 import { SubscriptionWebhook } from '../types/subscription-webhook';
 import { initializeLemonSqueezyClient } from './lemon-squeezy-sdk';
 import { createLemonSqueezySubscriptionPayloadBuilderService } from './lemon-squeezy-subscription-payload-builder.service';
@@ -89,7 +94,7 @@ export class LemonSqueezyWebhookHandlerService
   }
 
   async handleWebhookEvent(
-    event: OrderWebhook | SubscriptionWebhook,
+    event: OrderWebhook | SubscriptionWebhook | SubscriptionInvoiceWebhook,
     params: {
       onCheckoutSessionCompleted: (
         data: UpsertSubscriptionParams | UpsertOrderParams,
@@ -100,7 +105,10 @@ export class LemonSqueezyWebhookHandlerService
       onSubscriptionDeleted: (subscriptionId: string) => Promise<unknown>;
       onPaymentSucceeded: (sessionId: string) => Promise<unknown>;
       onPaymentFailed: (sessionId: string) => Promise<unknown>;
-      onEvent?: (event: OrderWebhook | SubscriptionWebhook) => Promise<unknown>;
+      onInvoicePaid: (
+        data: UpsertSubscriptionParams | UpsertOrderParams,
+      ) => Promise<unknown>;
+      onEvent?: (event: unknown) => Promise<unknown>;
     },
   ) {
     const eventName = event.meta.event_name;
@@ -131,6 +139,13 @@ export class LemonSqueezyWebhookHandlerService
         return this.handleSubscriptionDeletedEvent(
           event as SubscriptionWebhook,
           params.onSubscriptionDeleted,
+        );
+      }
+
+      case 'subscription_payment_success': {
+        return this.handleInvoicePaid(
+          event as SubscriptionInvoiceWebhook,
+          params.onInvoicePaid,
         );
       }
 
@@ -312,6 +327,80 @@ export class LemonSqueezyWebhookHandlerService
     // Here we don't need to do anything, so we just return the callback
 
     return onSubscriptionDeletedCallback(subscription.data.id);
+  }
+
+  private async handleInvoicePaid(
+    event: SubscriptionInvoiceWebhook,
+    onInvoicePaidCallback: (
+      subscription: UpsertSubscriptionParams,
+    ) => Promise<unknown>,
+  ) {
+    await initializeLemonSqueezyClient();
+
+    const attrs = event.data.attributes;
+    const subscriptionId = event.data.id;
+    const accountId = event.meta.custom_data.account_id;
+    const customerId = attrs.customer_id.toString();
+    const status = attrs.status;
+    const createdAt = attrs.created_at;
+
+    const { data: subscriptionResponse } =
+      await getSubscription(subscriptionId);
+    const subscription = subscriptionResponse?.data.attributes;
+
+    if (!subscription) {
+      const logger = await getLogger();
+
+      logger.error(
+        {
+          subscriptionId,
+          accountId,
+          name: this.namespace,
+        },
+        'Failed to fetch subscription',
+      );
+
+      return;
+    }
+
+    const variantId = subscription.variant_id;
+    const productId = subscription.product_id;
+    const endsAt = subscription.ends_at;
+    const renewsAt = subscription.renews_at;
+    const trialEndsAt = subscription.trial_ends_at;
+    const intervalCount = subscription.billing_anchor;
+    const interval = intervalCount === 1 ? 'month' : 'year';
+
+    const payloadBuilderService =
+      createLemonSqueezySubscriptionPayloadBuilderService();
+
+    const lineItems = [
+      {
+        id: subscription.order_item_id.toString(),
+        product: productId.toString(),
+        variant: variantId.toString(),
+        quantity: subscription.first_subscription_item?.quantity ?? 1,
+        priceAmount: attrs.total,
+      },
+    ];
+
+    const payload = payloadBuilderService.withBillingConfig(this.config).build({
+      customerId,
+      id: subscriptionId,
+      accountId,
+      lineItems,
+      status,
+      interval,
+      intervalCount,
+      currency: attrs.currency,
+      periodStartsAt: new Date(createdAt).getTime(),
+      periodEndsAt: new Date(renewsAt ?? endsAt).getTime(),
+      cancelAtPeriodEnd: subscription.cancelled,
+      trialStartsAt: trialEndsAt ? new Date(createdAt).getTime() : null,
+      trialEndsAt: trialEndsAt ? new Date(trialEndsAt).getTime() : null,
+    });
+
+    return onInvoicePaidCallback(payload);
   }
 
   private getOrderStatus(status: OrderStatus) {
