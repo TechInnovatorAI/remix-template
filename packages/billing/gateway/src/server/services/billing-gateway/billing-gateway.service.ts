@@ -127,7 +127,17 @@ class BillingGatewayService {
     return strategy.updateSubscriptionItem(payload);
   }
 
-  getStrategy() {
+  /**
+   * Retrieves a subscription from the provider.
+   * @param subscriptionId
+   */
+  async getSubscription(subscriptionId: string) {
+    const strategy = await this.getStrategy();
+
+    return strategy.getSubscription(subscriptionId);
+  }
+
+  private getStrategy() {
     return BillingGatewayFactoryService.GetProviderStrategy(this.provider);
   }
 }

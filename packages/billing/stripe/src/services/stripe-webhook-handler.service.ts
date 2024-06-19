@@ -1,19 +1,31 @@
 import process from 'node:process';
 import Stripe from 'stripe';
 
-import {
-  BillingConfig,
-  BillingWebhookHandlerService,
-  getLineItemTypeById,
-} from '@kit/billing';
+import { BillingConfig, BillingWebhookHandlerService } from '@kit/billing';
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
 
 import { StripeServerEnvSchema } from '../schema/stripe-server-env.schema';
 import { createStripeClient } from './stripe-sdk';
+import { createStripeSubscriptionPayloadBuilderService } from './stripe-subscription-payload-builder.service';
 
 type UpsertSubscriptionParams =
-  Database['public']['Functions']['upsert_subscription']['Args'];
+  Database['public']['Functions']['upsert_subscription']['Args'] & {
+    line_items: Array<LineItem>;
+  };
+
+interface LineItem {
+  id: string;
+  quantity: number;
+  subscription_id: string;
+  subscription_item_id: string;
+  product_id: string;
+  variant_id: string;
+  price_amount: number | null | undefined;
+  interval: string;
+  interval_count: number;
+  type: 'flat' | 'metered' | 'per_seat' | undefined;
+}
 
 type UpsertOrderParams =
   Database['public']['Functions']['upsert_order']['Args'];
@@ -150,22 +162,27 @@ export class StripeWebhookHandlerService
     // if it's a subscription, we need to retrieve the subscription
     // and build the payload for the subscription
     if (isSubscription) {
+      const subscriptionPayloadBuilderService =
+        createStripeSubscriptionPayloadBuilderService();
+
       const subscriptionId = session.subscription as string;
       const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
-      const payload = this.buildSubscriptionPayload({
-        accountId,
-        customerId,
-        id: subscription.id,
-        lineItems: subscription.items.data,
-        status: subscription.status,
-        currency: subscription.currency,
-        periodStartsAt: subscription.current_period_start,
-        periodEndsAt: subscription.current_period_end,
-        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-        trialStartsAt: subscription.trial_start,
-        trialEndsAt: subscription.trial_end,
-      });
+      const payload = subscriptionPayloadBuilderService
+        .withBillingConfig(this.config)
+        .build({
+          accountId,
+          customerId,
+          id: subscription.id,
+          lineItems: subscription.items.data,
+          status: subscription.status,
+          currency: subscription.currency,
+          periodStartsAt: subscription.current_period_start,
+          periodEndsAt: subscription.current_period_end,
+          cancelAtPeriodEnd: subscription.cancel_at_period_end,
+          trialStartsAt: subscription.trial_start,
+          trialEndsAt: subscription.trial_end,
+        });
 
       return onCheckoutCompletedCallback(payload);
     } else {
@@ -238,19 +255,24 @@ export class StripeWebhookHandlerService
     const subscriptionId = subscription.id;
     const accountId = subscription.metadata.accountId as string;
 
-    const payload = this.buildSubscriptionPayload({
-      customerId: subscription.customer as string,
-      id: subscriptionId,
-      accountId,
-      lineItems: subscription.items.data,
-      status: subscription.status,
-      currency: subscription.currency,
-      periodStartsAt: subscription.current_period_start,
-      periodEndsAt: subscription.current_period_end,
-      cancelAtPeriodEnd: subscription.cancel_at_period_end,
-      trialStartsAt: subscription.trial_start,
-      trialEndsAt: subscription.trial_end,
-    });
+    const subscriptionPayloadBuilderService =
+      createStripeSubscriptionPayloadBuilderService();
+
+    const payload = subscriptionPayloadBuilderService
+      .withBillingConfig(this.config)
+      .build({
+        customerId: subscription.customer as string,
+        id: subscriptionId,
+        accountId,
+        lineItems: subscription.items.data,
+        status: subscription.status,
+        currency: subscription.currency,
+        periodStartsAt: subscription.current_period_start,
+        periodEndsAt: subscription.current_period_end,
+        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+        trialStartsAt: subscription.trial_start,
+        trialEndsAt: subscription.trial_end,
+      });
 
     return onSubscriptionUpdatedCallback(payload);
   }
@@ -264,64 +286,6 @@ export class StripeWebhookHandlerService
     return onSubscriptionDeletedCallback(event.data.object.id);
   }
 
-  private buildSubscriptionPayload<
-    LineItem extends {
-      id: string;
-      quantity?: number;
-      price?: Stripe.Price;
-    },
-  >(params: {
-    id: string;
-    accountId: string;
-    customerId: string;
-    lineItems: LineItem[];
-    status: Stripe.Subscription.Status;
-    currency: string;
-    cancelAtPeriodEnd: boolean;
-    periodStartsAt: number;
-    periodEndsAt: number;
-    trialStartsAt: number | null;
-    trialEndsAt: number | null;
-  }): UpsertSubscriptionParams {
-    const active = params.status === 'active' || params.status === 'trialing';
-
-    const lineItems = params.lineItems.map((item) => {
-      const quantity = item.quantity ?? 1;
-      const variantId = item.price?.id as string;
-
-      return {
-        id: item.id,
-        quantity,
-        subscription_id: params.id,
-        subscription_item_id: item.id,
-        product_id: item.price?.product as string,
-        variant_id: variantId,
-        price_amount: item.price?.unit_amount,
-        interval: item.price?.recurring?.interval as string,
-        interval_count: item.price?.recurring?.interval_count as number,
-        type: getLineItemTypeById(this.config, variantId),
-      };
-    });
-
-    // otherwise we are updating a subscription
-    // and we only need to return the update payload
-    return {
-      target_subscription_id: params.id,
-      target_account_id: params.accountId,
-      target_customer_id: params.customerId,
-      billing_provider: this.provider,
-      status: params.status,
-      line_items: lineItems,
-      active,
-      currency: params.currency,
-      cancel_at_period_end: params.cancelAtPeriodEnd ?? false,
-      period_starts_at: getISOString(params.periodStartsAt) as string,
-      period_ends_at: getISOString(params.periodEndsAt) as string,
-      trial_starts_at: getISOString(params.trialStartsAt),
-      trial_ends_at: getISOString(params.trialEndsAt),
-    };
-  }
-
   private async loadStripe() {
     if (!this.stripe) {
       this.stripe = await createStripeClient();
@@ -329,8 +293,4 @@ export class StripeWebhookHandlerService
 
     return this.stripe;
   }
-}
-
-function getISOString(date: number | null) {
-  return date ? new Date(date * 1000).toISOString() : undefined;
 }

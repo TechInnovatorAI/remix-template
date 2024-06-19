@@ -43,7 +43,7 @@ export abstract class BillingWebhookHandlerService {
       onPaymentFailed: (sessionId: string) => Promise<unknown>;
 
       // generic handler for any event
-      onEvent?: <Data>(data: Data) => Promise<unknown>;
+      onEvent?: (data: unknown) => Promise<unknown>;
     },
   ): Promise<unknown>;
 }

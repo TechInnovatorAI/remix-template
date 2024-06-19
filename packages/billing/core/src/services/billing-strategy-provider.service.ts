@@ -9,6 +9,7 @@ import {
   RetrieveCheckoutSessionSchema,
   UpdateSubscriptionParamsSchema,
 } from '../schema';
+import { UpsertSubscriptionParams } from '../types';
 
 export abstract class BillingStrategyProviderService {
   abstract createBillingPortalSession(
@@ -65,4 +66,12 @@ export abstract class BillingStrategyProviderService {
     interval: string;
     amount: number;
   }>;
+
+  abstract getSubscription(subscriptionId: string): Promise<
+    UpsertSubscriptionParams & {
+      // we can't always guarantee that the target account id will be present
+      // so we need to make it optional and let the consumer handle it
+      target_account_id: string | undefined;
+    }
+  >;
 }

@@ -24,7 +24,7 @@ interface CustomHandlersParams {
   ) => Promise<unknown>;
   onPaymentSucceeded: (sessionId: string) => Promise<unknown>;
   onPaymentFailed: (sessionId: string) => Promise<unknown>;
-  onEvent?: <Data>(data: Data) => Promise<unknown>;
+  onEvent(event: unknown): Promise<unknown>;
 }
 
 /**

@@ -2,6 +2,7 @@ import {
   cancelSubscription,
   createUsageRecord,
   getCheckout,
+  getSubscription,
   getVariant,
   listUsageRecords,
   updateSubscriptionItem,
@@ -22,6 +23,7 @@ import { getLogger } from '@kit/shared/logger';
 
 import { createLemonSqueezyBillingPortalSession } from './create-lemon-squeezy-billing-portal-session';
 import { createLemonSqueezyCheckout } from './create-lemon-squeezy-checkout';
+import { createLemonSqueezySubscriptionPayloadBuilderService } from './lemon-squeezy-subscription-payload-builder.service';
 
 export class LemonSqueezyBillingStrategyService
   implements BillingStrategyProviderService
@@ -340,6 +342,91 @@ export class LemonSqueezyBillingStrategyService
     logger.info(ctx, 'Subscription updated successfully');
 
     return { success: true };
+  }
+
+  async getSubscription(subscriptionId: string) {
+    const logger = await getLogger();
+
+    const ctx = {
+      name: this.namespace,
+      subscriptionId,
+    };
+
+    logger.info(ctx, 'Retrieving subscription...');
+
+    const { error, data } = await getSubscription(subscriptionId);
+
+    if (error) {
+      logger.error(
+        {
+          ...ctx,
+          error,
+        },
+        'Failed to retrieve subscription',
+      );
+
+      throw new Error('Failed to retrieve subscription');
+    }
+
+    if (!data) {
+      logger.error(
+        {
+          ...ctx,
+        },
+        'Subscription not found',
+      );
+
+      throw new Error('Subscription not found');
+    }
+
+    logger.info(ctx, 'Subscription retrieved successfully');
+
+    const payloadBuilderService =
+      createLemonSqueezySubscriptionPayloadBuilderService();
+
+    const subscription = data.data.attributes;
+    const customerId = subscription.customer_id.toString();
+    const status = subscription.status;
+    const variantId = subscription.variant_id;
+    const productId = subscription.product_id;
+    const createdAt = subscription.created_at;
+    const endsAt = subscription.ends_at;
+    const renewsAt = subscription.renews_at;
+    const trialEndsAt = subscription.trial_ends_at;
+    const intervalCount = subscription.billing_anchor;
+    const interval = intervalCount === 1 ? 'month' : 'year';
+
+    const subscriptionItemId =
+      data.data.attributes.first_subscription_item?.id.toString() as string;
+
+    const lineItems = [
+      {
+        id: subscriptionItemId.toString(),
+        product: productId.toString(),
+        variant: variantId.toString(),
+        quantity: subscription.first_subscription_item?.quantity ?? 1,
+        // not anywhere in the API
+        priceAmount: 0,
+      },
+    ];
+
+    return payloadBuilderService.build({
+      customerId,
+      id: subscriptionId,
+      // not in the API
+      accountId: '',
+      lineItems,
+      status,
+      interval,
+      intervalCount,
+      // not in the API
+      currency: '',
+      periodStartsAt: new Date(createdAt).getTime(),
+      periodEndsAt: new Date(renewsAt ?? endsAt).getTime(),
+      cancelAtPeriodEnd: subscription.cancelled,
+      trialStartsAt: trialEndsAt ? new Date(createdAt).getTime() : null,
+      trialEndsAt: trialEndsAt ? new Date(trialEndsAt).getTime() : null,
+    });
   }
 
   /**

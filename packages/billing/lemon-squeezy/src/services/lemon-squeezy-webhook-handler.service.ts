@@ -1,10 +1,6 @@
 import { getOrder, getVariant } from '@lemonsqueezy/lemonsqueezy.js';
 
-import {
-  BillingConfig,
-  BillingWebhookHandlerService,
-  getLineItemTypeById,
-} from '@kit/billing';
+import { BillingConfig, BillingWebhookHandlerService } from '@kit/billing';
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
 
@@ -12,24 +8,31 @@ import { getLemonSqueezyEnv } from '../schema/lemon-squeezy-server-env.schema';
 import { OrderWebhook } from '../types/order-webhook';
 import { SubscriptionWebhook } from '../types/subscription-webhook';
 import { initializeLemonSqueezyClient } from './lemon-squeezy-sdk';
+import { createLemonSqueezySubscriptionPayloadBuilderService } from './lemon-squeezy-subscription-payload-builder.service';
 import { createHmac } from './verify-hmac';
 
 type UpsertSubscriptionParams =
-  Database['public']['Functions']['upsert_subscription']['Args'];
+  Database['public']['Functions']['upsert_subscription']['Args'] & {
+    line_items: Array<LineItem>;
+  };
 
 type UpsertOrderParams =
   Database['public']['Functions']['upsert_order']['Args'];
 
-type OrderStatus = 'pending' | 'failed' | 'paid' | 'refunded';
+interface LineItem {
+  id: string;
+  quantity: number;
+  subscription_id: string;
+  subscription_item_id: string;
+  product_id: string;
+  variant_id: string;
+  price_amount: number | null | undefined;
+  interval: string;
+  interval_count: number;
+  type: 'flat' | 'metered' | 'per_seat' | undefined;
+}
 
-type SubscriptionStatus =
-  | 'on_trial'
-  | 'active'
-  | 'cancelled'
-  | 'paused'
-  | 'expired'
-  | 'unpaid'
-  | 'past_due';
+type OrderStatus = 'pending' | 'failed' | 'paid' | 'refunded';
 
 export class LemonSqueezyWebhookHandlerService
   implements BillingWebhookHandlerService
@@ -268,7 +271,10 @@ export class LemonSqueezyWebhookHandlerService
 
     const interval = intervalCount === 1 ? 'month' : 'year';
 
-    const payload = this.buildSubscriptionPayload({
+    const payloadBuilderService =
+      createLemonSqueezySubscriptionPayloadBuilderService();
+
+    const payload = payloadBuilderService.withBillingConfig(this.config).build({
       customerId,
       id: subscriptionId,
       accountId,
@@ -308,76 +314,6 @@ export class LemonSqueezyWebhookHandlerService
     return onSubscriptionDeletedCallback(subscription.data.id);
   }
 
-  private buildSubscriptionPayload<
-    LineItem extends {
-      id: string;
-      quantity: number;
-      product: string;
-      variant: string;
-      priceAmount: number;
-    },
-  >(params: {
-    id: string;
-    accountId: string;
-    customerId: string;
-    lineItems: LineItem[];
-    interval: string;
-    intervalCount: number;
-    status: string;
-    currency: string;
-    cancelAtPeriodEnd: boolean;
-    periodStartsAt: number;
-    periodEndsAt: number;
-    trialStartsAt: number | null;
-    trialEndsAt: number | null;
-  }): UpsertSubscriptionParams {
-    const canceledAtPeriodEnd =
-      params.status === 'cancelled' && params.cancelAtPeriodEnd;
-
-    const active =
-      params.status === 'active' ||
-      params.status === 'trialing' ||
-      canceledAtPeriodEnd;
-
-    const lineItems = params.lineItems.map((item) => {
-      const quantity = item.quantity ?? 1;
-
-      return {
-        id: item.id,
-        quantity,
-        interval: params.interval,
-        interval_count: params.intervalCount,
-        subscription_id: params.id,
-        product_id: item.product,
-        variant_id: item.variant,
-        price_amount: item.priceAmount,
-        type: getLineItemTypeById(this.config, item.variant),
-      };
-    });
-
-    // otherwise we are updating a subscription
-    // and we only need to return the update payload
-    return {
-      target_subscription_id: params.id,
-      target_account_id: params.accountId,
-      target_customer_id: params.customerId,
-      billing_provider: this.provider,
-      status: this.getSubscriptionStatus(params.status as SubscriptionStatus),
-      line_items: lineItems,
-      active,
-      currency: params.currency,
-      cancel_at_period_end: params.cancelAtPeriodEnd ?? false,
-      period_starts_at: getISOString(params.periodStartsAt) as string,
-      period_ends_at: getISOString(params.periodEndsAt) as string,
-      trial_starts_at: params.trialStartsAt
-        ? getISOString(params.trialStartsAt)
-        : undefined,
-      trial_ends_at: params.trialEndsAt
-        ? getISOString(params.trialEndsAt)
-        : undefined,
-    };
-  }
-
   private getOrderStatus(status: OrderStatus) {
     switch (status) {
       case 'paid':
@@ -392,31 +328,6 @@ export class LemonSqueezyWebhookHandlerService
         return 'pending';
     }
   }
-
-  private getSubscriptionStatus(status: SubscriptionStatus) {
-    switch (status) {
-      case 'active':
-        return 'active';
-      case 'cancelled':
-        return 'canceled';
-      case 'paused':
-        return 'paused';
-      case 'on_trial':
-        return 'trialing';
-      case 'past_due':
-        return 'past_due';
-      case 'unpaid':
-        return 'unpaid';
-      case 'expired':
-        return 'past_due';
-      default:
-        return 'active';
-    }
-  }
-}
-
-function getISOString(date: number | null) {
-  return date ? new Date(date).toISOString() : undefined;
 }
 
 async function isSigningSecretValid(rawBody: string, signatureHeader: string) {

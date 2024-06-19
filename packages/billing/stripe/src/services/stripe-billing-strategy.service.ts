@@ -16,6 +16,7 @@ import { getLogger } from '@kit/shared/logger';
 import { createStripeBillingPortalSession } from './create-stripe-billing-portal-session';
 import { createStripeCheckout } from './create-stripe-checkout';
 import { createStripeClient } from './stripe-sdk';
+import { createStripeSubscriptionPayloadBuilderService } from './stripe-subscription-payload-builder.service';
 
 /**
  * @name StripeBillingStrategyService
@@ -352,6 +353,50 @@ export class StripeBillingStrategyService
       logger.error({ ...ctx, error }, 'Failed to retrieve plan');
 
       throw new Error('Failed to retrieve plan');
+    }
+  }
+
+  async getSubscription(subscriptionId: string) {
+    const stripe = await this.stripeProvider();
+    const logger = await getLogger();
+
+    const ctx = {
+      name: this.namespace,
+      subscriptionId,
+    };
+
+    logger.info(ctx, 'Retrieving subscription...');
+
+    const subscriptionPayloadBuilder =
+      createStripeSubscriptionPayloadBuilderService();
+
+    try {
+      const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+        expand: ['line_items'],
+      });
+
+      logger.info(ctx, 'Subscription retrieved successfully');
+
+      const customer = subscription.customer as string;
+      const accountId = subscription.metadata?.accountId as string;
+
+      return subscriptionPayloadBuilder.build({
+        customerId: customer,
+        accountId,
+        id: subscription.id,
+        lineItems: subscription.items.data,
+        status: subscription.status,
+        currency: subscription.currency,
+        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+        periodStartsAt: subscription.current_period_start,
+        periodEndsAt: subscription.current_period_end,
+        trialStartsAt: subscription.trial_start,
+        trialEndsAt: subscription.trial_end,
+      });
+    } catch (error) {
+      logger.error({ ...ctx, error }, 'Failed to retrieve subscription');
+
+      throw new Error('Failed to retrieve subscription');
     }
   }
 

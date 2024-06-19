@@ -1,5 +1,6 @@
 import { type EmailOtpType, SupabaseClient } from '@supabase/supabase-js';
 
+
 /**
  * @name createAuthCallbackService
  * @description Creates an instance of the AuthCallbackService
@@ -43,6 +44,7 @@ class AuthCallbackService {
       : params.redirectPath;
 
     const callbackUrl = callbackParam ? new URL(callbackParam) : null;
+    const nextPath = callbackUrl ? callbackUrl.searchParams.get('next') : null;
     const inviteToken = callbackUrl?.searchParams.get('invite_token');
 
     const errorPath = params.errorPath ?? '/auth/callback/error';
@@ -52,6 +54,10 @@ class AuthCallbackService {
     searchParams.delete('type');
     searchParams.delete('next');
     searchParams.delete('callback');
+
+    if (nextPath) {
+      searchParams.set('next', nextPath);
+    }
 
     url.pathname = next;
 
