@@ -1,30 +1,28 @@
-import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
-
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { createRequestHandler } from '@remix-run/cloudflare';
-import { env as nodeEnv } from 'node:process';
-
-import __STATIC_CONTENT_MANIFEST from "__STATIC_CONTENT_MANIFEST";
+import __STATIC_CONTENT_MANIFEST from '__STATIC_CONTENT_MANIFEST';
+import process from 'node:process';
 
 const MANIFEST = JSON.parse(__STATIC_CONTENT_MANIFEST);
 
 export default {
 async fetch(request, env, ctx) {
+process.env = process.env || {};
+
 // node.js compatible environment variables
 for (const key in env) {
-    nodeEnv[key] ??= (() => {
-        if (typeof env[key] === 'string') {
-            return env[key];
-        }
-    })();
+process.env[key] ??= (() => {
+if (typeof env[key] === 'string') {
+return env[key];
 }
-
-Object.assign(nodeEnv, {...env });
+})();
+}
 
 try {
 try {
 const url = new URL(request.url);
 
-const ttl = url.pathname.startsWith("/assets/")
+const ttl = url.pathname.startsWith('/assets/')
 ? 60 * 60 * 24 * 365 // 1 year
 : 60 * 5; // 5 minutes
 
@@ -40,7 +38,7 @@ cacheControl: {
 browserTTL: ttl,
 edgeTTL: ttl,
 },
-}
+},
 );
 } catch (error) {
 // No-op
