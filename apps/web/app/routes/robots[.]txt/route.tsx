@@ -12,7 +12,7 @@ export const loader = async () => {
   const items = [
     `User-agent: ${robots.rules.userAgent}`,
     `Allow: ${robots.rules.allow}`,
-    `Sitemap: ${robots.sitemap}`
+    `Sitemap: ${robots.sitemap}`,
   ];
 
   const content = items.reduce((acc, curr) => acc + curr + '\n', '');

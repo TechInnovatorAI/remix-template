@@ -1,5 +1,4 @@
 import { Container } from '@react-email/components';
-import * as React from 'react';
 
 export function EmailContent(
   props: React.PropsWithChildren<{
@@ -9,7 +8,7 @@ export function EmailContent(
   return (
     <Container
       className={
-        'rounded-xl my-[8px] px-[24px] py-[12px] mx-auto border border-solid border-[#eeeeee] ' +
+        'mx-auto my-[8px] rounded-xl border border-solid border-[#eeeeee] px-[24px] py-[12px] ' +
           props.className || ''
       }
     >

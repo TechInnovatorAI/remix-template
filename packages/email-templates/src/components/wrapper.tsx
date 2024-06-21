@@ -1,5 +1,4 @@
 import { Container } from '@react-email/components';
-import * as React from 'react';
 
 export function EmailWrapper(
   props: React.PropsWithChildren<{
@@ -21,7 +20,7 @@ export function EmailWrapper(
           backgroundColor: '#fff',
           margin: 'auto',
         }}
-        className={'my-[36px] mx-auto px-4 ' + props.className || ''}
+        className={'mx-auto my-[36px] px-4 ' + props.className || ''}
       >
         {props.children}
       </Container>
