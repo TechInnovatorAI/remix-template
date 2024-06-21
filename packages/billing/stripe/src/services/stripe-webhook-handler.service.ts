@@ -304,10 +304,10 @@ export class StripeWebhookHandlerService
     const invoice = event.data.object;
     const subscriptionId = invoice.subscription as string;
 
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
-      expand: ['line_items'],
-    });
+    // Retrieve the subscription
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
+    // Here we need to retrieve the subscription and build the payload
     const accountId = subscription.metadata.accountId as string;
 
     const subscriptionPayloadBuilderService =
