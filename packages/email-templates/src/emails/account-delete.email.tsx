@@ -1,8 +1,6 @@
 import {
   Body,
-  Container,
   Head,
-  Heading,
   Html,
   Preview,
   Tailwind,
@@ -10,6 +8,12 @@ import {
   render,
 } from '@react-email/components';
 
+import { BodyStyle } from '../components/body-style';
+import { EmailContent } from '../components/content';
+import { EmailFooter } from '../components/footer';
+import { EmailHeader } from '../components/header';
+import { EmailHeading } from '../components/heading';
+import { EmailWrapper } from '../components/wrapper';
 import { initializeEmailI18n } from '../lib/i18n';
 
 interface Props {
@@ -36,44 +40,51 @@ export async function renderAccountDeleteEmail(props: Props) {
 
   const html = render(
     <Html>
-      <Head />
+      <Head>
+        <BodyStyle />
+      </Head>
+
       <Preview>{previewText}</Preview>
 
       <Tailwind>
-        <Body className="mx-auto my-auto bg-[#ffffff] font-sans">
-          <Container className="mx-auto my-[40px] w-[465px] rounded-lg border border-solid border-[#eaeaea] bg-white p-[20px]">
-            <Heading className="mx-0 my-[30px] p-0 text-center text-[24px] font-bold text-black">
-              {previewText}
-            </Heading>
+        <Body>
+          <EmailWrapper>
+            <EmailHeader>
+              <EmailHeading>{previewText}</EmailHeading>
+            </EmailHeader>
 
-            <Text className="text-[14px] leading-[24px] text-black">
-              {t(`${namespace}:hello`, {
-                displayName: props.userDisplayName,
-              })}
-            </Text>
+            <EmailContent>
+              <Text className="text-[14px] leading-[24px] text-black">
+                {t(`${namespace}:hello`, {
+                  displayName: props.userDisplayName,
+                })}
+              </Text>
 
-            <Text className="text-[14px] leading-[24px] text-black">
-              {t(`${namespace}:paragraph1`, {
-                productName: props.productName,
-              })}
-            </Text>
+              <Text className="text-[14px] leading-[24px] text-black">
+                {t(`${namespace}:paragraph1`, {
+                  productName: props.productName,
+                })}
+              </Text>
 
-            <Text className="text-[14px] leading-[24px] text-black">
-              {t(`${namespace}:paragraph2`)}
-            </Text>
+              <Text className="text-[14px] leading-[24px] text-black">
+                {t(`${namespace}:paragraph2`)}
+              </Text>
 
-            <Text className="text-[14px] leading-[24px] text-black">
-              {t(`${namespace}:paragraph3`, {
-                productName: props.productName,
-              })}
-            </Text>
+              <Text className="text-[14px] leading-[24px] text-black">
+                {t(`${namespace}:paragraph3`, {
+                  productName: props.productName,
+                })}
+              </Text>
 
-            <Text className="text-[14px] leading-[24px] text-black">
-              {t(`${namespace}:paragraph4`, {
-                productName: props.productName,
-              })}
-            </Text>
-          </Container>
+              <Text className="text-[14px] leading-[24px] text-black">
+                {t(`${namespace}:paragraph4`, {
+                  productName: props.productName,
+                })}
+              </Text>
+            </EmailContent>
+
+            <EmailFooter>{props.productName}</EmailFooter>
+          </EmailWrapper>
         </Body>
       </Tailwind>
     </Html>,
