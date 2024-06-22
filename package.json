@@ -10,6 +10,7 @@
     "name": "MakerKit"
   },
   "scripts": {
+    "postinstall": "manypkg fix",
     "build": "turbo build --cache-dir=.turbo",
     "clean": "git clean -xdf node_modules dist",
     "clean:workspaces": "turbo clean",
@@ -39,8 +40,7 @@
     "pnpm": "^9.4.0",
     "prettier": "^3.3.2",
     "turbo": "^2.0.4",
-    "typescript": "^5.5.2",
-    "yarn": "^1.22.22"
+    "typescript": "^5.5.2"
   },
   "pnpm": {
     "overrides": {

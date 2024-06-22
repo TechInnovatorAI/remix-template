@@ -11,11 +11,14 @@ import { GlobalLoader } from '@kit/ui/global-loader';
 import { Toaster } from '@kit/ui/sonner';
 
 import authConfig from '~/config/auth.config';
+import featuresFlagConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { i18nResolver } from '~/lib/i18n/i18n.resolver';
 import { getI18nSettings } from '~/lib/i18n/i18n.settings';
 
 import { ReactQueryProvider } from './react-query-provider';
+import { If } from '@kit/ui/if';
+import { VersionUpdater } from '@kit/ui/version-updater';
 
 const captchaSiteKey = authConfig.captchaTokenSiteKey;
 
@@ -55,6 +58,10 @@ export function RootProviders(
                   {props.children}
                 </ThemeProvider>
               </AuthProvider>
+
+              <If condition={featuresFlagConfig.enableVersionUpdater}>
+                <VersionUpdater />
+              </If>
             </CaptchaProvider>
           </MonitoringProvider>
         </ReactQueryProvider>

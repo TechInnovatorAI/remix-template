@@ -51,6 +51,10 @@
   "notifications": "Notifications",
   "noNotifications": "No notifications",
   "justNow": "Just now",
+  "newVersionAvailable": "New version available",
+  "newVersionAvailableDescription": "A new version of the app is available. It is recommended to refresh the page to get the latest updates and avoid any issues.",
+  "newVersionSubmitButton": "Reload and Update",
+  "back": "Back",
   "roles": {
     "owner": {
       "label": "Owner"
