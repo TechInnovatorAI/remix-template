@@ -1,6 +1,5 @@
 import { type EmailOtpType, SupabaseClient } from '@supabase/supabase-js';
 
-
 /**
  * @name createAuthCallbackService
  * @description Creates an instance of the AuthCallbackService

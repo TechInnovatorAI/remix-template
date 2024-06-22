@@ -18,12 +18,12 @@
     "./config/edge": "./src/config/sentry.edge.config.ts"
   },
   "dependencies": {
-    "@opentelemetry/exporter-jaeger": "1.25.0",
-    "@opentelemetry/resources": "1.25.0",
-    "@opentelemetry/sdk-node": "0.52.0",
-    "@opentelemetry/semantic-conventions": "^1.25.0",
+    "@opentelemetry/exporter-jaeger": "1.25.1",
+    "@opentelemetry/resources": "1.25.1",
+    "@opentelemetry/sdk-node": "0.52.1",
+    "@opentelemetry/semantic-conventions": "^1.25.1",
     "@sentry/opentelemetry-node": "^7.114.0",
-    "@sentry/remix": "8.10.0"
+    "@sentry/remix": "8.11.0"
   },
   "devDependencies": {
     "@kit/eslint-config": "workspace:*",
