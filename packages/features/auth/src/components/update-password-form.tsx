@@ -36,7 +36,9 @@ export function UpdatePasswordForm(params: { redirectTo: string }) {
   });
 
   if (updateUser.error) {
-    return <ErrorState onRetry={() => updateUser.reset()} />;
+    return (
+      <ErrorState error={updateUser.error} onRetry={() => updateUser.reset()} />
+    );
   }
 
   if (updateUser.data && !updateUser.isPending) {
@@ -138,7 +140,7 @@ function SuccessState(props: { redirectTo: string }) {
   );
 }
 
-function ErrorState(props: { onRetry: () => void }) {
+function ErrorState(props: { onRetry: () => void; error: Error }) {
   return (
     <div className={'flex flex-col space-y-4'}>
       <Alert variant={'destructive'}>
@@ -149,7 +151,12 @@ function ErrorState(props: { onRetry: () => void }) {
         </AlertTitle>
 
         <AlertDescription>
-          <Trans i18nKey={'auth:resetPasswordError'} />
+          <Trans
+            i18nKey={[
+              `auth:errors.${props.error.message}`,
+              'auth:resetPasswordError',
+            ]}
+          />
         </AlertDescription>
       </Alert>
 
