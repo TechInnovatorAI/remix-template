@@ -28,7 +28,7 @@
     "@kit/tailwind-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:^",
-    "@remix-run/react": "2.9.2",
+    "@remix-run/react": "2.10.0",
     "@supabase/supabase-js": "^2.43.5",
     "@types/react": "^18.3.3",
     "date-fns": "^3.6.0",
