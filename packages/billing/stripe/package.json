@@ -15,7 +15,7 @@
     "./components": "./src/components/index.ts"
   },
   "dependencies": {
-    "@stripe/react-stripe-js": "^2.7.1",
+    "@stripe/react-stripe-js": "^2.7.2",
     "@stripe/stripe-js": "^4.0.0",
     "stripe": "^16.0.0"
   },
