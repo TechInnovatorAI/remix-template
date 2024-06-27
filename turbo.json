@@ -3,6 +3,7 @@
   "globalDependencies": [
     "**/.env"
   ],
+  "ui": "stream",
   "globalEnv": [
     "STRIPE_SECRET_KEY",
     "STRIPE_WEBHOOK_SECRET",

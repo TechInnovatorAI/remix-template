@@ -18,7 +18,9 @@ const local = z.object({
 
 const cloud = z.object({
   kind: z.literal('cloud'),
-  project: z.string(),
+  project: z.string().min(1),
+  branchPrefix: z.string().optional(),
+  pathPrefix: z.string().optional(),
 }) satisfies ZodOutputFor<CloudConfig['storage']>;
 
 const github = z.object({
@@ -27,6 +29,8 @@ const github = z.object({
   branchPrefix: z.string().optional(),
   pathPrefix: z.string().optional(),
   githubToken: z.string({
+    description:
+      'The GitHub token to use for authentication with the GitHub API',
     required_error: 'Please provide a GitHub token',
   }),
 }) satisfies ZodOutputFor<GitHubConfig['storage']>;
@@ -83,59 +87,70 @@ function createKeyStaticConfig(path = '') {
     path += '/';
   }
 
+  const cloud = {
+    project: storage.kind === 'cloud' ? storage.project : '',
+  };
+
+  const collections = getKeystaticCollections(path);
+
   return config({
     storage,
-    collections: {
-      posts: collection({
-        label: 'Posts',
-        slugField: 'title',
-        path: `${path}posts/*`,
-        format: { contentField: 'content' },
-        schema: {
-          title: fields.slug({ name: { label: 'Title' } }),
-          image: fields.image({
-            label: 'Image',
-            directory: 'public/site/images',
-            publicPath: '/site/images',
-          }),
-          categories: fields.array(fields.text({ label: 'Category' })),
-          tags: fields.array(fields.text({ label: 'Tag' })),
-          description: fields.text({ label: 'Description' }),
-          publishedAt: fields.date({ label: 'Published At' }),
-          parent: fields.relationship({
-            label: 'Parent',
-            collection: 'posts',
-          }),
-          language: fields.text({ label: 'Language' }),
-          order: fields.number({ label: 'Order' }),
-          content: getContentField(),
-        },
-      }),
-      documentation: collection({
-        label: 'Documentation',
-        slugField: 'title',
-        path: `${path}documentation/**`,
-        format: { contentField: 'content' },
-        schema: {
-          title: fields.slug({ name: { label: 'Title' } }),
-          content: getContentField(),
-          image: fields.image({
-            label: 'Image',
-            directory: 'public/site/images',
-            publicPath: '/site/images',
-          }),
-          description: fields.text({ label: 'Description' }),
-          publishedAt: fields.date({ label: 'Published At' }),
-          order: fields.number({ label: 'Order' }),
-          language: fields.text({ label: 'Language' }),
-          parent: fields.relationship({
-            label: 'Parent',
-            collection: 'documentation',
-          }),
-          categories: fields.array(fields.text({ label: 'Category' })),
-          tags: fields.array(fields.text({ label: 'Tag' })),
-        },
-      }),
-    },
+    cloud,
+    collections,
   });
+}
+
+function getKeystaticCollections(path: string) {
+  return {
+    posts: collection({
+      label: 'Posts',
+      slugField: 'title',
+      path: `${path}posts/*`,
+      format: { contentField: 'content' },
+      schema: {
+        title: fields.slug({ name: { label: 'Title' } }),
+        image: fields.image({
+          label: 'Image',
+          directory: 'public/site/images',
+          publicPath: '/site/images',
+        }),
+        categories: fields.array(fields.text({ label: 'Category' })),
+        tags: fields.array(fields.text({ label: 'Tag' })),
+        description: fields.text({ label: 'Description' }),
+        publishedAt: fields.date({ label: 'Published At' }),
+        parent: fields.relationship({
+          label: 'Parent',
+          collection: 'posts',
+        }),
+        language: fields.text({ label: 'Language' }),
+        order: fields.number({ label: 'Order' }),
+        content: getContentField(),
+      },
+    }),
+    documentation: collection({
+      label: 'Documentation',
+      slugField: 'title',
+      path: `${path}documentation/**`,
+      format: { contentField: 'content' },
+      schema: {
+        title: fields.slug({ name: { label: 'Title' } }),
+        content: getContentField(),
+        image: fields.image({
+          label: 'Image',
+          directory: 'public/site/images',
+          publicPath: '/site/images',
+        }),
+        description: fields.text({ label: 'Description' }),
+        publishedAt: fields.date({ label: 'Published At' }),
+        order: fields.number({ label: 'Order' }),
+        language: fields.text({ label: 'Language' }),
+        parent: fields.relationship({
+          label: 'Parent',
+          collection: 'documentation',
+        }),
+        categories: fields.array(fields.text({ label: 'Category' })),
+        tags: fields.array(fields.text({ label: 'Tag' })),
+      },
+    }),
+  };
 }
