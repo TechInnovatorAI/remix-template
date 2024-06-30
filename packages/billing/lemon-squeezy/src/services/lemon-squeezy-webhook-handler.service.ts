@@ -1,12 +1,12 @@
-import {
-  getOrder,
-  getSubscription,
-  getVariant,
-} from '@lemonsqueezy/lemonsqueezy.js';
+import { getOrder, getSubscription, getVariant } from '@lemonsqueezy/lemonsqueezy.js';
+
+
 
 import { BillingConfig, BillingWebhookHandlerService } from '@kit/billing';
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
+
+
 
 import { getLemonSqueezyEnv } from '../schema/lemon-squeezy-server-env.schema';
 import { OrderWebhook } from '../types/order-webhook';
@@ -15,6 +15,7 @@ import { SubscriptionWebhook } from '../types/subscription-webhook';
 import { initializeLemonSqueezyClient } from './lemon-squeezy-sdk';
 import { createLemonSqueezySubscriptionPayloadBuilderService } from './lemon-squeezy-subscription-payload-builder.service';
 import { createHmac } from './verify-hmac';
+
 
 type UpsertSubscriptionParams =
   Database['public']['Functions']['upsert_subscription']['Args'] & {
@@ -240,7 +241,6 @@ export class LemonSqueezyWebhookHandlerService
     const endsAt = subscription.ends_at;
     const renewsAt = subscription.renews_at;
     const trialEndsAt = subscription.trial_ends_at;
-    const intervalCount = subscription.billing_anchor;
 
     logger.info(
       {
@@ -250,7 +250,7 @@ export class LemonSqueezyWebhookHandlerService
     );
 
     const { data: order, error } = await getOrder(orderId).catch((error) => {
-      logger.error(
+      logger.warn(
         {
           orderId,
           subscriptionId,
@@ -274,17 +274,20 @@ export class LemonSqueezyWebhookHandlerService
       `Successfully fetched order`,
     );
 
+    const priceAmount = order?.data.attributes.first_order_item.price ?? 0;
+    const firstSubscriptionItem = subscription.first_subscription_item;
+
     const lineItems = [
       {
-        id: subscription.order_item_id.toString(),
+        id: firstSubscriptionItem.id.toString(),
         product: productId.toString(),
         variant: variantId.toString(),
-        quantity: order.data.attributes.first_order_item.quantity,
-        priceAmount: order.data.attributes.first_order_item.price,
+        quantity: firstSubscriptionItem.quantity,
+        priceAmount,
       },
     ];
 
-    const interval = intervalCount === 1 ? 'month' : 'year';
+    const { interval, intervalCount } = getSubscriptionIntervalType(renewsAt);
 
     const payloadBuilderService =
       createLemonSqueezySubscriptionPayloadBuilderService();
@@ -434,4 +437,27 @@ async function isSigningSecretValid(rawBody: string, signatureHeader: string) {
 
 function timingSafeEqual(digest: string, signature: Buffer) {
   return digest.toString() === signature.toString();
+}
+
+function getSubscriptionIntervalType(renewsAt: string) {
+  const renewalDate = new Date(renewsAt);
+  const currentDate = new Date();
+
+  // Calculate the difference in milliseconds
+  const timeDifference = renewalDate.getTime() - currentDate.getTime();
+
+  // Convert milliseconds to days
+  const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+  if (daysDifference <= 32) {
+    return {
+      interval: 'monthly',
+      intervalCount: 1,
+    };
+  }
+
+  return {
+    interval: 'yearly',
+    intervalCount: 12,
+  };
 }

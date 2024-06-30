@@ -43,6 +43,15 @@ interface Attributes {
   created_at: string;
   updated_at: string;
   test_mode: boolean;
+
+  first_subscription_item: {
+    id: number;
+    subscription_id: number;
+    price_id: number;
+    quantity: number;
+    created_at: string;
+    updated_at: string;
+  };
 }
 
 interface Urls {
