@@ -26,7 +26,7 @@
     "supabase:db:dump:local": "supabase db dump --local --data-only"
   },
   "dependencies": {
-    "@edge-csrf/core": "^2.2.0",
+    "@edge-csrf/core": "^2.2.2",
     "@hookform/resolvers": "^3.6.0",
     "@kit/accounts": "workspace:^",
     "@kit/admin": "workspace:^",
@@ -51,12 +51,12 @@
     "@remix-run/react": "2.10.0",
     "@remix-run/serve": "^2.10.0",
     "@remix-run/server-runtime": "^2.10.0",
-    "@supabase/supabase-js": "^2.44.1",
-    "@tanstack/react-query": "5.45.1",
-    "@tanstack/react-table": "^8.17.3",
+    "@supabase/supabase-js": "^2.44.2",
+    "@tanstack/react-query": "5.49.2",
+    "@tanstack/react-table": "^8.19.1",
     "date-fns": "^3.6.0",
-    "isbot": "^5.1.9",
-    "lucide-react": "^0.397.0",
+    "isbot": "^5.1.11",
+    "lucide-react": "^0.399.0",
     "next-themes": "0.3.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -84,7 +84,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "supabase": "1.178.2",
     "typescript": "^5.5.2",
-    "vite": "^5.3.1",
+    "vite": "^5.3.2",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "engines": {
