@@ -10,7 +10,7 @@
   },
   "prettier": "@kit/prettier-config",
   "devDependencies": {
-    "@hookform/resolvers": "^3.6.0",
+    "@hookform/resolvers": "^3.7.0",
     "@kit/csrf": "workspace:^",
     "@kit/eslint-config": "workspace:*",
     "@kit/prettier-config": "workspace:*",
@@ -22,12 +22,12 @@
     "@remix-run/react": "2.10.0",
     "@supabase/supabase-js": "^2.44.2",
     "@tanstack/react-query": "5.49.2",
-    "@tanstack/react-table": "^8.19.1",
+    "@tanstack/react-table": "^8.19.2",
     "@types/react": "^18.3.3",
-    "lucide-react": "^0.399.0",
+    "lucide-react": "^0.400.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-hook-form": "^7.52.0",
+    "react-hook-form": "^7.52.1",
     "zod": "^3.23.8"
   },
   "exports": {

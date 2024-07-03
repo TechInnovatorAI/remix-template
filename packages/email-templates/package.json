@@ -13,7 +13,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@react-email/components": "0.0.19"
+    "@react-email/components": "0.0.20"
   },
   "devDependencies": {
     "@kit/eslint-config": "workspace:*",
