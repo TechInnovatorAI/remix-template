@@ -451,13 +451,13 @@ function getSubscriptionIntervalType(renewsAt: string) {
 
   if (daysDifference <= 32) {
     return {
-      interval: 'monthly',
+      interval: 'month',
       intervalCount: 1,
     };
   }
 
   return {
-    interval: 'yearly',
+    interval: 'year',
     intervalCount: 12,
   };
 }
