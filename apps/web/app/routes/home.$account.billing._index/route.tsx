@@ -118,7 +118,6 @@ export default function TeamAccountBillingPage() {
               action: '/api/billing/customer-portal',
               method: 'POST',
               encType: 'application/json',
-              navigate: true,
             },
           );
         }}

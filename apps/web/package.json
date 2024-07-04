@@ -73,8 +73,8 @@
     "@remix-run/dev": "^2.10.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
-    "@typescript-eslint/parser": "^7.14.1",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
     "dotenv-cli": "^7.4.2",
     "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -84,7 +84,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "supabase": "1.178.2",
     "typescript": "^5.5.3",
-    "vite": "^5.3.2",
+    "vite": "^5.3.3",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "engines": {
