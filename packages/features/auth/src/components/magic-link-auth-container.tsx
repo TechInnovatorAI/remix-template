@@ -49,8 +49,13 @@ export function MagicLinkAuthContainer({
   });
 
   const onSubmit = ({ email }: { email: string }) => {
-    const queryParams = inviteToken ? `?invite_token=${inviteToken}` : '';
-    const emailRedirectTo = [redirectUrl, queryParams].join('');
+    const url = new URL(redirectUrl);
+
+    if (inviteToken) {
+      url.searchParams.set('invite_token', inviteToken);
+    }
+
+    const emailRedirectTo = url.href;
 
     const promise = () =>
       signInWithOtpMutation.mutateAsync({
