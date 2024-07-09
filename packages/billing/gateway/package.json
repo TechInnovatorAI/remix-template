@@ -16,7 +16,7 @@
     "./marketing": "./src/components/marketing.tsx"
   },
   "devDependencies": {
-    "@hookform/resolvers": "^3.7.0",
+    "@hookform/resolvers": "^3.9.0",
     "@kit/billing": "workspace:^",
     "@kit/csrf": "workspace:^",
     "@kit/eslint-config": "workspace:*",
@@ -28,11 +28,11 @@
     "@kit/tailwind-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:^",
-    "@remix-run/react": "2.10.0",
-    "@supabase/supabase-js": "^2.44.2",
+    "@remix-run/react": "2.10.2",
+    "@supabase/supabase-js": "^2.44.3",
     "@types/react": "^18.3.3",
     "date-fns": "^3.6.0",
-    "lucide-react": "^0.400.0",
+    "lucide-react": "^0.403.0",
     "react": "18.3.1",
     "react-hook-form": "^7.52.1",
     "react-i18next": "^14.1.2",

@@ -23,7 +23,7 @@
     "@kit/tailwind-config": "workspace:*",
     "@kit/team-accounts": "workspace:^",
     "@kit/tsconfig": "workspace:*",
-    "@supabase/supabase-js": "^2.44.2",
+    "@supabase/supabase-js": "^2.44.3",
     "zod": "^3.23.8"
   },
   "eslintConfig": {
