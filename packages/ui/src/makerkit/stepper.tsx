@@ -8,7 +8,7 @@ import { cn } from '../utils';
 import { If } from './if';
 import { Trans } from './trans';
 
-type Variant = 'numbers' | 'default';
+type Variant = 'numbers' | 'default' | 'dots';
 
 const classNameBuilder = getClassNameBuilder();
 
@@ -39,9 +39,11 @@ export function Stepper(props: {
       });
 
       const isNumberVariant = variant === 'numbers';
+      const isDotsVariant = variant === 'dots';
 
       const labelClassName = cn({
         ['text-xs px-1.5 py-2']: !isNumberVariant,
+        ['hidden']: isDotsVariant,
       });
 
       const { label, number } = getStepLabel(labelOrKey, index);
@@ -70,9 +72,10 @@ export function Stepper(props: {
     return null;
   }
 
-  const containerClassName = cn({
+  const containerClassName = cn('w-full', {
     ['flex justify-between']: variant === 'numbers',
     ['flex space-x-0.5']: variant === 'default',
+    ['flex space-x-2.5 self-center']: variant === 'dots',
   });
 
   return (
@@ -89,6 +92,7 @@ function getClassNameBuilder() {
         default: `flex flex-col h-[2.5px] w-full transition-all duration-500`,
         numbers:
           'w-9 h-9 font-bold rounded-full flex items-center justify-center text-sm border',
+        dots: 'w-2.5 h-2.5 rounded-full bg-muted transition-colors',
       },
       selected: {
         true: '',
@@ -138,6 +142,30 @@ function getClassNameBuilder() {
         selected: false,
         className: 'text-muted-foreground',
       },
+      {
+        variant: 'dots',
+        selected: true,
+        complete: true,
+        className: 'bg-primary',
+      },
+      {
+        variant: 'dots',
+        selected: false,
+        complete: true,
+        className: 'bg-primary',
+      },
+      {
+        variant: 'dots',
+        selected: true,
+        complete: false,
+        className: 'bg-primary',
+      },
+      {
+        variant: 'dots',
+        selected: false,
+        complete: false,
+        className: 'bg-muted',
+      }
     ],
     defaultVariants: {
       variant: 'default',
