@@ -1,12 +1,12 @@
-import { getOrder, getSubscription, getVariant } from '@lemonsqueezy/lemonsqueezy.js';
-
-
+import {
+  getOrder,
+  getSubscription,
+  getVariant,
+} from '@lemonsqueezy/lemonsqueezy.js';
 
 import { BillingConfig, BillingWebhookHandlerService } from '@kit/billing';
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
-
-
 
 import { getLemonSqueezyEnv } from '../schema/lemon-squeezy-server-env.schema';
 import { OrderWebhook } from '../types/order-webhook';
@@ -15,7 +15,6 @@ import { SubscriptionWebhook } from '../types/subscription-webhook';
 import { initializeLemonSqueezyClient } from './lemon-squeezy-sdk';
 import { createLemonSqueezySubscriptionPayloadBuilderService } from './lemon-squeezy-subscription-payload-builder.service';
 import { createHmac } from './verify-hmac';
-
 
 type UpsertSubscriptionParams =
   Database['public']['Functions']['upsert_subscription']['Args'] & {

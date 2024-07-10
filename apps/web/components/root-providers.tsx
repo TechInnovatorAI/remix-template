@@ -8,7 +8,9 @@ import { MonitoringProvider } from '@kit/monitoring/components';
 import { useAuthChangeListener } from '@kit/supabase/hooks/use-auth-change-listener';
 import { ClientOnly } from '@kit/ui/client-only';
 import { GlobalLoader } from '@kit/ui/global-loader';
+import { If } from '@kit/ui/if';
 import { Toaster } from '@kit/ui/sonner';
+import { VersionUpdater } from '@kit/ui/version-updater';
 
 import authConfig from '~/config/auth.config';
 import featuresFlagConfig from '~/config/feature-flags.config';
@@ -17,8 +19,6 @@ import { i18nResolver } from '~/lib/i18n/i18n.resolver';
 import { getI18nSettings } from '~/lib/i18n/i18n.settings';
 
 import { ReactQueryProvider } from './react-query-provider';
-import { If } from '@kit/ui/if';
-import { VersionUpdater } from '@kit/ui/version-updater';
 
 const captchaSiteKey = authConfig.captchaTokenSiteKey;
 

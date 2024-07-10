@@ -165,7 +165,7 @@ function getClassNameBuilder() {
         selected: false,
         complete: false,
         className: 'bg-muted',
-      }
+      },
     ],
     defaultVariants: {
       variant: 'default',
