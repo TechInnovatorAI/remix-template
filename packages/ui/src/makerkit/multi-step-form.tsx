@@ -12,6 +12,7 @@ import React, {
 } from 'react';
 
 import { Slot, Slottable } from '@radix-ui/react-slot';
+import { useMutation } from '@tanstack/react-query';
 import { Path, UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -77,7 +78,7 @@ export function MultiStepForm<T extends z.ZodType>({
   }, [children]);
 
   const stepNames = steps.map((step) => step.props.name);
-  const multiStepForm = useMultiStepForm(schema, form, stepNames);
+  const multiStepForm = useMultiStepForm(schema, form, stepNames, onSubmit);
 
   return (
     <MultiStepFormContext.Provider value={multiStepForm}>
@@ -169,6 +170,7 @@ export function useMultiStepForm<Schema extends z.ZodType>(
   schema: Schema,
   form: UseFormReturn<z.infer<Schema>>,
   stepNames: string[],
+  onSubmit: (data: z.infer<Schema>) => void,
 ) {
   const [state, setState] = useState({
     currentStepIndex: 0,
@@ -282,6 +284,12 @@ export function useMultiStepForm<Schema extends z.ZodType>(
   const isValid = form.formState.isValid;
   const errors = form.formState.errors;
 
+  const mutation = useMutation({
+    mutationFn: () => {
+      return form.handleSubmit(onSubmit)();
+    },
+  });
+
   return useMemo(
     () => ({
       form,
@@ -297,9 +305,11 @@ export function useMultiStepForm<Schema extends z.ZodType>(
       isStepValid,
       isValid,
       errors,
+      mutation,
     }),
     [
       form,
+      mutation,
       stepNames,
       state.currentStepIndex,
       state.direction,
@@ -406,11 +416,15 @@ function AnimatedStep({
 
   const visibilityClasses = isActive ? 'opacity-100' : 'opacity-0 absolute';
 
-  const transformClasses = cn('translate-x-0', isActive ? {} : {
-    '-translate-x-full': direction === 'forward' || index < currentIndex,
-    'translate-x-full': direction === 'backward' || index > currentIndex,
-  });
-
+  const transformClasses = cn(
+    'translate-x-0',
+    isActive
+      ? {}
+      : {
+          '-translate-x-full': direction === 'forward' || index < currentIndex,
+          'translate-x-full': direction === 'backward' || index > currentIndex,
+        },
+  );
 
   const className = cn(baseClasses, visibilityClasses, transformClasses);
 
