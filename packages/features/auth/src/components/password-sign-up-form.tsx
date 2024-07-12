@@ -20,6 +20,7 @@ import { Input } from '@kit/ui/input';
 import { Trans } from '@kit/ui/trans';
 
 import { PasswordSignUpSchema } from '../schemas/password-sign-up.schema';
+import { TermsAndConditionsFormField } from './terms-and-conditions-form-field';
 
 export const PasswordSignUpForm: React.FC<{
   onSubmit: (params: {
@@ -28,7 +29,8 @@ export const PasswordSignUpForm: React.FC<{
     repeatPassword: string;
   }) => unknown;
   loading: boolean;
-}> = ({ onSubmit, loading }) => {
+  displayTermsCheckbox?: boolean;
+}> = ({ onSubmit, loading, displayTermsCheckbox }) => {
   const { t } = useTranslation();
 
   const form = useForm({
@@ -121,6 +123,10 @@ export const PasswordSignUpForm: React.FC<{
             </FormItem>
           )}
         />
+
+        <If condition={displayTermsCheckbox}>
+          <TermsAndConditionsFormField />
+        </If>
 
         <Button
           data-test={'auth-submit-button'}

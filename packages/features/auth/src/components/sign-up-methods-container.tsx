@@ -24,6 +24,7 @@ export function SignUpMethodsContainer(props: {
     oAuth: Provider[];
   };
 
+  displayTermsCheckbox?: boolean;
   inviteToken?: string;
 }) {
   const redirectUrl = getCallbackUrl(props);
@@ -35,7 +36,10 @@ export function SignUpMethodsContainer(props: {
       </If>
 
       <If condition={props.providers.password}>
-        <EmailPasswordSignUpContainer emailRedirectTo={redirectUrl} />
+        <EmailPasswordSignUpContainer
+          displayTermsCheckbox={props.displayTermsCheckbox}
+          emailRedirectTo={redirectUrl}
+        />
       </If>
 
       <If condition={props.providers.magicLink}>
@@ -43,6 +47,7 @@ export function SignUpMethodsContainer(props: {
           shouldCreateUser={true}
           inviteToken={props.inviteToken}
           redirectUrl={redirectUrl}
+          displayTermsCheckbox={props.displayTermsCheckbox}
         />
       </If>
 

@@ -5,7 +5,16 @@ import { z } from 'zod';
 const providers: z.ZodType<Provider> = getProviders();
 
 const AuthConfigSchema = z.object({
-  captchaTokenSiteKey: z.string().optional(),
+  captchaTokenSiteKey: z
+    .string({
+      description: 'The reCAPTCHA site key.',
+    })
+    .optional(),
+  displayTermsCheckbox: z
+    .boolean({
+      description: 'Whether to display the terms checkbox during sign-up.',
+    })
+    .optional(),
   providers: z.object({
     password: z.boolean({
       description: 'Enable password authentication.',
@@ -21,6 +30,10 @@ const authConfig = AuthConfigSchema.parse({
   // NB: This is a public key, so it's safe to expose.
   // Copy the value from the Supabase Dashboard.
   captchaTokenSiteKey: import.meta.env.VITE_CAPTCHA_SITE_KEY,
+
+  // whether to display the terms checkbox during sign-up
+  displayTermsCheckbox:
+    import.meta.env.VITE_DISPLAY_TERMS_AND_CONDITIONS_CHECKBOX === 'true',
 
   // NB: Enable the providers below in the Supabase Console
   // in your production project

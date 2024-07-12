@@ -15,12 +15,14 @@ import { PasswordSignUpForm } from './password-sign-up-form';
 
 interface EmailPasswordSignUpContainerProps {
   onSignUp?: (userId?: string) => unknown;
+  displayTermsCheckbox?: boolean;
   emailRedirectTo: string;
 }
 
 export function EmailPasswordSignUpContainer({
   onSignUp,
   emailRedirectTo,
+  displayTermsCheckbox,
 }: EmailPasswordSignUpContainerProps) {
   const { captchaToken, resetCaptchaToken } = useCaptchaToken();
 
@@ -72,7 +74,11 @@ export function EmailPasswordSignUpContainer({
       <If condition={!showVerifyEmailAlert}>
         <AuthErrorAlert error={signUpMutation.error} />
 
-        <PasswordSignUpForm onSubmit={onSignupRequested} loading={loading} />
+        <PasswordSignUpForm
+          displayTermsCheckbox={displayTermsCheckbox}
+          onSubmit={onSignupRequested}
+          loading={loading}
+        />
       </If>
     </>
   );

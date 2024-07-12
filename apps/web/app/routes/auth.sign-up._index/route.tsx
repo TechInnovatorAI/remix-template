@@ -58,6 +58,7 @@ export default function SignUpPage() {
 
       <SignUpMethodsContainer
         providers={authConfig.providers}
+        displayTermsCheckbox={authConfig.displayTermsCheckbox}
         inviteToken={inviteToken}
         paths={paths}
       />
