@@ -32,7 +32,7 @@
     "@supabase/supabase-js": "^2.44.3",
     "@types/react": "^18.3.3",
     "date-fns": "^3.6.0",
-    "lucide-react": "^0.403.0",
+    "lucide-react": "^0.408.0",
     "react": "18.3.1",
     "react-hook-form": "^7.52.1",
     "react-i18next": "^14.1.2",
