@@ -21,7 +21,14 @@ class BillingWebhooksService {
   async handleSubscriptionDeletedWebhook(subscription: Subscription) {
     const gateway = createBillingGatewayService(subscription.billing_provider);
 
-    await gateway.cancelSubscription({
+    const subscriptionData = await gateway.getSubscription(subscription.id);
+    const isCanceled = subscriptionData.status === 'canceled';
+
+    if (isCanceled) {
+      return;
+    }
+
+    return gateway.cancelSubscription({
       subscriptionId: subscription.id,
     });
   }
