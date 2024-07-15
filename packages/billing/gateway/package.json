@@ -29,7 +29,7 @@
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:^",
     "@remix-run/react": "2.10.2",
-    "@supabase/supabase-js": "^2.44.3",
+    "@supabase/supabase-js": "^2.44.4",
     "@types/react": "^18.3.3",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.408.0",
