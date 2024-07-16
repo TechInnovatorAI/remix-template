@@ -19,7 +19,7 @@
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:^",
     "@makerkit/data-loader-supabase-core": "^0.0.8",
-    "@remix-run/react": "2.10.2",
+    "@remix-run/react": "2.10.3",
     "@supabase/supabase-js": "^2.44.4",
     "@tanstack/react-query": "5.51.1",
     "@tanstack/react-table": "^8.19.3",
