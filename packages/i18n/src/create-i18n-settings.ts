@@ -1,3 +1,5 @@
+import type { InitOptions } from 'i18next';
+
 /**
  * Get i18n settings for i18next.
  * @param languages
@@ -12,7 +14,7 @@ export function createI18nSettings({
   languages: string[];
   language: string;
   namespaces?: string | string[];
-}) {
+}): InitOptions {
   const lng = language;
   const ns = namespaces;
 
@@ -21,6 +23,9 @@ export function createI18nSettings({
     fallbackLng: languages[0],
     detection: undefined,
     lng,
+    missingInterpolationHandler: (text, value, options) => {
+      console.debug(`Missing interpolation value for key: ${text}`, value, options);
+    },
     load: 'languageOnly' as const,
     preload: false as const,
     lowerCaseLng: true as const,

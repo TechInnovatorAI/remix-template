@@ -20,7 +20,9 @@ export function RootErrorBoundary() {
   const routeError = useRouteError();
 
   const error =
-    routeError instanceof Error ? routeError : new Error(`Unknown error: ${routeError}"`);
+    routeError instanceof Error
+      ? routeError
+      : new Error(`Unknown error: ${JSON.stringify(routeError)}"`);
 
   const status = isRouteErrorResponse(error) ? error.status : 500;
 
