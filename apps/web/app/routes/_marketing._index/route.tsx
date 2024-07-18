@@ -1,14 +1,14 @@
 import { Link } from '@remix-run/react';
-import {
-  ChevronRight,
-  CreditCard,
-  LayoutDashboard,
-  Lock,
-  Sparkle,
-} from 'lucide-react';
+import { ArrowRightIcon, LayoutDashboard } from 'lucide-react';
 
 import { PricingTable } from '@kit/billing-gateway/marketing';
 import { Button } from '@kit/ui/button';
+import {
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@kit/ui/card';
 import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';
 import { cn } from '@kit/ui/utils';
@@ -18,111 +18,61 @@ import pathsConfig from '~/config/paths.config';
 
 export default function Index() {
   return (
-    <div className={'mt-4 flex flex-col space-y-24 py-16'}>
+    <div className={'mt-4 flex flex-col space-y-24 py-14'}>
       <div className={'container mx-auto flex flex-col space-y-20'}>
         <div
           className={
             'flex flex-col items-center md:flex-row' +
-            'animate-in fade-in mx-auto flex-1 justify-center' +
-            'zoom-in-95 slide-in-from-top-24 duration-500'
+            ' animate-in fade-in mx-auto flex-1 justify-center' +
+            ' zoom-in-90 slide-in-from-top-36 duration-1000'
           }
         >
           <div
             className={
-              'flex w-full flex-1 flex-col items-center space-y-8 xl:space-y-12 2xl:space-y-14'
+              'flex w-full flex-1 flex-col items-center space-y-6 xl:space-y-8 2xl:space-y-10'
             }
           >
-            <Pill>
+            <Pill new>
               <span>The leading SaaS Starter Kit for ambitious developers</span>
             </Pill>
 
             <div className={'flex flex-col items-center space-y-8'}>
               <HeroTitle>
-                <span>The SaaS Starter Kit</span>
+                <span>The ultimate SaaS Starter</span>
 
-                <span>
-                  <span>for ambitious developers</span>
-                </span>
+                <span>for your next project</span>
               </HeroTitle>
 
-              <div className={'flex flex-col'}>
+              <div className={'flex max-w-2xl flex-col space-y-1'}>
                 <Heading
-                  level={2}
-                  className={
-                    'text-muted-foreground p-0 text-center font-sans text-2xl font-normal'
-                  }
+                  level={3}
+                  className={'p-0 text-center font-sans text-base font-normal'}
                 >
-                  <span>Build and launch a SaaS in days, not months</span>
-                </Heading>
-
-                <Heading
-                  level={2}
-                  className={
-                    'text-muted-foreground p-0 text-center font-sans text-2xl font-normal'
-                  }
-                >
-                  <span>Focus on your business, not on the tech</span>
-                </Heading>
-
-                <Heading
-                  level={2}
-                  className={
-                    'text-muted-foreground p-0 text-center font-sans text-2xl font-normal'
-                  }
-                >
-                  Ship something great, today.
+                  Build and Ship a SaaS faster than ever before with the
+                  next-gen SaaS Starter Kit. Ship your SaaS in days, not months.
                 </Heading>
               </div>
-
-              <MainCallToActionButton />
             </div>
+
+            <MainCallToActionButton />
           </div>
         </div>
 
         <div
           className={
-            'animate-in fade-in mx-auto flex max-w-6xl justify-center py-12' +
-            'slide-in-from-top-16 fill-mode-both delay-300 duration-1000'
+            'animate-in fade-in mx-auto flex max-w-[100rem] justify-center py-8 ' +
+            ' zoom-in-95 slide-in-from-top-32 fill-mode-both delay-300 duration-1000'
           }
         >
           <img
             className={
-              'delay-250 animate-in fade-in zoom-in-50 fill-mode-both rounded-lg border duration-1000 ease-out'
+              'delay-250 animate-in fade-in zoom-in-50 fill-mode-both dark:border-primary/10 rounded-2xl border border-gray-200 duration-1000 ease-out'
             }
-            width={1689}
-            height={1057}
-            src={`/images/dashboard-demo.webp`}
-            alt={`App`}
+            width={3558}
+            height={2222}
+            src={`/images/dashboard.webp`}
+            alt={`App Dashboard`}
           />
-        </div>
-      </div>
-
-      <div className={'container mx-auto'}>
-        <div
-          className={
-            'flex flex-col items-center justify-center space-y-8 py-8 xl:space-y-16 xl:py-16'
-          }
-        >
-          <div
-            className={
-              'flex max-w-3xl flex-col items-center space-y-8 text-center'
-            }
-          >
-            <Pill>
-              <span>A modern, scalable, and secure SaaS Starter Kit</span>
-            </Pill>
-
-            <div className={'flex flex-col space-y-2'}>
-              <Heading level={1}>The best tool in the space</Heading>
-
-              <Heading
-                level={2}
-                className={'text-muted-foreground font-sans font-normal'}
-              >
-                Unbeatable Features and Benefits for Your SaaS Business
-              </Heading>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -131,115 +81,107 @@ export default function Index() {
           className={'flex flex-col space-y-16 xl:space-y-32 2xl:space-y-36'}
         >
           <FeatureShowcaseContainer>
-            <FeatureContainer>
-              <div className={'flex flex-col space-y-6'}>
-                <IconContainer className={'bg-green-50 dark:bg-green-500/10'}>
-                  <Lock className={'h-5 text-green-500'} />
+            <FeatureContainer className={'w-full max-w-5xl'}>
+              <div className={'flex flex-col space-y-4'}>
+                <IconContainer>
+                  <LayoutDashboard className={'h-5'} />
+
+                  <span>SaaS Starter Kit</span>
                 </IconContainer>
 
                 <div className={'flex flex-col'}>
-                  <Heading level={2}>Authentication</Heading>
-
-                  <Heading
-                    level={3}
-                    className={'text-muted-foreground font-sans font-normal'}
+                  <h3
+                    className={
+                      'text-3xl font-normal tracking-tighter xl:text-5xl'
+                    }
                   >
-                    Secure and Easy-to-Use Authentication for Your SaaS Website
-                    and API
-                  </Heading>
+                    <b className={'font-semibold dark:text-white'}>
+                      The ultimate SaaS Starter Kit
+                    </b>
+                    .{' '}
+                    <GradientSecondaryText
+                      className={
+                        'from-foreground/70 to-foreground/80 font-medium'
+                      }
+                    >
+                      Unleash your creativity and build your SaaS faster than
+                      ever with Makerkit.
+                    </GradientSecondaryText>
+                  </h3>
                 </div>
               </div>
-
-              <div>
-                Our authentication system is built on top of the
-                industry-leading PaaS such as Supabase and Firebase. It is
-                secure, easy-to-use, and fully customizable. It supports
-                email/password, social logins, and more.
-              </div>
             </FeatureContainer>
 
-            <FeatureContainer>
-              <img
-                className="rounded-2xl"
-                src={'/images/sign-in.webp'}
-                width={'1760'}
-                height={'1680'}
-                alt={'Sign In'}
-              />
-            </FeatureContainer>
-          </FeatureShowcaseContainer>
+            <FeatureContainer
+              className={
+                'grid w-full grid-cols-1 gap-6 space-y-0 lg:grid-cols-3'
+              }
+            >
+              <FeatureCard
+                className={
+                  'relative col-span-2 overflow-hidden bg-violet-500 text-white lg:h-96'
+                }
+                title={'Beautiful Dashboard'}
+                description={`Makerkit provides a beautiful dashboard to manage your SaaS business.`}
+              >
+                <img
+                  loading={'lazy'}
+                  className="border-border absolute right-0 top-0 hidden h-full w-full rounded-tl-2xl border lg:top-36 lg:flex lg:h-auto lg:w-10/12"
+                  src={'/images/dashboard-header.webp'}
+                  width={'2061'}
+                  height={'800'}
+                  alt={'Dashboard Header'}
+                />
+              </FeatureCard>
 
-          <FeatureShowcaseContainer>
-            <FeatureContainer reverse>
-              <img
-                className="rounded-2xl"
-                src={'/images/dashboard.webp'}
-                width={'2004'}
-                height={'1410'}
-                alt={'Dashboard'}
-              />
-            </FeatureContainer>
+              <FeatureCard
+                className={
+                  'relative col-span-2 w-full overflow-hidden lg:col-span-1'
+                }
+                title={'Authentication'}
+                description={`Makerkit provides a variety of providers to allow your users to sign in.`}
+              >
+                <img
+                  loading={'lazy'}
+                  className="absolute left-16 top-32 hidden h-auto w-8/12 rounded-l-2xl lg:flex"
+                  src={'/images/sign-in.webp'}
+                  width={'1760'}
+                  height={'1680'}
+                  alt={'Sign In'}
+                />
+              </FeatureCard>
 
-            <FeatureContainer>
-              <div className={'flex flex-col space-y-6'}>
-                <IconContainer className={'bg-indigo-50 dark:bg-indigo-500/10'}>
-                  <LayoutDashboard className={'h-5 text-indigo-500'} />
-                </IconContainer>
+              <FeatureCard
+                className={
+                  'relative col-span-2 overflow-hidden lg:col-span-1 lg:h-96'
+                }
+                title={'Multi Tenancy'}
+                description={`Multi tenant memberships for your SaaS business.`}
+              >
+                <img
+                  loading={'lazy'}
+                  className="absolute right-0 top-0 hidden h-full w-full rounded-tl-2xl border lg:top-28 lg:flex lg:h-auto lg:w-8/12"
+                  src={'/images/multi-tenancy.webp'}
+                  width={'2061'}
+                  height={'800'}
+                  alt={'Multi Tenancy'}
+                />
+              </FeatureCard>
 
-                <div className={'flex flex-col'}>
-                  <Heading level={2}>Dashboard</Heading>
-
-                  <Heading
-                    level={3}
-                    className={'text-muted-foreground font-sans font-normal'}
-                  >
-                    A fantastic dashboard to manage your SaaS business
-                  </Heading>
-                </div>
-              </div>
-
-              <div>
-                Our dashboard offers an overview of your SaaS business. It shows
-                at a glance all you need to know about your business. It is
-                fully customizable and extendable.
-              </div>
-            </FeatureContainer>
-          </FeatureShowcaseContainer>
-
-          <FeatureShowcaseContainer>
-            <FeatureContainer>
-              <div className={'flex flex-col space-y-6'}>
-                <IconContainer className={'bg-blue-50 dark:bg-blue-500/10'}>
-                  <CreditCard className={'h-5 text-blue-500'} />
-                </IconContainer>
-
-                <div className={'flex flex-col'}>
-                  <Heading level={2}>Billing</Heading>
-
-                  <Heading
-                    level={3}
-                    className={'text-muted-foreground font-sans font-normal'}
-                  >
-                    A powerful billing system for your SaaS business
-                  </Heading>
-                </div>
-              </div>
-
-              <div>
-                Powerful billing system that supports multiple payment gateways
-                such as Stripe, Lemon Squeezy and Paddle. Fully customizable and
-                easy to use.
-              </div>
-            </FeatureContainer>
-
-            <FeatureContainer>
-              <img
-                className="rounded-2xl"
-                src={'/images/billing.webp'}
-                width={'1916'}
-                height={'1392'}
-                alt={'Billing'}
-              />
+              <FeatureCard
+                className={'relative col-span-2 overflow-hidden lg:h-96'}
+                title={'Billing'}
+                description={`Makerkit supports multiple payment gateways to charge your customers.`}
+              >
+                <img
+                  loading={'lazy'}
+                  className="border-border absolute right-0 top-0 hidden h-full w-full rounded-tl-2xl border lg:top-36 lg:flex lg:h-auto lg:w-11/12"
+                  src={'/images/billing.webp'}
+                  width={'2061'}
+                  height={'800'}
+                  alt={'Billing'}
+                />
+              </FeatureCard>
             </FeatureContainer>
           </FeatureShowcaseContainer>
         </div>
@@ -251,17 +193,19 @@ export default function Index() {
             'flex flex-col items-center justify-center space-y-16 py-16'
           }
         >
-          <div className={'flex flex-col items-center space-y-8 text-center'}>
+          <div className={'flex flex-col items-center space-y-4 text-center'}>
             <Pill>Get started for free. No credit card required.</Pill>
 
-            <div className={'flex flex-col space-y-2'}>
-              <Heading level={1}>
+            <div className={'flex flex-col'}>
+              <Heading level={2} className={'tracking-tighter'}>
                 Fair pricing for all types of businesses
               </Heading>
 
               <Heading
-                level={2}
-                className={'text-muted-foreground font-sans font-normal'}
+                level={3}
+                className={
+                  'text-muted-foreground font-sans font-normal tracking-tight'
+                }
               >
                 Get started on our free plan and upgrade when you are ready.
               </Heading>
@@ -287,7 +231,7 @@ function HeroTitle({ children }: React.PropsWithChildren) {
   return (
     <h1
       className={
-        'font-heading flex flex-col text-center text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl'
+        'hero-title flex flex-col space-y-1 text-center font-sans text-4xl font-semibold tracking-tighter sm:text-6xl lg:max-w-5xl lg:text-7xl xl:text-[5.125rem] dark:text-white'
       }
     >
       {children}
@@ -295,27 +239,34 @@ function HeroTitle({ children }: React.PropsWithChildren) {
   );
 }
 
-function Pill(props: React.PropsWithChildren) {
+function Pill(
+  props: React.PropsWithChildren<{
+    new?: boolean;
+  }>,
+) {
   return (
     <h2
       className={
-        'text-muted-foreground dark:shadow-primary/20 rounded-full px-4 py-2 text-center text-sm shadow'
+        'dark:border-primary/10 space-x-2.5 rounded-full border border-gray-100 px-2 py-2.5 text-center text-sm font-medium text-transparent'
       }
     >
-      <Sparkle className={'inline-block h-4'} />
-      {props.children}
+      {props.new && (
+        <span
+          className={
+            'bg-primary text-primary-foreground rounded-2xl px-2.5 py-1.5 text-sm font-semibold'
+          }
+        >
+          New
+        </span>
+      )}
+      <GradientSecondaryText>{props.children}</GradientSecondaryText>
     </h2>
   );
 }
 
 function FeatureShowcaseContainer(props: React.PropsWithChildren) {
   return (
-    <div
-      className={
-        'flex flex-col items-center justify-between space-y-8 lg:flex-row lg:space-y-0' +
-        ' lg:space-x-24'
-      }
-    >
+    <div className={'flex flex-col justify-between space-y-8'}>
       {props.children}
     </div>
   );
@@ -330,11 +281,11 @@ function FeatureContainer(
   return (
     <div
       className={cn(
-        props.className,
-        'flex w-full flex-col space-y-6 lg:w-6/12',
+        'flex w-full flex-col space-y-6 py-4',
         {
           'order-2 mt-8 lg:order-none lg:mt-0': props.reverse,
         },
+        props.className,
       )}
     >
       {props.children}
@@ -344,27 +295,36 @@ function FeatureContainer(
 
 function MainCallToActionButton() {
   return (
-    <div className={'flex space-x-2'}>
-      <Button asChild variant={'link'}>
-        <Link to={'/docs'}>
-          <Trans i18nKey={'common:documentation'} />
-        </Link>
-      </Button>
-
-      <Button asChild>
+    <div className={'flex space-x-4'}>
+      <Button
+        className={
+          'dark:shadow-primary/30 h-12 rounded-xl px-4 text-base font-semibold transition-all hover:shadow-2xl'
+        }
+        asChild
+      >
         <Link to={'/auth/sign-up'}>
           <span className={'flex items-center space-x-0.5'}>
             <span>
               <Trans i18nKey={'common:getStarted'} />
             </span>
 
-            <ChevronRight
+            <ArrowRightIcon
               className={
                 'animate-in fade-in slide-in-from-left-8 h-4' +
-                'delay-800 zoom-in fill-mode-both duration-1000'
+                ' zoom-in fill-mode-both delay-1000 duration-1000'
               }
             />
           </span>
+        </Link>
+      </Button>
+
+      <Button
+        variant={'link'}
+        className={'h-12 rounded-xl px-4 text-base font-semibold'}
+        asChild
+      >
+        <Link to={'/contact'}>
+          <Trans i18nKey={'common:contactUs'} />
         </Link>
       </Button>
     </div>
@@ -378,14 +338,62 @@ function IconContainer(
 ) {
   return (
     <div className={'flex'}>
-      <span
+      <div
         className={cn(
-          'flex items-center justify-center rounded-lg p-3',
+          'flex items-center justify-center space-x-4 rounded-lg p-3 font-semibold',
           props.className,
         )}
       >
         {props.children}
-      </span>
+      </div>
     </div>
+  );
+}
+
+function FeatureCard(
+  props: React.PropsWithChildren<{
+    title: string;
+    description: string;
+    className?: string;
+  }>,
+) {
+  return (
+    <div
+      className={cn(
+        props.className,
+        'dark:ring-primary/10 rounded-3xl p-2 ring-2 ring-gray-100',
+      )}
+    >
+      <CardHeader>
+        <CardTitle className={'text-xl font-semibold'}>{props.title}</CardTitle>
+
+        <CardDescription
+          className={
+            'max-w-xs text-sm font-semibold tracking-tight text-current'
+          }
+        >
+          {props.description}
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>{props.children}</CardContent>
+    </div>
+  );
+}
+
+function GradientSecondaryText(
+  props: React.PropsWithChildren<{
+    className?: string;
+  }>,
+) {
+  return (
+    <span
+      className={cn(
+        'from-foreground/60 to-foreground bg-gradient-to-r bg-clip-text text-transparent',
+        props.className,
+      )}
+    >
+      {props.children}
+    </span>
   );
 }

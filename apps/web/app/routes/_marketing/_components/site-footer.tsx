@@ -7,8 +7,8 @@ import appConfig from '~/config/app.config';
 
 export function SiteFooter() {
   return (
-    <footer className={'mt-auto border-t py-8 2xl:py-14'}>
-      <div className={'px-8'}>
+    <footer className={'site-footer relative mt-auto w-full py-8 2xl:py-16'}>
+      <div className={'container'}>
         <div className={'flex flex-col space-y-8 lg:flex-row lg:space-y-0'}>
           <div
             className={
@@ -23,12 +23,12 @@ export function SiteFooter() {
 
               <div className={'flex flex-col space-y-4'}>
                 <div>
-                  <p className={'text-muted-foreground text-sm'}>
+                  <p className={'text-sm text-muted-foreground'}>
                     <Trans i18nKey={'marketing:footerDescription'} />
                   </p>
                 </div>
 
-                <div className={'text-muted-foreground flex text-xs'}>
+                <div className={'flex text-xs text-muted-foreground'}>
                   <p>
                     <Trans
                       i18nKey={'marketing:copyright'}
@@ -130,7 +130,7 @@ function FooterLink(props: React.PropsWithChildren) {
   return (
     <li
       className={
-        'text-muted-foreground text-sm hover:underline [&>a]:transition-colors'
+        'text-sm text-muted-foreground hover:underline [&>a]:transition-colors'
       }
     >
       {props.children}

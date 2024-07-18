@@ -40,7 +40,7 @@ export function PostPreview({
 
       <div className={'flex flex-col space-y-4 px-1'}>
         <div className={'flex flex-col space-y-2'}>
-          <h2 className="text-2xl font-semibold leading-snug">
+          <h2 className="text-2xl font-semibold leading-snug tracking-tight">
             <Link to={slug} className="hover:underline">
               {title}
             </Link>

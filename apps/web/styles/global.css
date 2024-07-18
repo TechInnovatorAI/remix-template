@@ -1,4 +1,4 @@
-@import url('//fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Urbanist:wght@500;600&display=swap');
+@import url('//fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -38,7 +38,7 @@
         --radius: 0.5rem;
 
         --font-sans: -apple-system, Inter, Helvetica, Arial, sans-serif;
-        --font-heading: Urbanist, var(--font-sans);
+        --font-heading: var(--font-sans);
     }
 
     .dark {
@@ -99,4 +99,26 @@ Optimize dropdowns for mobile
 
 [data-radix-menu-content] [role="menuitem"] {
     @apply md:min-h-0 min-h-12;
+}
+
+
+.site-header > .container:before,
+.site-footer > .container:before {
+    background: radial-gradient(62.87% 100% at 50% 100%, theme('colors.gray.200') 0%, rgba(255, 255, 255, 0) 100%);
+
+    bottom: 0;
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.dark .site-header > .container:before,
+.dark .site-footer > .container:before {
+    background: radial-gradient(62.87% 100% at 50% 100%, rgba(255, 255, 255, .16) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.site-footer > .container:before {
+    top: 0;
 }

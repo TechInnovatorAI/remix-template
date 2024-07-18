@@ -54,17 +54,14 @@ function SuspendedPersonalAccountDropdown(props: { user: User | null }) {
 }
 
 function AuthButtons() {
-  const textClassName =
-    'text-gray-600 hover:text-current dark:text-gray-400 dark:hover:text-white';
-
   return (
     <div className={'flex space-x-2'}>
       <div className={'hidden space-x-0.5 md:flex'}>
         <If condition={features.enableThemeToggle}>
-          <ModeToggle className={textClassName} />
+          <ModeToggle />
         </If>
 
-        <Button asChild variant={'ghost'} className={textClassName}>
+        <Button asChild variant={'ghost'}>
           <Link to={pathsConfig.auth.signIn}>
             <Trans i18nKey={'auth:signIn'} />
           </Link>

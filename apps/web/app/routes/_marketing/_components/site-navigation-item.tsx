@@ -5,10 +5,9 @@ import { cn } from '@kit/ui/utils';
 
 const getClassName = (isActive: boolean) => {
   return cn(
-    `text-sm font-medium px-2.5 py-2 border rounded-lg border-transparent transition-colors duration-100`,
+    `text-sm font-medium transition-colors duration-300 inline-flex w-max`,
     {
-      'hover:border-border dark:text-gray-400 text-gray-600 hover:text-current dark:hover:text-white':
-        !isActive,
+      'dark:text-gray-300 dark:hover:text-white': !isActive,
       'dark:text-white text-current': isActive,
     },
   );

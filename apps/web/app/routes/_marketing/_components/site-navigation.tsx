@@ -29,6 +29,10 @@ const links = {
     label: 'marketing:faq',
     path: '/faq',
   },
+  Contact: {
+    label: 'marketing:contact',
+    path: '/contact',
+  },
 };
 
 export function SiteNavigation() {
@@ -43,8 +47,12 @@ export function SiteNavigation() {
   return (
     <>
       <div className={'hidden items-center justify-center md:flex'}>
-        <NavigationMenu>
-          <NavigationMenuList className={'space-x-1'}>
+        <NavigationMenu
+          className={
+            'rounded-full border border-gray-100 px-4 py-2 dark:border-primary/10'
+          }
+        >
+          <NavigationMenuList className={'space-x-4'}>
             {NavItems}
           </NavigationMenuList>
         </NavigationMenu>
