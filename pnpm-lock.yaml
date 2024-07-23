@@ -1125,6 +1125,9 @@ importers:
       '@kit/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
 
   packages/supabase:
     devDependencies:
