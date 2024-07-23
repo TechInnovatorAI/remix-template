@@ -76,7 +76,7 @@ export const Footer = forwardRef<HTMLElement, FooterProps>(
 );
 
 function FooterSectionHeading(props: React.PropsWithChildren) {
-  return <span className="font-heading">{props.children}</span>;
+  return <span className="font-heading font-medium">{props.children}</span>;
 }
 
 function FooterSectionList(props: React.PropsWithChildren) {

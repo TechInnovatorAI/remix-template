@@ -1,5 +1,4 @@
-import { Link } from '@remix-run/react';
-
+import { Footer } from '@kit/ui/marketing';
 import { Trans } from '@kit/ui/trans';
 
 import { AppLogo } from '~/components/app-logo';
@@ -7,133 +6,53 @@ import appConfig from '~/config/app.config';
 
 export function SiteFooter() {
   return (
-    <footer className={'site-footer relative mt-auto w-full py-8 2xl:py-16'}>
-      <div className={'container'}>
-        <div className={'flex flex-col space-y-8 lg:flex-row lg:space-y-0'}>
-          <div
-            className={
-              'flex w-full space-x-2 lg:w-4/12 xl:w-4/12' +
-              ' xl:space-x-6 2xl:space-x-8'
-            }
-          >
-            <div className={'flex flex-col space-y-4'}>
-              <div>
-                <AppLogo className={'w-[85px] md:w-[95px]'} />
-              </div>
-
-              <div className={'flex flex-col space-y-4'}>
-                <div>
-                  <p className={'text-sm text-muted-foreground'}>
-                    <Trans i18nKey={'marketing:footerDescription'} />
-                  </p>
-                </div>
-
-                <div className={'flex text-xs text-muted-foreground'}>
-                  <p>
-                    <Trans
-                      i18nKey={'marketing:copyright'}
-                      values={{
-                        product: appConfig.name,
-                        year: new Date().getFullYear(),
-                      }}
-                    />
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className={
-              'flex flex-col space-y-8 lg:space-x-6 lg:space-y-0' +
-              ' w-full lg:flex-row lg:justify-end xl:space-x-16'
-            }
-          >
-            <div>
-              <div className={'flex flex-col space-y-2.5'}>
-                <FooterSectionHeading>
-                  <Trans i18nKey={'marketing:about'} />
-                </FooterSectionHeading>
-
-                <FooterSectionList>
-                  <FooterLink>
-                    <Link to={'/blog'}>
-                      <Trans i18nKey={'marketing:blog'} />
-                    </Link>
-                  </FooterLink>
-                  <FooterLink>
-                    <Link to={'/contact'}>
-                      <Trans i18nKey={'marketing:contact'} />
-                    </Link>
-                  </FooterLink>
-                </FooterSectionList>
-              </div>
-            </div>
-
-            <div>
-              <div className={'flex flex-col space-y-2.5'}>
-                <FooterSectionHeading>
-                  <Trans i18nKey={'marketing:product'} />
-                </FooterSectionHeading>
-
-                <FooterSectionList>
-                  <FooterLink>
-                    <Link to={'/docs'}>
-                      <Trans i18nKey={'marketing:documentation'} />
-                    </Link>
-                  </FooterLink>
-                </FooterSectionList>
-              </div>
-            </div>
-
-            <div>
-              <div className={'flex flex-col space-y-2.5'}>
-                <FooterSectionHeading>
-                  <Trans i18nKey={'marketing:legal'} />
-                </FooterSectionHeading>
-
-                <FooterSectionList>
-                  <FooterLink>
-                    <Link to={'/terms-of-service'}>
-                      <Trans i18nKey={'marketing:termsOfService'} />
-                    </Link>
-                  </FooterLink>
-                  <FooterLink>
-                    <Link to={'/privacy-policy'}>
-                      <Trans i18nKey={'marketing:privacyPolicy'} />
-                    </Link>
-                  </FooterLink>
-                  <FooterLink>
-                    <Link to={'/cookie-policy'}>
-                      <Trans i18nKey={'marketing:cookiePolicy'} />
-                    </Link>
-                  </FooterLink>
-                </FooterSectionList>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-function FooterSectionHeading(props: React.PropsWithChildren) {
-  return <span className={'font-heading'}>{props.children}</span>;
-}
-
-function FooterSectionList(props: React.PropsWithChildren) {
-  return <ul className={'flex flex-col space-y-2.5'}>{props.children}</ul>;
-}
-
-function FooterLink(props: React.PropsWithChildren) {
-  return (
-    <li
-      className={
-        'text-sm text-muted-foreground hover:underline [&>a]:transition-colors'
+    <Footer
+      logo={<AppLogo className="w-[85px] md:w-[95px]" />}
+      description={<Trans i18nKey="marketing:footerDescription" />}
+      copyright={
+        <Trans
+          i18nKey="marketing:copyright"
+          values={{
+            product: appConfig.name,
+            year: new Date().getFullYear(),
+          }}
+        />
       }
-    >
-      {props.children}
-    </li>
+      sections={[
+        {
+          heading: <Trans i18nKey="marketing:about" />,
+          links: [
+            { href: '/blog', label: <Trans i18nKey="marketing:blog" /> },
+            { href: '/contact', label: <Trans i18nKey="marketing:contact" /> },
+          ],
+        },
+        {
+          heading: <Trans i18nKey="marketing:product" />,
+          links: [
+            {
+              href: '/docs',
+              label: <Trans i18nKey="marketing:documentation" />,
+            },
+          ],
+        },
+        {
+          heading: <Trans i18nKey="marketing:legal" />,
+          links: [
+            {
+              href: '/terms-of-service',
+              label: <Trans i18nKey="marketing:termsOfService" />,
+            },
+            {
+              href: '/privacy-policy',
+              label: <Trans i18nKey="marketing:privacyPolicy" />,
+            },
+            {
+              href: '/cookie-policy',
+              label: <Trans i18nKey="marketing:cookiePolicy" />,
+            },
+          ],
+        },
+      ]}
+    />
   );
 }
