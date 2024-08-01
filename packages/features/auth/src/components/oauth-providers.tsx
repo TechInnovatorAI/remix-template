@@ -32,7 +32,7 @@ export const OauthProviders: React.FC<{
       const credential = await signInRequest();
 
       if (!credential) {
-        return Promise.reject();
+        return Promise.reject(new Error(`No credential returned`));
       }
     },
     [],

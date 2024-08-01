@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 import {
   BillingConfig,
-  LineItemSchema,
+  type LineItemSchema,
   getPlanIntervals,
   getPrimaryLineItem,
 } from '@kit/billing';

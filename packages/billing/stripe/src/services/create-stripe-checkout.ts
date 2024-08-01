@@ -1,7 +1,7 @@
 import type { Stripe } from 'stripe';
 import { z } from 'zod';
 
-import { CreateBillingCheckoutSchema } from '@kit/billing/schema';
+import type { CreateBillingCheckoutSchema } from '@kit/billing/schema';
 
 /**
  * @name createStripeCheckout

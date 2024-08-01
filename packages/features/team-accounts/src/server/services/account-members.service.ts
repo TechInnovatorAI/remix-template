@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
 
-import {
+import type {
   RemoveMemberSchema,
   TransferOwnershipSchema,
   UpdateMemberRoleSchema,

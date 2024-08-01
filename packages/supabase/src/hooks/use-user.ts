@@ -21,7 +21,7 @@ export function useUser(initialData?: User | null) {
       return response.data.user;
     }
 
-    return Promise.reject('Unexpected result format');
+    return Promise.reject(new Error('Unexpected result format'));
   };
 
   return useQuery({

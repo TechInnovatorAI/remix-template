@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { getMailer } from '@kit/mailers';
 
-import { ContactEmailSchema } from '../contact-email.schema';
+import type { ContactEmailSchema } from '../contact-email.schema';
 
 const contactEmail = z
   .string({

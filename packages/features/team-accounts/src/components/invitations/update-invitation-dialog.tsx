@@ -29,7 +29,7 @@ import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
 
 import { RoleSchema } from '../../schema';
-import { UpdateInvitationSchema } from '../../schema';
+import type { UpdateInvitationSchema } from '../../schema';
 import { MembershipRoleSelector } from '../members/membership-role-selector';
 import { RolesDataProvider } from '../members/roles-data-provider';
 

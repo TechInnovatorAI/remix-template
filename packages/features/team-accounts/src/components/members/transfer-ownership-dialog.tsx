@@ -34,7 +34,7 @@ import { Trans } from '@kit/ui/trans';
 
 import {
   TransferOwnershipConfirmationSchema,
-  TransferOwnershipSchema,
+  type TransferOwnershipSchema,
 } from '../../schema';
 
 export const TransferOwnershipDialog: React.FC<{

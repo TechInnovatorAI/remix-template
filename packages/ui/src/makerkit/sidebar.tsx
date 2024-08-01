@@ -17,7 +17,7 @@ import {
 import { cn, isRouteActive } from '../utils';
 import { SidebarContext } from './context/sidebar.context';
 import { If } from './if';
-import { NavigationConfigSchema } from './navigation-config.schema';
+import type { NavigationConfigSchema } from './navigation-config.schema';
 import { Trans } from './trans';
 
 export type SidebarConfig = z.infer<typeof NavigationConfigSchema>;

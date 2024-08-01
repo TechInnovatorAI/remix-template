@@ -31,7 +31,7 @@ export const PasswordSignInContainer: React.FC<{
 
           onSignIn(userId);
         }
-      } catch (e) {
+      } catch {
         // wrong credentials, do nothing
       } finally {
         resetCaptchaToken();

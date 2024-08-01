@@ -6,7 +6,7 @@ import {
 import process from 'node:process';
 import { z } from 'zod';
 
-import { CreateBillingCheckoutSchema } from '@kit/billing/schema';
+import type { CreateBillingCheckoutSchema } from '@kit/billing/schema';
 
 import { getLemonSqueezyEnv } from '../schema/lemon-squeezy-server-env.schema';
 import { initializeLemonSqueezyClient } from './lemon-squeezy-sdk';

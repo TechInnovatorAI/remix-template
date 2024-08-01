@@ -1,4 +1,4 @@
-/** @type {import("eslint").Linter.Config} */
+/** @type {import('eslint').Linter.Config} */
 const config = {
   extends: [
     'turbo',
@@ -24,6 +24,7 @@ const config = {
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+    '@typescript-eslint/only-throw-error': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
@@ -50,7 +51,6 @@ const config = {
     '**/*.config.js',
     '**/*.config.cjs',
     '**/node_modules',
-    '.next',
     'dist',
     'pnpm-lock.yaml',
   ],

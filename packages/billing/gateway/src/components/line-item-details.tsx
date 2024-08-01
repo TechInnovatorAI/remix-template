@@ -1,7 +1,7 @@
 import { PlusSquare } from 'lucide-react';
 import { z } from 'zod';
 
-import { LineItemSchema } from '@kit/billing';
+import type { LineItemSchema } from '@kit/billing';
 import { formatCurrency } from '@kit/shared/utils';
 import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';

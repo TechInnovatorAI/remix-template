@@ -14,7 +14,7 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
 
     // return a successful response
     return new Response(null, { status: 200 });
-  } catch (error) {
+  } catch {
     // return an error response
     return new Response(null, { status: 500 });
   }

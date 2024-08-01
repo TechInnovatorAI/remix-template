@@ -21,7 +21,7 @@ import {
 import { Input } from '@kit/ui/input';
 import { Trans } from '@kit/ui/trans';
 
-import { TeamNameFormSchema, UpdateTeamNameSchema } from '../../schema';
+import { TeamNameFormSchema, type UpdateTeamNameSchema } from '../../schema';
 
 export const UpdateTeamAccountNameForm = (props: {
   account: {

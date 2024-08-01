@@ -61,7 +61,7 @@ export async function action(args: ActionFunctionArgs) {
         return redirect(url);
       }
     }
-  } catch (e) {
+  } catch {
     return json({
       error: true,
     });

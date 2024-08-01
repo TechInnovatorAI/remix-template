@@ -13,7 +13,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@keystatic/core": "0.5.28",
+    "@keystatic/core": "0.5.32",
     "@markdoc/markdoc": "^0.4.0"
   },
   "devDependencies": {

@@ -74,6 +74,7 @@ export const UpdatePasswordForm = ({
     // if the user does not have an email assigned, it's possible they
     // don't have an email/password factor linked, and the UI is out of sync
     if (!email) {
+      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
       return Promise.reject(t(`cannotUpdatePassword`));
     }
 

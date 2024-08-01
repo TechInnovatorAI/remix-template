@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-import { BillingProviderSchema } from '@kit/billing';
+import type { BillingProviderSchema } from '@kit/billing';
+
 import {
   CancelSubscriptionParamsSchema,
   CreateBillingCheckoutSchema,

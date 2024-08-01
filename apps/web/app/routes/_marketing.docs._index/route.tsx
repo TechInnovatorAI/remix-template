@@ -12,7 +12,7 @@ import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { DocsCards } from '~/routes/_marketing.docs/_components/docs-cards';
 import { SitePageHeader } from '~/routes/_marketing/_components/site-page-header';
 
-import { loader as docsLoader } from '../_marketing.docs/route';
+import type { loader as docsLoader } from '../_marketing.docs/route';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const { t } = await createI18nServerInstance(args.request);

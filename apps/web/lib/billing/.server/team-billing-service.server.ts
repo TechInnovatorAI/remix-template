@@ -2,7 +2,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 import { z } from 'zod';
 
-import { LineItemSchema } from '@kit/billing';
+import type { LineItemSchema } from '@kit/billing';
 import { getBillingGatewayProvider } from '@kit/billing-gateway';
 import { getLogger } from '@kit/shared/logger';
 import { requireUser } from '@kit/supabase/require-user';
@@ -13,7 +13,7 @@ import billingConfig from '~/config/billing.config';
 import pathsConfig from '~/config/paths.config';
 import { Database } from '~/lib/database.types';
 
-import { TeamCheckoutSchema } from '../schema/team-billing.schema';
+import type { TeamCheckoutSchema } from '../schema/team-billing.schema';
 
 export function createTeamBillingService(client: SupabaseClient<Database>) {
   return new TeamBillingService(client);
@@ -224,6 +224,7 @@ class TeamBillingService {
           userId,
           customerId,
           accountId,
+          error,
           name: this.namespace,
         },
         `Billing Portal session was not created`,

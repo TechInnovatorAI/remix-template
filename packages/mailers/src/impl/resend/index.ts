@@ -2,7 +2,7 @@ import process from 'node:process';
 import { z } from 'zod';
 
 import { Mailer } from '../../mailer';
-import { MailerSchema } from '../../schema/mailer.schema';
+import type { MailerSchema } from '../../schema/mailer.schema';
 
 type Config = z.infer<typeof MailerSchema>;
 

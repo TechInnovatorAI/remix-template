@@ -45,7 +45,7 @@ import { Trans } from '@kit/ui/trans';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { requireUserLoader } from '~/lib/require-user-loader';
 import { TeamAccountLayoutPageHeader } from '~/routes/home.$account/_components/team-account-layout-page-header';
-import { loader as accountWorkspaceLoader } from '~/routes/home.$account/route';
+import type { loader as accountWorkspaceLoader } from '~/routes/home.$account/route';
 
 import { loadMembersPageData } from './_lib/members-page-loader.server';
 

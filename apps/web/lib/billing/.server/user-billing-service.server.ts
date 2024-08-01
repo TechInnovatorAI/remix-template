@@ -13,7 +13,7 @@ import billingConfig from '~/config/billing.config';
 import pathsConfig from '~/config/paths.config';
 import { Database } from '~/lib/database.types';
 
-import { PersonalAccountCheckoutSchema } from '../schema/personal-account-checkout.schema';
+import type { PersonalAccountCheckoutSchema } from '../schema/personal-account-checkout.schema';
 
 export function createUserBillingService(client: SupabaseClient<Database>) {
   return new UserBillingService(client);

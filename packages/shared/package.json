@@ -23,7 +23,7 @@
     "@types/react": "^18.3.3"
   },
   "dependencies": {
-    "pino": "^9.3.1"
+    "pino": "^9.3.2"
   },
   "eslintConfig": {
     "root": true,

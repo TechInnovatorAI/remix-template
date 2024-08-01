@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { Mailer } from '../../mailer';
-import { MailerSchema } from '../../schema/mailer.schema';
+import type { MailerSchema } from '../../schema/mailer.schema';
 import { getSMTPConfiguration } from '../../smtp-configuration';
 
 type Config = z.infer<typeof MailerSchema>;

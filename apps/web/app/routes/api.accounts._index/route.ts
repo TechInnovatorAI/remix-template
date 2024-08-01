@@ -1,4 +1,3 @@
-import { json } from '@remix-run/react';
 import { ActionFunctionArgs } from '@remix-run/server-runtime';
 import { z } from 'zod';
 
@@ -19,26 +18,16 @@ export async function action({ request }: ActionFunctionArgs) {
 
   await verifyCsrfToken(request, body.payload.csrfToken);
 
-  try {
-    switch (body.intent) {
-      case 'create-account': {
-        const { createTeamAccountAction } = await import(
-          '@kit/team-accounts/actions'
-        );
+  switch (body.intent) {
+    case 'create-account': {
+      const { createTeamAccountAction } = await import(
+        '@kit/team-accounts/actions'
+      );
 
-        return createTeamAccountAction({
-          client,
-          data: body.payload,
-        });
-      }
-
-      default: {
-        throw new Error(`Invalid intent: ${body.intent}`);
-      }
+      return createTeamAccountAction({
+        client,
+        data: body.payload,
+      });
     }
-  } catch (error) {
-    return json({
-      success: false,
-    });
   }
 }

@@ -53,7 +53,7 @@ export async function action(args: ActionFunctionArgs) {
         return service.createCheckoutSession(data.payload);
       }
     }
-  } catch (e) {
+  } catch {
     return json({
       error: true,
     });

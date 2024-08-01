@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import {
-  BillingProviderSchema,
+  type BillingProviderSchema,
   BillingStrategyProviderService,
 } from '@kit/billing';
 

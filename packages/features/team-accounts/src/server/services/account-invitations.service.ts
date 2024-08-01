@@ -6,8 +6,8 @@ import { z } from 'zod';
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
 
-import { DeleteInvitationSchema, InviteMembersSchema } from '../../schema';
-import { UpdateInvitationSchema } from '../../schema/update-invitation.schema';
+import type { DeleteInvitationSchema, InviteMembersSchema } from '../../schema';
+import type { UpdateInvitationSchema } from '../../schema';
 
 export function createAccountInvitationsService(
   client: SupabaseClient<Database>,
