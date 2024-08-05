@@ -90,3 +90,6 @@ content_path = "./supabase/templates/change-email-address.html"
 [auth.email.template.magic_link]
 subject = "Sign in to Makerkit"
 content_path = "./supabase/templates/magic-link.html"
+
+[analytics]
+enabled = false

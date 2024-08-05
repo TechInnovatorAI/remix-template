@@ -1,4 +1,7 @@
+'use client';
+
 import { PlusSquare } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import type { LineItemSchema } from '@kit/billing';
@@ -16,6 +19,9 @@ export function LineItemDetails(
     selectedInterval?: string | undefined;
   }>,
 ) {
+  const locale = useTranslation().i18n.language;
+  const currencyCode = props?.currency.toLowerCase();
+
   return (
     <div className={'flex flex-col space-y-1'}>
       {props.lineItems.map((item, index) => {
@@ -48,10 +54,11 @@ export function LineItemDetails(
                   <Trans
                     i18nKey={'billing:setupFee'}
                     values={{
-                      setupFee: formatCurrency(
-                        props?.currency.toLowerCase(),
-                        item.setupFee as number,
-                      ),
+                      setupFee: formatCurrency({
+                        currencyCode,
+                        value: item.setupFee as number,
+                        locale,
+                      }),
                     }}
                   />
                 </span>
@@ -89,7 +96,11 @@ export function LineItemDetails(
               <span>-</span>
 
               <span className={'text-xs font-semibold'}>
-                {formatCurrency(props?.currency.toLowerCase(), item.cost)}
+                {formatCurrency({
+                  currencyCode,
+                  value: item.cost,
+                  locale,
+                })}
               </span>
             </div>
 
@@ -129,7 +140,11 @@ export function LineItemDetails(
 
               <If condition={!item.tiers?.length}>
                 <span className={'font-semibold'}>
-                  {formatCurrency(props.currency.toLowerCase(), item.cost)}
+                  {formatCurrency({
+                    currencyCode,
+                    value: item.cost,
+                    locale,
+                  })}
                 </span>
               </If>
             </div>
@@ -165,7 +180,11 @@ export function LineItemDetails(
               {/* If there are no tiers, there is a flat cost for usage */}
               <If condition={!item.tiers?.length}>
                 <span className={'font-semibold'}>
-                  {formatCurrency(props?.currency.toLowerCase(), item.cost)}
+                  {formatCurrency({
+                    currencyCode,
+                    value: item.cost,
+                    locale,
+                  })}
                 </span>
               </If>
             </div>
@@ -203,6 +222,7 @@ function Tiers({
   item: z.infer<typeof LineItemSchema>;
 }) {
   const unit = item.unit;
+  const locale = useTranslation().i18n.language;
 
   const tiers = item.tiers?.map((tier, index) => {
     const tiersLength = item.tiers?.length ?? 0;
@@ -228,7 +248,11 @@ function Tiers({
 
         <If condition={isLastTier}>
           <span className={'font-bold'}>
-            {formatCurrency(currency.toLowerCase(), tier.cost)}
+            {formatCurrency({
+              currencyCode: currency.toLowerCase(),
+              value: tier.cost,
+              locale,
+            })}
           </span>
 
           <If condition={tiersLength > 1}>
@@ -264,7 +288,11 @@ function Tiers({
 
           <If condition={!isIncluded}>
             <span className={'font-bold'}>
-              {formatCurrency(currency.toLowerCase(), tier.cost)}
+              {formatCurrency({
+                currencyCode: currency.toLowerCase(),
+                value: tier.cost,
+                locale,
+              })}
             </span>
 
             <span>

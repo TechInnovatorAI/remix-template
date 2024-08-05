@@ -53,7 +53,7 @@ export default function SignInPage() {
 
   return (
     <>
-      <Heading level={4}>
+      <Heading level={5} className={'tracking-tight'}>
         <Trans i18nKey={'auth:signInHeading'} />
       </Heading>
 

@@ -9,13 +9,13 @@ const iconClasses = 'w-4';
 
 const routes = [
   {
-    label: 'common:homeTabLabel',
+    label: 'common:routes.home',
     path: pathsConfig.app.home,
     Icon: <Home className={iconClasses} />,
     end: true,
   },
   {
-    label: 'account:accountTabLabel',
+    label: 'account:routes.account',
     path: pathsConfig.app.personalAccountSettings,
     Icon: <User className={iconClasses} />,
   },
@@ -23,7 +23,7 @@ const routes = [
 
 if (featureFlagsConfig.enablePersonalAccountBilling) {
   routes.push({
-    label: 'common:billingTabLabel',
+    label: 'common:routes.billing',
     path: pathsConfig.app.personalAccountBilling,
     Icon: <CreditCard className={iconClasses} />,
   });

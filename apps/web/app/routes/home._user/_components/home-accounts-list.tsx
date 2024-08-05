@@ -9,7 +9,12 @@ import {
   CardButtonHeader,
   CardButtonTitle,
 } from '@kit/ui/card-button';
-import { Heading } from '@kit/ui/heading';
+import {
+  EmptyState,
+  EmptyStateButton,
+  EmptyStateHeading,
+  EmptyStateText,
+} from '@kit/ui/empty-state';
 import { Trans } from '@kit/ui/trans';
 
 import { UserWorkspace } from '../_lib/load-user-workspace.server';
@@ -42,31 +47,32 @@ export function HomeAccountsList({
 
 function HomeAccountsListEmptyState() {
   return (
-    <div className="flex flex-col items-center justify-center space-y-8 py-24">
-      <div className="flex flex-col items-center space-y-1">
-        <Heading level={2}>
+    <div className={'flex flex-1'}>
+      <EmptyState>
+        <EmptyStateButton asChild>
+          <HomeAddAccountButton className={'mt-4'} />
+        </EmptyStateButton>
+        <EmptyStateHeading>
           <Trans i18nKey={'account:noTeamsYet'} />
-        </Heading>
-
-        <Heading
-          className="text-muted-foreground font-sans font-medium"
-          level={4}
-        >
+        </EmptyStateHeading>
+        <EmptyStateText>
           <Trans i18nKey={'account:createTeam'} />
-        </Heading>
-      </div>
-
-      <HomeAddAccountButton />
+        </EmptyStateText>
+      </EmptyState>
     </div>
   );
 }
 
-function HomeAddAccountButton() {
+function HomeAddAccountButton(props: { className?: string }) {
   const [isAddingAccount, setIsAddingAccount] = useState(false);
 
   return (
     <>
-      <Button size="sm" onClick={() => setIsAddingAccount(true)}>
+      <Button
+        className={props.className}
+        size="sm"
+        onClick={() => setIsAddingAccount(true)}
+      >
         <Trans i18nKey={'account:createTeamButtonLabel'} />
       </Button>
 

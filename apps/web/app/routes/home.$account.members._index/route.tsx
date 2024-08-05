@@ -30,6 +30,7 @@ import {
   UpdateInvitationSchema,
   UpdateMemberRoleSchema,
 } from '@kit/team-accounts/schema';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { Button } from '@kit/ui/button';
 import {
   Card,
@@ -119,7 +120,7 @@ export default function TeamAccountMembersPage() {
     <>
       <TeamAccountLayoutPageHeader
         title={<Trans i18nKey={'common:membersTabLabel'} />}
-        description={<Trans i18nKey={'common:membersTabDescription'} />}
+        description={<AppBreadcrumbs />}
         account={data.accountSlug}
       />
 
@@ -129,7 +130,7 @@ export default function TeamAccountMembersPage() {
             <CardHeader className={'flex flex-row justify-between'}>
               <div className={'flex flex-col space-y-1.5'}>
                 <CardTitle>
-                  <Trans i18nKey={'common:membersTabLabel'} />
+                  <Trans i18nKey={'common:accountMembers'} />
                 </CardTitle>
 
                 <CardDescription>

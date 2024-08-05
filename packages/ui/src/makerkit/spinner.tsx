@@ -10,7 +10,7 @@ export function Spinner(
       <svg
         aria-hidden="true"
         className={cn(
-          `h-10 w-10 animate-spin fill-primary-foreground text-primary dark:fill-primary dark:text-primary/30`,
+          `h-8 w-8 animate-spin fill-primary-foreground text-primary dark:fill-primary dark:text-primary/30`,
           props.className,
         )}
         viewBox="0 0 100 101"

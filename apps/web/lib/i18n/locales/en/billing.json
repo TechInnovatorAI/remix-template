@@ -26,6 +26,7 @@
     "month": "Billed monthly",
     "year": "Billed yearly"
   },
+  "perMonth": "per month",
   "custom": "Custom Plan",
   "lifetime": "Lifetime",
   "trialPeriod": "{{period}} day trial",

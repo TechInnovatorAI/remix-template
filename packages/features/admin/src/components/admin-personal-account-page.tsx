@@ -3,6 +3,7 @@ import { User } from '@supabase/supabase-js';
 import { BadgeX, Ban, ShieldPlus, VenetianMask } from 'lucide-react';
 
 import { Database } from '@kit/supabase/database';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
@@ -32,6 +33,7 @@ export function AdminPersonalAccountPage(props: {
     id: string;
     name: string;
     picture_url: string;
+    email: string;
   };
 
   memberships: Membership[];
@@ -46,6 +48,13 @@ export function AdminPersonalAccountPage(props: {
 
   return (
     <div className={'flex flex-col space-y-4'}>
+      <AppBreadcrumbs
+        values={{
+          [props.account.id]:
+            props.account.name ?? props.account.email ?? 'Account',
+        }}
+      />
+
       <div className={'flex items-center justify-between'}>
         <div className={'flex items-center space-x-4'}>
           <div className={'flex items-center space-x-2.5'}>
@@ -103,9 +112,7 @@ export function AdminPersonalAccountPage(props: {
         <AdminSubscriptionTable subscription={props.subscription} />
 
         <div className={'divider-divider-x flex flex-col space-y-2.5'}>
-          <Heading className={'font-bold'} level={5}>
-            Teams
-          </Heading>
+          <Heading level={6}>Teams</Heading>
 
           <div>
             <AdminMembershipsTable memberships={props.memberships} />

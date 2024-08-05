@@ -128,7 +128,7 @@ export default createBillingSchema({
             {
               id: 'price_enterprise_yearly',
               name: 'Base',
-              cost: 299.99,
+              cost: 299.9,
               type: 'flat',
             },
           ],

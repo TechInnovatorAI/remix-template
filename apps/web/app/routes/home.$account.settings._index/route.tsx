@@ -19,6 +19,7 @@ import {
   LeaveTeamAccountSchema,
   UpdateTeamNameSchema,
 } from '@kit/team-accounts/schema';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
@@ -78,7 +79,7 @@ export default function TeamAccountSettingsPage() {
       <TeamAccountLayoutPageHeader
         account={account.slug}
         title={<Trans i18nKey={'teams:settings.pageTitle'} />}
-        description={<Trans i18nKey={'teams:settings.pageDescription'} />}
+        description={<AppBreadcrumbs />}
       />
 
       <PageBody>

@@ -1,6 +1,7 @@
 import { BadgeX } from 'lucide-react';
 
 import { Database } from '@kit/supabase/database';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
@@ -25,6 +26,12 @@ export function AdminTeamAccountPage(props: {
 }) {
   return (
     <div className={'flex flex-col space-y-4'}>
+      <AppBreadcrumbs
+        values={{
+          [props.account.id]: props.account.name ?? 'Account',
+        }}
+      />
+
       <div className={'flex justify-between'}>
         <div className={'flex items-center space-x-4'}>
           <div className={'flex items-center space-x-2.5'}>
@@ -52,9 +59,7 @@ export function AdminTeamAccountPage(props: {
           <AdminSubscriptionTable subscription={props.subscription} />
 
           <div className={'flex flex-col space-y-2.5'}>
-            <Heading className={'font-bold'} level={5}>
-              Team Members
-            </Heading>
+            <Heading level={6}>Team Members</Heading>
 
             <AdminMembersTable members={props.members} />
           </div>

@@ -24,7 +24,11 @@ export function createI18nSettings({
     detection: undefined,
     lng,
     missingInterpolationHandler: (text, value, options) => {
-      console.debug(`Missing interpolation value for key: ${text}`, value, options);
+      console.debug(
+        `Missing interpolation value for key: ${text}`,
+        value,
+        options,
+      );
     },
     load: 'languageOnly' as const,
     preload: false as const,

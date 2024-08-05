@@ -2,9 +2,8 @@ import { lazy } from 'react';
 
 import { MetaFunction, useLoaderData } from '@remix-run/react';
 import { LoaderFunctionArgs } from '@remix-run/server-runtime';
-import { PlusCircle } from 'lucide-react';
 
-import { Button } from '@kit/ui/button';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { ClientOnly } from '@kit/ui/client-only';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
@@ -46,13 +45,8 @@ export default function TeamAccountHomePage() {
       <TeamAccountLayoutPageHeader
         account={data.account}
         title={<Trans i18nKey={'common:dashboardTabLabel'} />}
-        description={<Trans i18nKey={'common:dashboardTabDescription'} />}
-      >
-        <Button>
-          <PlusCircle className={'mr-1 h-4'} />
-          <span>Add Widget</span>
-        </Button>
-      </TeamAccountLayoutPageHeader>
+        description={<AppBreadcrumbs />}
+      />
 
       <PageBody>
         <ClientOnly>

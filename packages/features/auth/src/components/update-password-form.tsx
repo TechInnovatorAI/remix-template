@@ -48,7 +48,7 @@ export function UpdatePasswordForm(params: { redirectTo: string }) {
   return (
     <div className={'flex w-full flex-col space-y-6'}>
       <div className={'flex justify-center'}>
-        <Heading level={5}>
+        <Heading level={5} className={'tracking-tight'}>
           <Trans i18nKey={'auth:passwordResetLabel'} />
         </Heading>
       </div>

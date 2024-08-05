@@ -8,6 +8,7 @@ import { deletePersonalAccountAction } from '@kit/accounts/actions';
 import { PersonalAccountSettingsContainer } from '@kit/accounts/personal-account-settings';
 import { DeletePersonalAccountSchema } from '@kit/accounts/schema';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
@@ -55,7 +56,7 @@ export default function PersonalAccountSettingsPage() {
     <>
       <HomeLayoutPageHeader
         title={<Trans i18nKey={'account:accountTabLabel'} />}
-        description={<Trans i18nKey={'account:accountTabDescription'} />}
+        description={<AppBreadcrumbs />}
       />
 
       <PageBody>

@@ -38,7 +38,7 @@ const redirectPath = `${callback}?next=${passwordUpdate}`;
 export default function PasswordResetPage() {
   return (
     <>
-      <Heading level={4}>
+      <Heading level={5} className={'tracking-tight'}>
         <Trans i18nKey={'auth:passwordResetLabel'} />
       </Heading>
 

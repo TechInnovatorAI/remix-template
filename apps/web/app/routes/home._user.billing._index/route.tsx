@@ -8,6 +8,7 @@ import {
 } from '@kit/billing-gateway/components';
 import { CsrfTokenFormField, useCsrfToken } from '@kit/csrf/client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { If } from '@kit/ui/if';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
@@ -52,8 +53,8 @@ export default function PersonalAccountBillingPage() {
   return (
     <>
       <HomeLayoutPageHeader
-        title={<Trans i18nKey={'common:billingTabLabel'} />}
-        description={<Trans i18nKey={'common:billingTabDescription'} />}
+        title={<Trans i18nKey={'common:routes.billing'} />}
+        description={<AppBreadcrumbs />}
       />
 
       <PageBody>

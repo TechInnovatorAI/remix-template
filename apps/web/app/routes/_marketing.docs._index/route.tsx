@@ -6,7 +6,6 @@ import {
 import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
 
 import { Cms } from '@kit/cms';
-import { PageBody } from '@kit/ui/page';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { DocsCards } from '~/routes/_marketing.docs/_components/docs-cards';
@@ -41,16 +40,14 @@ export default function DocsPage() {
   const cards = (data?.pages ?? []).filter((item) => !item.parentId);
 
   return (
-    <PageBody>
-      <div className={'flex flex-col space-y-8 xl:space-y-16'}>
-        <SitePageHeader title={title} subtitle={description} />
+    <div className={'flex flex-col space-y-6 xl:space-y-10'}>
+      <SitePageHeader title={title} subtitle={description} />
 
-        <div className={'flex flex-col items-center'}>
-          <div className={'container mx-auto max-w-5xl'}>
-            <DocsCards cards={cards as Cms.ContentItem[]} />
-          </div>
+      <div className={'flex flex-col items-center'}>
+        <div className={'container mx-auto max-w-5xl'}>
+          <DocsCards cards={cards as Cms.ContentItem[]} />
         </div>
       </div>
-    </PageBody>
+    </div>
   );
 }

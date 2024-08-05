@@ -6,12 +6,16 @@ export function isBrowser() {
 }
 
 /**
- *@name formatCurrency
+ * @name formatCurrency
  * @description Format the currency based on the currency code
  */
-export function formatCurrency(currencyCode: string, value: string | number) {
-  return new Intl.NumberFormat('en-US', {
+export function formatCurrency(params: {
+  currencyCode: string;
+  locale: string;
+  value: string | number;
+}) {
+  return new Intl.NumberFormat(params.locale, {
     style: 'currency',
-    currency: currencyCode,
-  }).format(Number(value));
+    currency: params.currencyCode,
+  }).format(Number(params.value));
 }

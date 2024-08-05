@@ -17,6 +17,8 @@ import { AdminActionsSchema } from '@kit/admin/schema';
 import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
+import { PageBody, PageHeader } from '@kit/ui/page';
 
 export const meta = [
   {
@@ -86,7 +88,15 @@ export const loader = async function (args: LoaderFunctionArgs) {
 export default function AdminAccountsPage() {
   const data = useLoaderData<typeof loader>();
 
-  return <AdminAccountsTable {...data} />;
+  return (
+    <>
+      <PageHeader title="Accounts" description={<AppBreadcrumbs />} />
+
+      <PageBody>
+        <AdminAccountsTable {...data} />
+      </PageBody>
+    </>
+  );
 }
 
 export const action = async function (args: ActionFunctionArgs) {

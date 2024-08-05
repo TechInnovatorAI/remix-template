@@ -43,7 +43,7 @@ export function PersonalAccountSettingsContainer(
   }
 
   return (
-    <div className={'flex w-full flex-col space-y-6 pb-32'}>
+    <div className={'flex w-full flex-col space-y-4 pb-32'}>
       <Card>
         <CardHeader>
           <CardTitle>
@@ -148,7 +148,7 @@ export function PersonalAccountSettingsContainer(
       </Card>
 
       <If condition={props.features.enableAccountDeletion}>
-        <Card className={'border-destructive border-2'}>
+        <Card className={'border-destructive'}>
           <CardHeader>
             <CardTitle>
               <Trans i18nKey={'account:dangerZone'} />

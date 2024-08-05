@@ -22,9 +22,7 @@ export function AdminSubscriptionTable({
 }) {
   return (
     <div className={'flex flex-col space-y-2.5'}>
-      <Heading className={'font-bold'} level={5}>
-        Subscription
-      </Heading>
+      <Heading level={6}>Subscription</Heading>
 
       <If
         condition={subscription}

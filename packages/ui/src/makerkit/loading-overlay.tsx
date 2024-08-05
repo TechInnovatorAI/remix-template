@@ -27,7 +27,7 @@ export function LoadingOverlay({
     >
       <Spinner className={spinnerClassName} />
 
-      <div>{children}</div>
+      <div className={'text-sm text-muted-foreground'}>{children}</div>
     </div>
   );
 }

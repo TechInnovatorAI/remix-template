@@ -23,7 +23,7 @@ export default function DocsLayout() {
   const { pages } = useLoaderData<typeof loader>();
 
   return (
-    <div className={'flex container'}>
+    <div className={'container flex'}>
       <DocsNavigation pages={pages as Cms.ContentItem[]} />
 
       <Outlet />

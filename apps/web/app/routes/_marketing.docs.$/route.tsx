@@ -45,9 +45,14 @@ export default function DocumentationPage() {
 
   return (
     <div className={'flex flex-1 flex-col'}>
-      <SitePageHeader title={page.title} subtitle={description} />
+      <SitePageHeader
+        className={'lg:px-8'}
+        container={false}
+        title={page.title}
+        subtitle={description}
+      />
 
-      <div className={'container flex max-w-5xl flex-col space-y-4 py-6'}>
+      <div className={'flex flex-col space-y-4 py-6 lg:px-8'}>
         <article className={styles.HTML}>
           <ContentRenderer content={page.content} />
         </article>

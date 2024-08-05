@@ -32,6 +32,8 @@ export function GlobalLoader({
           <LoadingOverlay displayLogo={displayLogo} fullPage={fullPage}>
             {Text}
           </LoadingOverlay>
+
+          {children}
         </div>
       </If>
     </>

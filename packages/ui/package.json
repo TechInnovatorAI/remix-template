@@ -54,6 +54,7 @@
     "react-day-picker": "^8.10.1",
     "react-hook-form": "^7.52.1",
     "react-i18next": "^15.0.0",
+    "recharts": "^2.12.7",
     "sonner": "^1.5.0",
     "tailwindcss": "3.4.7",
     "tailwindcss-animate": "^1.0.7",
@@ -100,6 +101,8 @@
     "./input-otp": "./src/shadcn/input-otp.tsx",
     "./textarea": "./src/shadcn/textarea.tsx",
     "./switch": "./src/shadcn/switch.tsx",
+    "./chart": "./src/shadcn/chart.tsx",
+    "./breadcrumb": "./src/shadcn/breadcrumb.tsx",
     "./utils": "./src/utils/index.ts",
     "./if": "./src/makerkit/if.tsx",
     "./trans": "./src/makerkit/trans.tsx",
@@ -123,6 +126,8 @@
     "./card-button": "./src/makerkit/card-button.tsx",
     "./version-updater": "./src/makerkit/version-updater.tsx",
     "./multi-step-form": "./src/makerkit/multi-step-form.tsx",
+    "./empty-state": "./src/makerkit/empty-state.tsx",
+    "./app-breadcrumbs": "./src/makerkit/app-breadcrumbs.tsx",
     "./marketing": "./src/makerkit/marketing/index.tsx"
   },
   "typesVersions": {

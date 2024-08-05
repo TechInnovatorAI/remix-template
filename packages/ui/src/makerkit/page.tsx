@@ -13,9 +13,6 @@ type PageProps = React.PropsWithChildren<{
 
 export function Page(props: PageProps) {
   switch (props.style) {
-    case 'sidebar':
-      return <PageWithSidebar {...props} />;
-
     case 'header':
       return <PageWithHeader {...props} />;
 
@@ -31,7 +28,9 @@ function PageWithSidebar(props: PageProps) {
   const { Navigation, Children, MobileNavigation } = getSlotsFromPage(props);
 
   return (
-    <div className={cn('flex', props.className)}>
+    <div
+      className={cn('flex bg-gray-50/50 dark:bg-background', props.className)}
+    >
       {Navigation}
 
       <div
@@ -42,7 +41,13 @@ function PageWithSidebar(props: PageProps) {
       >
         {MobileNavigation}
 
-        <div className={'flex flex-1 flex-col space-y-4'}>{Children}</div>
+        <div
+          className={
+            'flex flex-1 flex-col overflow-y-auto bg-background lg:m-1.5 lg:ml-0 lg:rounded-lg lg:border'
+          }
+        >
+          {Children}
+        </div>
       </div>
     </div>
   );
@@ -54,7 +59,12 @@ export function PageMobileNavigation(
   }>,
 ) {
   return (
-    <div className={cn('w-full py-2 lg:hidden', props.className)}>
+    <div
+      className={cn(
+        'flex w-full items-center border-b py-2 lg:hidden',
+        props.className,
+      )}
+    >
       {props.children}
     </div>
   );
@@ -72,7 +82,7 @@ function PageWithHeader(props: PageProps) {
       >
         <div
           className={cn(
-            'dark:border-primary-900 flex h-14 items-center justify-between bg-muted/30 px-4 shadow-sm dark:shadow-primary/10 lg:justify-start',
+            'flex h-14 items-center justify-between bg-muted/40 px-4 dark:border-border dark:shadow-primary/10 lg:justify-start lg:shadow-sm',
             {
               'sticky top-0 z-10 backdrop-blur-md': props.sticky ?? true,
             },
@@ -87,13 +97,7 @@ function PageWithHeader(props: PageProps) {
           {MobileNavigation}
         </div>
 
-        <div
-          className={
-            'flex h-screen flex-1 flex-col space-y-8 px-4 py-4 lg:container'
-          }
-        >
-          {Children}
-        </div>
+        <div className={'container flex flex-1 flex-col'}>{Children}</div>
       </div>
     </div>
   );
@@ -115,13 +119,11 @@ export function PageNavigation(props: React.PropsWithChildren) {
 
 export function PageDescription(props: React.PropsWithChildren) {
   return (
-    <h2 className={'hidden lg:block'}>
-      <span
-        className={'text-base font-medium leading-none text-muted-foreground'}
-      >
+    <div className={'h-6'}>
+      <div className={'text-xs font-normal leading-none text-muted-foreground'}>
         {props.children}
-      </span>
-    </h2>
+      </div>
+    </div>
   );
 }
 
@@ -129,7 +131,7 @@ export function PageTitle(props: React.PropsWithChildren) {
   return (
     <h1
       className={
-        'font-heading text-2xl font-semibold leading-none dark:text-white'
+        'h-6 font-heading font-bold leading-none tracking-tight dark:text-white'
       }
     >
       {props.children}
@@ -137,11 +139,15 @@ export function PageTitle(props: React.PropsWithChildren) {
   );
 }
 
+export function PageHeaderActions(props: React.PropsWithChildren) {
+  return <div className={'flex items-center space-x-2'}>{props.children}</div>;
+}
+
 export function PageHeader({
   children,
-  className,
   title,
   description,
+  className,
 }: React.PropsWithChildren<{
   className?: string;
   title?: string | React.ReactNode;
@@ -150,17 +156,14 @@ export function PageHeader({
   return (
     <div
       className={cn(
-        'flex h-20 items-center justify-between lg:px-4',
+        'flex items-center justify-between py-4 lg:px-4',
         className,
       )}
     >
-      {title ? (
-        <div className={'flex flex-col space-y-1.5'}>
-          <PageTitle>{title}</PageTitle>
-
-          <PageDescription>{description}</PageDescription>
-        </div>
-      ) : null}
+      <div className={'flex flex-col'}>
+        <PageDescription>{description}</PageDescription>
+        <PageTitle>{title}</PageTitle>
+      </div>
 
       {children}
     </div>

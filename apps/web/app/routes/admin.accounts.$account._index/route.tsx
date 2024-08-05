@@ -56,6 +56,7 @@ export default function AdminPage() {
           picture_url: data.account.picture_url ?? '',
           name: data.account.name ?? '',
           id: data.account.id ?? '',
+          email: data.account.email ?? '',
         }}
         memberships={data.memberships}
         subscription={data.subscription}

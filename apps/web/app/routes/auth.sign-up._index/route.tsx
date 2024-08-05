@@ -52,7 +52,7 @@ export default function SignUpPage() {
 
   return (
     <>
-      <Heading level={4}>
+      <Heading level={5} className={'tracking-tight'}>
         <Trans i18nKey={'auth:signUpHeading'} />
       </Heading>
 

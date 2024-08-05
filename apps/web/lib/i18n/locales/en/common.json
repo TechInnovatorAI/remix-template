@@ -1,7 +1,7 @@
 {
   "homeTabLabel": "Home",
   "homeTabDescription": "Welcome to your home page",
-  "accountMembers": "Members",
+  "accountMembers": "Account Members",
   "membersTabDescription": "Here you can manage the members of your team.",
   "billingTabLabel": "Billing",
   "billingTabDescription": "Manage your billing and subscription",
@@ -55,6 +55,15 @@
   "newVersionAvailableDescription": "A new version of the app is available. It is recommended to refresh the page to get the latest updates and avoid any issues.",
   "newVersionSubmitButton": "Reload and Update",
   "back": "Back",
+  "routes": {
+    "home": "Home",
+    "account": "Account",
+    "members": "Members",
+    "billing": "Billing",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
   "roles": {
     "owner": {
       "label": "Owner"

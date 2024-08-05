@@ -37,11 +37,11 @@ For more info: https://github.com/tailwindlabs/tailwindcss/issues/3258#issuecomm
 }
 
 .HTML p {
-  @apply mb-4 mt-2 text-base leading-7;
+  @apply mb-4 mt-2 text-base leading-7 text-muted-foreground;
 }
 
 .HTML li {
-  @apply relative my-1.5 text-base leading-7;
+  @apply relative my-1.5 text-base leading-7 text-muted-foreground;
 }
 
 .HTML ul > li:before {

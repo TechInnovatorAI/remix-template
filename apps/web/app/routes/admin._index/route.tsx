@@ -5,6 +5,7 @@ import { getSuperAdminUser } from '@kit/admin';
 import { loadAdminDashboard } from '@kit/admin/api';
 import { AdminDashboard } from '@kit/admin/components/admin-dashboard';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody, PageHeader } from '@kit/ui/page';
 
 export const meta = [
@@ -29,10 +30,7 @@ export default function AdminPage() {
 
   return (
     <>
-      <PageHeader
-        title={'Super Admin'}
-        description={`Your SaaS stats at a glance`}
-      />
+      <PageHeader title={'Super Admin'} description={<AppBreadcrumbs />} />
 
       <PageBody>
         <AdminDashboard data={data} />
