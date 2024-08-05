@@ -343,7 +343,7 @@ function Price({
   children,
   isMonthlyPrice,
 }: React.PropsWithChildren<{
-  isMonthlyPrice: boolean;
+  isMonthlyPrice?: boolean;
 }>) {
   return (
     <div
