@@ -17,7 +17,7 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^4.1.0",
-    "stripe": "^16.5.0"
+    "stripe": "^16.6.0"
   },
   "devDependencies": {
     "@kit/billing": "workspace:^",
@@ -28,7 +28,7 @@
     "@kit/tailwind-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:^",
-    "@remix-run/react": "2.10.3",
+    "@remix-run/react": "2.11.0",
     "@types/react": "^18.3.3",
     "date-fns": "^3.6.0",
     "react": "18.3.1",
