@@ -36,11 +36,12 @@ export function PricingTable({
   CheckoutButtonRenderer,
   redirectToCheckout = true,
   displayPlanDetails = true,
+  alwaysDisplayMonthlyPrice = true,
 }: {
   config: BillingConfig;
   paths: Paths;
   displayPlanDetails?: boolean;
-
+  alwaysDisplayMonthlyPrice?: boolean;
   redirectToCheckout?: boolean;
 
   CheckoutButtonRenderer?: React.ComponentType<{
@@ -99,6 +100,7 @@ export function PricingTable({
               product={product}
               paths={paths}
               displayPlanDetails={displayPlanDetails}
+              alwaysDisplayMonthlyPrice={alwaysDisplayMonthlyPrice}
               CheckoutButton={CheckoutButtonRenderer}
             />
           );
@@ -118,7 +120,7 @@ function PricingItem(
     selectable: boolean;
 
     primaryLineItem: z.infer<typeof LineItemSchema> | undefined;
-
+    alwaysDisplayMonthlyPrice?: boolean;
     redirectToCheckout?: boolean;
 
     plan: {
@@ -219,6 +221,7 @@ function PricingItem(
               product={props.product}
               interval={interval}
               lineItem={lineItem}
+              alwaysDisplayMonthlyPrice={props.alwaysDisplayMonthlyPrice}
             />
           </Price>
 
@@ -482,6 +485,7 @@ function LineItemPrice({
   plan,
   interval,
   product,
+  alwaysDisplayMonthlyPrice = true,
 }: {
   lineItem: z.infer<typeof LineItemSchema> | undefined;
   plan: {
@@ -491,13 +495,16 @@ function LineItemPrice({
   product: {
     currency: string;
   };
+  alwaysDisplayMonthlyPrice?: boolean;
 }) {
   const { i18n } = useTranslation();
   const isYearlyPricing = interval === 'year';
 
   const cost = lineItem
     ? isYearlyPricing
-      ? Number(lineItem.cost / 12).toFixed(2)
+      ? alwaysDisplayMonthlyPrice
+        ? Number(lineItem.cost / 12).toFixed(2)
+        : lineItem.cost
       : lineItem?.cost
     : 0;
 
