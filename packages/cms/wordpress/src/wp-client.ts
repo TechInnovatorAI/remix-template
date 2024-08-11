@@ -32,7 +32,7 @@ class WordpressClient implements CmsClient {
       _embed: 'true',
     });
 
-    if (options?.limit) {
+    if (options?.limit && options.limit !== Infinity) {
       queryParams.append('per_page', options.limit.toString());
     }
 
