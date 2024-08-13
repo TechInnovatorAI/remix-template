@@ -35,7 +35,7 @@
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
     "@turbo/gen": "^2.0.12",
-    "@types/node": "^22.1.0",
+    "@types/node": "^22.2.0",
     "cross-env": "^7.0.3",
     "pnpm": "^9.7.0",
     "prettier": "^3.3.3",

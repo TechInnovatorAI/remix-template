@@ -52,11 +52,11 @@
     "@remix-run/serve": "^2.11.1",
     "@remix-run/server-runtime": "^2.11.1",
     "@supabase/supabase-js": "^2.45.1",
-    "@tanstack/react-query": "5.51.21",
+    "@tanstack/react-query": "5.51.23",
     "@tanstack/react-table": "^8.20.1",
     "date-fns": "^3.6.0",
     "isbot": "^5.1.14",
-    "lucide-react": "^0.424.0",
+    "lucide-react": "^0.427.0",
     "next-themes": "0.3.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -73,8 +73,8 @@
     "@remix-run/dev": "^2.11.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.1",
-    "@typescript-eslint/parser": "^8.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.1.0",
+    "@typescript-eslint/parser": "^8.1.0",
     "dotenv-cli": "^7.4.2",
     "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -82,10 +82,10 @@
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "supabase": "1.187.10",
+    "supabase": "1.188.4",
     "typescript": "^5.5.4",
     "vite": "^5.4.0",
-    "vite-tsconfig-paths": "^4.3.2"
+    "vite-tsconfig-paths": "^5.0.1"
   },
   "engines": {
     "node": ">=18.0.0"
