@@ -12,6 +12,7 @@ import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import authConfig from '~/config/auth.config';
 import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
@@ -20,6 +21,7 @@ import { HomeLayoutPageHeader } from '~/routes/home._user/_components/home-page-
 
 const features = {
   enableAccountDeletion: featureFlagsConfig.enableAccountDeletion,
+  enablePasswordUpdate: authConfig.providers.password,
 };
 
 const paths = {

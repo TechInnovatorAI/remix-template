@@ -28,6 +28,7 @@ export function PersonalAccountSettingsContainer(
 
     features: {
       enableAccountDeletion: boolean;
+      enablePasswordUpdate: boolean;
     };
 
     paths: {
@@ -115,21 +116,23 @@ export function PersonalAccountSettingsContainer(
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <Trans i18nKey={'account:updatePasswordCardTitle'} />
-          </CardTitle>
+      <If condition={props.features.enablePasswordUpdate}>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <Trans i18nKey={'account:updatePasswordCardTitle'} />
+            </CardTitle>
 
-          <CardDescription>
-            <Trans i18nKey={'account:updatePasswordCardDescription'} />
-          </CardDescription>
-        </CardHeader>
+            <CardDescription>
+              <Trans i18nKey={'account:updatePasswordCardDescription'} />
+            </CardDescription>
+          </CardHeader>
 
-        <CardContent>
-          <UpdatePasswordFormContainer callbackPath={props.paths.callback} />
-        </CardContent>
-      </Card>
+          <CardContent>
+            <UpdatePasswordFormContainer callbackPath={props.paths.callback} />
+          </CardContent>
+        </Card>
+      </If>
 
       <Card>
         <CardHeader>
