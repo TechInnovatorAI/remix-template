@@ -99,6 +99,10 @@ export class BaselimeServerMonitoringService implements MonitoringService {
   identifyUser<Info extends { id: string }>(info: Info) {
     this.userId = info.id;
   }
+
+  ready() {
+    return Promise.resolve();
+  }
 }
 
 function getFormattedError(error: Error) {

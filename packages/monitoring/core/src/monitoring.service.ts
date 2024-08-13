@@ -29,4 +29,9 @@ export abstract class MonitoringService {
    * @param info
    */
   abstract identifyUser<Info extends { id: string }>(info: Info): unknown;
+
+  /**
+   * Ready the monitoring service for use
+   */
+  abstract ready(): Promise<unknown>;
 }

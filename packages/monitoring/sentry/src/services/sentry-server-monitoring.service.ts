@@ -14,41 +14,29 @@ const DSN = import.meta.env.VITE_SENTRY_DSN;
  * identifying users using the Sentry monitoring service.
  */
 export class SentryServerMonitoringService implements MonitoringService {
-  private initialized = false;
+  private readonly readyPromise: Promise<unknown>;
+  private readyResolver?: (value?: unknown) => void;
+
+  constructor() {
+    this.readyPromise = new Promise(
+      (resolve) => (this.readyResolver = resolve),
+    );
+
+    void this.initialize();
+  }
 
   async initialize() {
-    if (this.initialized) {
-      return;
+    if (typeof document !== 'undefined') {
+      await this.initializeSentryBrowserClient();
+    } else {
+      await this.initializeSentryServerClient();
     }
 
-    const { init, browserTracingIntegration, replayIntegration } = await import(
-      '@sentry/remix'
-    ).catch();
+    this.readyResolver?.();
+  }
 
-    init({
-      dsn: DSN,
-      integrations: [
-        browserTracingIntegration({
-          useEffect,
-          useLocation,
-          useMatches,
-        }),
-        // Replay is only available in the client
-        replayIntegration(),
-      ],
-
-      // Set tracesSampleRate to 1.0 to capture 100%
-      // of transactions for performance monitoring.
-      // We recommend adjusting this value in production
-      tracesSampleRate: 1.0,
-
-      // Capture Replay for 10% of all sessions,
-      // plus for 100% of sessions with an error
-      replaysSessionSampleRate: 0.1,
-      replaysOnErrorSampleRate: 1.0,
-    });
-
-    this.initialized = true;
+  async ready() {
+    return this.readyPromise;
   }
 
   async captureException(error: Error | null) {
@@ -76,5 +64,42 @@ export class SentryServerMonitoringService implements MonitoringService {
     const { setUser } = await import('@sentry/remix').catch();
 
     setUser(user);
+  }
+
+  private async initializeSentryServerClient() {
+    const { init } = await import('@sentry/remix').catch();
+
+    init({
+      dsn: DSN,
+    });
+  }
+
+  private async initializeSentryBrowserClient() {
+    const { init, browserTracingIntegration, replayIntegration } = await import(
+      '@sentry/remix'
+    ).catch();
+
+    init({
+      dsn: DSN,
+      integrations: [
+        browserTracingIntegration({
+          useEffect,
+          useLocation,
+          useMatches,
+        }),
+        // Replay is only available in the client
+        replayIntegration(),
+      ],
+
+      // Set tracesSampleRate to 1.0 to capture 100%
+      // of transactions for performance monitoring.
+      // We recommend adjusting this value in production
+      tracesSampleRate: 1.0,
+
+      // Capture Replay for 10% of all sessions,
+      // plus for 100% of sessions with an error
+      replaysSessionSampleRate: 0.1,
+      replaysOnErrorSampleRate: 1.0,
+    });
   }
 }

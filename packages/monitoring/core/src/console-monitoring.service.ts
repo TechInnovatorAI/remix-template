@@ -14,4 +14,8 @@ export class ConsoleMonitoringService implements MonitoringService {
   captureEvent(event: string) {
     console.log(`[Console Monitoring] Captured event: ${event}`);
   }
+
+  ready() {
+    return Promise.resolve();
+  }
 }

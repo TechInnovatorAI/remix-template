@@ -22,6 +22,9 @@ export function useBaselime(): MonitoringService {
       captureEvent<Extra extends object>(event: string, extra?: Extra) {
         return sendEvent(event, extra);
       },
+      ready() {
+        return Promise.resolve();
+      }
     } satisfies MonitoringService;
   }, [captureException, sendEvent, setUser]);
 }
