@@ -7,7 +7,7 @@ export function RootHead() {
   const structuredData = {
     name: name,
     url: siteUrl,
-    logo: `${siteUrl}/favicon/favicon-150x150.png`,
+    logo: `${siteUrl}/images/favicon/favicon-150x150.png`,
     '@context': 'https://schema.org',
     '@type': 'Organization',
   };
@@ -50,8 +50,6 @@ export function RootHead() {
       <link rel="preconnect" href="https://fonts.gstatic.com" />
 
       <meta name="msapplication-TileColor" content="#ffffff" />
-      <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
-
       <meta name="theme-color" content={appConfig.themeColor} />
 
       <meta

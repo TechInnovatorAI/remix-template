@@ -5,16 +5,17 @@ import { ThemeProvider } from 'next-themes';
 import { CaptchaProvider, CaptchaTokenSetter } from '@kit/auth/captcha/client';
 import { I18nProvider } from '@kit/i18n/provider';
 import { MonitoringProvider } from '@kit/monitoring/components';
-import { useAuthChangeListener } from '@kit/supabase/hooks/use-auth-change-listener';
+import { AppEventsProvider } from '@kit/shared/events';
 import { ClientOnly } from '@kit/ui/client-only';
 import { GlobalLoader } from '@kit/ui/global-loader';
 import { If } from '@kit/ui/if';
 import { Toaster } from '@kit/ui/sonner';
 import { VersionUpdater } from '@kit/ui/version-updater';
 
+import { AnalyticsProvider } from '~/components/analytics-provider';
+import { AuthProvider } from '~/components/auth-provider';
 import authConfig from '~/config/auth.config';
 import featuresFlagConfig from '~/config/feature-flags.config';
-import pathsConfig from '~/config/paths.config';
 import { i18nResolver } from '~/lib/i18n/i18n.resolver';
 import { getI18nSettings } from '~/lib/i18n/i18n.settings';
 
@@ -44,37 +45,32 @@ export function RootProviders(
 
         <ReactQueryProvider>
           <MonitoringProvider>
-            <CaptchaProvider>
-              <CaptchaTokenSetter siteKey={captchaSiteKey} />
+            <AppEventsProvider>
+              <AnalyticsProvider>
+                <CaptchaProvider>
+                  <CaptchaTokenSetter siteKey={captchaSiteKey} />
 
-              <AuthProvider>
-                <ThemeProvider
-                  attribute="class"
-                  enableSystem
-                  disableTransitionOnChange
-                  defaultTheme={props.theme}
-                  enableColorScheme={false}
-                >
-                  {props.children}
-                </ThemeProvider>
-              </AuthProvider>
+                  <AuthProvider>
+                    <ThemeProvider
+                      attribute="class"
+                      enableSystem
+                      disableTransitionOnChange
+                      defaultTheme={props.theme}
+                      enableColorScheme={false}
+                    >
+                      {props.children}
+                    </ThemeProvider>
+                  </AuthProvider>
 
-              <If condition={featuresFlagConfig.enableVersionUpdater}>
-                <VersionUpdater />
-              </If>
-            </CaptchaProvider>
+                  <If condition={featuresFlagConfig.enableVersionUpdater}>
+                    <VersionUpdater />
+                  </If>
+                </CaptchaProvider>{' '}
+              </AnalyticsProvider>
+            </AppEventsProvider>
           </MonitoringProvider>
         </ReactQueryProvider>
       </I18nProvider>
     </Suspense>
   );
-}
-
-// we place this below React Query since it uses the QueryClient
-function AuthProvider(props: React.PropsWithChildren) {
-  useAuthChangeListener({
-    appHomePath: pathsConfig.app.home,
-  });
-
-  return props.children;
 }

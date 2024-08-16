@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react';
 
+import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
+
 import { useLocation } from '@remix-run/react';
 
 import { useSupabase } from './use-supabase';
@@ -16,13 +18,16 @@ const PRIVATE_PATH_PREFIXES = ['/home', '/admin', '/join', '/update-password'];
  * @name useAuthChangeListener
  * @param privatePathPrefixes
  * @param appHomePath
+ * @param onEvent
  */
 export function useAuthChangeListener({
   privatePathPrefixes = PRIVATE_PATH_PREFIXES,
   appHomePath,
+  onEvent,
 }: {
   appHomePath: string;
   privatePathPrefixes?: string[];
+  onEvent?: (event: AuthChangeEvent, user: Session | null) => void;
 }) {
   const client = useSupabase();
   const pathName = useLocation().pathname;
@@ -30,6 +35,10 @@ export function useAuthChangeListener({
   useEffect(() => {
     // keep this running for the whole session unless the component was unmounted
     const listener = client.auth.onAuthStateChange((event, user) => {
+      if (onEvent) {
+        onEvent(event, user);
+      }
+
       // log user out if user is falsy
       // and if the current path is a private route
       const shouldRedirectUser =
@@ -50,7 +59,7 @@ export function useAuthChangeListener({
 
     // destroy listener on un-mounts
     return () => listener.data.subscription.unsubscribe();
-  }, [client.auth, pathName, appHomePath, privatePathPrefixes]);
+  }, [client.auth, pathName, appHomePath, privatePathPrefixes, onEvent]);
 }
 
 /**

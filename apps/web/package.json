@@ -30,6 +30,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@kit/accounts": "workspace:^",
     "@kit/admin": "workspace:^",
+    "@kit/analytics": "workspace:^",
     "@kit/auth": "workspace:^",
     "@kit/billing": "workspace:^",
     "@kit/billing-gateway": "workspace:^",
