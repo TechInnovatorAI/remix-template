@@ -39,8 +39,7 @@ export class StripeWebhookHandlerService
 
   constructor(private readonly config: BillingConfig) {}
 
-  private readonly provider: BillingProvider =
-    'stripe';
+  private readonly provider: BillingProvider = 'stripe';
 
   private readonly namespace = 'billing.stripe';
 

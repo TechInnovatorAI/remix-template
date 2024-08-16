@@ -1,7 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
 import { BillingConfig } from '@kit/billing';
-import { Enums, Database } from '@kit/supabase/database';
+import { Database, Enums } from '@kit/supabase/database';
 
 import { createBillingEventHandlerService } from './billing-event-handler.service';
 import { BillingEventHandlerFactoryService } from './billing-gateway-factory.service';

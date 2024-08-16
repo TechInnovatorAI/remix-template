@@ -6,13 +6,12 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Tables } from '@kit/supabase/database';
 import { DataTable } from '@kit/ui/enhanced-data-table';
 
-type Membership =
-  Tables<'accounts_memberships'> & {
-    account: {
-      id: string;
-      name: string;
-    };
+type Membership = Tables<'accounts_memberships'> & {
+  account: {
+    id: string;
+    name: string;
   };
+};
 
 export function AdminMembershipsTable(props: { memberships: Membership[] }) {
   return <DataTable data={props.memberships} columns={getColumns()} />;

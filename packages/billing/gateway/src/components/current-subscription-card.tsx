@@ -18,7 +18,7 @@ import { CurrentPlanAlert } from './current-plan-alert';
 import { CurrentPlanBadge } from './current-plan-badge';
 import { LineItemDetails } from './line-item-details';
 
-type Subscription = Tables<'subscriptions'>
+type Subscription = Tables<'subscriptions'>;
 type LineItem = Tables<'subscription_items'>;
 
 interface Props {

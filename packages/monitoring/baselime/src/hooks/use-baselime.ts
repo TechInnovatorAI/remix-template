@@ -24,7 +24,7 @@ export function useBaselime(): MonitoringService {
       },
       ready() {
         return Promise.resolve();
-      }
+      },
     } satisfies MonitoringService;
   }, [captureException, sendEvent, setUser]);
 }
