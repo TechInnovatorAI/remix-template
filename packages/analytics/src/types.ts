@@ -6,7 +6,7 @@ interface TrackEvent {
 }
 
 interface TrackPageView {
-  trackPageView(url: string): Promise<unknown>;
+  trackPageView(path: string): Promise<unknown>;
 }
 
 interface Identify {
@@ -24,7 +24,7 @@ export interface AnalyticsService extends TrackPageView, TrackEvent, Identify {
 }
 
 export type AnalyticsProviderFactory<Config extends object> = (
-  config: Config,
+  config?: Config,
 ) => AnalyticsService;
 
 export interface CreateAnalyticsManagerOptions<

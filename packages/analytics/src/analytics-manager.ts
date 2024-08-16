@@ -22,6 +22,30 @@ export function createAnalyticsManager<T extends string, Config extends object>(
     return Array.from(activeServices.values());
   };
 
+  const registerActiveServices = (
+    options: CreateAnalyticsManagerOptions<T, Config>,
+  ) => {
+    Object.keys(options.providers).forEach((provider) => {
+      const providerKey = provider as keyof typeof options.providers;
+      const factory = options.providers[providerKey];
+
+      if (!factory) {
+        console.warn(
+          `Analytics provider '${provider}' not registered. Skipping initialization.`,
+        );
+
+        return;
+      }
+
+      const service = factory();
+      activeServices.set(provider as T, service);
+
+      void service.initialize();
+    });
+  };
+
+  registerActiveServices(options);
+
   return {
     addProvider: (provider: T, config: Config) => {
       const factory = options.providers[provider];
@@ -50,9 +74,9 @@ export function createAnalyticsManager<T extends string, Config extends object>(
       );
     },
 
-    trackPageView: (url: string) => {
+    trackPageView: (path: string) => {
       return Promise.all(
-        getActiveServices().map((service) => service.trackPageView(url)),
+        getActiveServices().map((service) => service.trackPageView(path)),
       );
     },
 
