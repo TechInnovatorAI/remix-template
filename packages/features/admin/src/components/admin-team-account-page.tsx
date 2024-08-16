@@ -1,6 +1,6 @@
 import { BadgeX } from 'lucide-react';
 
-import { Database } from '@kit/supabase/database';
+import { Database, Tables } from '@kit/supabase/database';
 import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -11,12 +11,12 @@ import { AdminDeleteAccountDialog } from './admin-delete-account-dialog';
 import { AdminMembersTable } from './admin-members-table';
 import { AdminSubscriptionTable } from './admin-subscription-table';
 
-type Account = Database['public']['Tables']['accounts']['Row'];
+type Account = Tables<'accounts'>;
 type Members =
   Database['public']['Functions']['get_account_members']['Returns'];
 
-type Subscription = Database['public']['Tables']['subscriptions']['Row'] & {
-  subscription_items: Database['public']['Tables']['subscription_items']['Row'][];
+type Subscription = Tables<'subscriptions'> & {
+  subscription_items: Tables<'subscription_items'>[];
 };
 
 export function AdminTeamAccountPage(props: {

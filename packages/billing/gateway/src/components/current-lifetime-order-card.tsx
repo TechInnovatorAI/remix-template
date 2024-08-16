@@ -1,7 +1,7 @@
 import { BadgeCheck } from 'lucide-react';
 
 import { BillingConfig, getProductPlanPairByVariantId } from '@kit/billing';
-import { Database } from '@kit/supabase/database';
+import { Tables } from '@kit/supabase/database';
 import {
   Card,
   CardContent,
@@ -14,8 +14,8 @@ import { Trans } from '@kit/ui/trans';
 import { CurrentPlanBadge } from './current-plan-badge';
 import { LineItemDetails } from './line-item-details';
 
-type Order = Database['public']['Tables']['orders']['Row'];
-type LineItem = Database['public']['Tables']['order_items']['Row'];
+type Order = Tables<'orders'>;
+type LineItem = Tables<'order_items'>;
 
 interface Props {
   order: Order & {

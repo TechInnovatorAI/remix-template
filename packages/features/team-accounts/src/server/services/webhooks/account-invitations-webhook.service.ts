@@ -4,9 +4,9 @@ import process from 'node:process';
 import { z } from 'zod';
 
 import { getLogger } from '@kit/shared/logger';
-import { Database } from '@kit/supabase/database';
+import { Database, Tables } from '@kit/supabase/database';
 
-type Invitation = Database['public']['Tables']['invitations']['Row'];
+type Invitation = Tables<'invitations'>;
 
 const invitePath = '/join';
 

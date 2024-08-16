@@ -1,9 +1,9 @@
 import { Suspense, forwardRef, lazy, memo, useMemo } from 'react';
 
-import { Database } from '@kit/supabase/database';
+import { Enums } from '@kit/supabase/database';
 import { LoadingOverlay } from '@kit/ui/loading-overlay';
 
-type BillingProvider = Database['public']['Enums']['billing_provider'];
+type BillingProvider = Enums<'billing_provider'>;
 
 const Fallback = <LoadingOverlay fullPage={false} />;
 

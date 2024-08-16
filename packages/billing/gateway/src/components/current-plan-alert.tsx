@@ -1,10 +1,10 @@
-import { Database } from '@kit/supabase/database';
+import { Enums } from '@kit/supabase/database';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { Trans } from '@kit/ui/trans';
 
 export function CurrentPlanAlert(
   props: React.PropsWithoutRef<{
-    status: Database['public']['Enums']['subscription_status'];
+    status: Enums<'subscription_status'>
   }>,
 ) {
   let variant: 'success' | 'warning' | 'destructive';

@@ -2,9 +2,9 @@ import process from 'node:process';
 import { z } from 'zod';
 
 import { getLogger } from '@kit/shared/logger';
-import { Database } from '@kit/supabase/database';
+import { Tables } from '@kit/supabase/database';
 
-type Account = Database['public']['Tables']['accounts']['Row'];
+type Account = Tables<'accounts'>;
 
 export function createAccountWebhooksService() {
   return new AccountWebhooksService();

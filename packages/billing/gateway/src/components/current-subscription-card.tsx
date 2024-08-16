@@ -2,7 +2,7 @@ import { formatDate } from 'date-fns';
 import { BadgeCheck } from 'lucide-react';
 
 import { BillingConfig, getProductPlanPairByVariantId } from '@kit/billing';
-import { Database } from '@kit/supabase/database';
+import { Tables } from '@kit/supabase/database';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
   Card,
@@ -18,8 +18,8 @@ import { CurrentPlanAlert } from './current-plan-alert';
 import { CurrentPlanBadge } from './current-plan-badge';
 import { LineItemDetails } from './line-item-details';
 
-type Subscription = Database['public']['Tables']['subscriptions']['Row'];
-type LineItem = Database['public']['Tables']['subscription_items']['Row'];
+type Subscription = Tables<'subscriptions'>
+type LineItem = Tables<'subscription_items'>;
 
 interface Props {
   subscription: Subscription & {

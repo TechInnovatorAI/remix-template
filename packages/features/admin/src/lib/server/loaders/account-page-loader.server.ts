@@ -1,10 +1,9 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
-import { Database } from '@kit/supabase/database';
+import { Database, Tables } from '@kit/supabase/database';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
-type Db = Database['public']['Tables'];
-type Membership = Db['accounts_memberships']['Row'];
+type Membership = Tables<'accounts_memberships'>;
 
 export async function loadAdminAccountPage(accountId: string) {
   const client = getSupabaseServerAdminClient();

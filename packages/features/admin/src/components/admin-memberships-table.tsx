@@ -3,11 +3,11 @@
 import { Link } from '@remix-run/react';
 import { ColumnDef } from '@tanstack/react-table';
 
-import { Database } from '@kit/supabase/database';
+import { Tables } from '@kit/supabase/database';
 import { DataTable } from '@kit/ui/enhanced-data-table';
 
 type Membership =
-  Database['public']['Tables']['accounts_memberships']['Row'] & {
+  Tables<'accounts_memberships'> & {
     account: {
       id: string;
       name: string;

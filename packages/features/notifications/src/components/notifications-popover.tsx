@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Bell, CircleAlert, Info, TriangleAlert, XIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { Database } from '@kit/supabase/database';
+import { Tables } from '@kit/supabase/database';
 import { Button } from '@kit/ui/button';
 import { Divider } from '@kit/ui/divider';
 import { If } from '@kit/ui/if';
@@ -14,7 +14,7 @@ import { cn } from '@kit/ui/utils';
 
 import { useDismissNotification, useFetchNotifications } from '../hooks';
 
-type Notification = Database['public']['Tables']['notifications']['Row'];
+type Notification = Tables<'notifications'>;
 
 type PartialNotification = Pick<
   Notification,

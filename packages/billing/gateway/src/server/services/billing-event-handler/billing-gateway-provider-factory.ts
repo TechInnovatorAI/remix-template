@@ -1,10 +1,12 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
 import { BillingConfig } from '@kit/billing';
-import { Database } from '@kit/supabase/database';
+import { Enums, Database } from '@kit/supabase/database';
 
 import { createBillingEventHandlerService } from './billing-event-handler.service';
 import { BillingEventHandlerFactoryService } from './billing-gateway-factory.service';
+
+type BillingProvider = Enums<'billing_provider'>;
 
 /**
  * @description This function retrieves the billing provider from the database and returns a
@@ -13,7 +15,7 @@ import { BillingEventHandlerFactoryService } from './billing-gateway-factory.ser
  */
 export async function getBillingEventHandlerService(
   clientProvider: () => SupabaseClient<Database>,
-  provider: Database['public']['Enums']['billing_provider'],
+  provider: BillingProvider,
   config: BillingConfig,
 ) {
   const strategy = await BillingEventHandlerFactoryService.GetProviderStrategy(

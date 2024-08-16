@@ -1,8 +1,8 @@
-import { Database } from '@kit/supabase/database';
+import { Tables } from '@kit/supabase/database';
 
 import { createBillingGatewayService } from '../billing-gateway/billing-gateway.service';
 
-type Subscription = Database['public']['Tables']['subscriptions']['Row'];
+type Subscription = Tables<'subscriptions'>;
 
 export function createBillingWebhooksService() {
   return new BillingWebhooksService();

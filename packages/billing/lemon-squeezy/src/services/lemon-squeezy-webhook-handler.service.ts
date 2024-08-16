@@ -6,7 +6,7 @@ import {
 
 import { BillingConfig, BillingWebhookHandlerService } from '@kit/billing';
 import { getLogger } from '@kit/shared/logger';
-import { Database } from '@kit/supabase/database';
+import { Database, Enums } from '@kit/supabase/database';
 
 import { getLemonSqueezyEnv } from '../schema/lemon-squeezy-server-env.schema';
 import { OrderWebhook } from '../types/order-webhook';
@@ -23,6 +23,8 @@ type UpsertSubscriptionParams =
 
 type UpsertOrderParams =
   Database['public']['Functions']['upsert_order']['Args'];
+
+type BillingProvider = Enums<'billing_provider'>;
 
 interface LineItem {
   id: string;
@@ -42,8 +44,7 @@ type OrderStatus = 'pending' | 'failed' | 'paid' | 'refunded';
 export class LemonSqueezyWebhookHandlerService
   implements BillingWebhookHandlerService
 {
-  private readonly provider: Database['public']['Enums']['billing_provider'] =
-    'lemon-squeezy';
+  private readonly provider: BillingProvider = 'lemon-squeezy';
 
   private readonly namespace = 'billing.lemon-squeezy';
 

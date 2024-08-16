@@ -1,4 +1,4 @@
-import { Database } from '@kit/supabase/database';
+import { Tables } from '@kit/supabase/database';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { Heading } from '@kit/ui/heading';
 import { If } from '@kit/ui/if';
@@ -15,8 +15,8 @@ export function AdminSubscriptionTable({
   subscription,
 }: {
   subscription:
-    | (Database['public']['Tables']['subscriptions']['Row'] & {
-        subscription_items: Database['public']['Tables']['subscription_items']['Row'][];
+    | (Tables<'subscriptions'> & {
+        subscription_items: Tables<'subscription_items'>[];
       })
     | null;
 }) {

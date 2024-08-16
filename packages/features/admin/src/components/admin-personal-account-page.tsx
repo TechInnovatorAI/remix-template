@@ -2,7 +2,7 @@ import { User } from '@supabase/supabase-js';
 
 import { BadgeX, Ban, ShieldPlus, VenetianMask } from 'lucide-react';
 
-import { Database } from '@kit/supabase/database';
+import { Tables } from '@kit/supabase/database';
 import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
@@ -17,9 +17,7 @@ import { AdminMembershipsTable } from './admin-memberships-table';
 import { AdminReactivateUserDialog } from './admin-reactivate-user-dialog';
 import { AdminSubscriptionTable } from './admin-subscription-table';
 
-type Db = Database['public']['Tables'];
-
-type Membership = Db['accounts_memberships']['Row'] & {
+type Membership = Tables<'accounts_memberships'> & {
   account: {
     id: string;
     name: string;
@@ -38,8 +36,8 @@ export function AdminPersonalAccountPage(props: {
 
   memberships: Membership[];
   subscription:
-    | (Db['subscriptions']['Row'] & {
-        subscription_items: Db['subscription_items']['Row'][];
+    | (Tables<'subscriptions'> & {
+        subscription_items: Tables<'subscription_items'>[];
       })
     | null;
 }) {
