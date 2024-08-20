@@ -21,7 +21,7 @@
     "@makerkit/data-loader-supabase-core": "^0.0.8",
     "@remix-run/react": "2.11.2",
     "@supabase/supabase-js": "^2.45.1",
-    "@tanstack/react-query": "5.51.23",
+    "@tanstack/react-query": "5.51.24",
     "@tanstack/react-table": "^8.20.1",
     "@types/react": "^18.3.3",
     "lucide-react": "^0.428.0",
